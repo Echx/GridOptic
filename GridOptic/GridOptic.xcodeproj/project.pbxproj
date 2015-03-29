@@ -13,6 +13,8 @@
 		26FE564C1AC8735A00E88806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564B1AC8735A00E88806 /* Images.xcassets */; };
 		26FE564F1AC8735A00E88806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564D1AC8735A00E88806 /* LaunchScreen.xib */; };
 		26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE565A1AC8735A00E88806 /* GridOpticTests.swift */; };
+		26FE56651AC873B000E88806 /* GOGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56641AC873B000E88806 /* GOGrid.swift */; };
+		26FE56671AC8779500E88806 /* GOCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56661AC8779500E88806 /* GOCoordinate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		26FE56541AC8735A00E88806 /* GridOpticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridOpticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26FE56591AC8735A00E88806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26FE565A1AC8735A00E88806 /* GridOpticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOpticTests.swift; sourceTree = "<group>"; };
+		26FE56641AC873B000E88806 /* GOGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GOGrid.swift; path = GridOptic/GOGrid.swift; sourceTree = "<group>"; };
+		26FE56661AC8779500E88806 /* GOCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GOCoordinate.swift; path = GridOptic/GOCoordinate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 		26FE56411AC8735A00E88806 /* GridOptic */ = {
 			isa = PBXGroup;
 			children = (
+				26FE56641AC873B000E88806 /* GOGrid.swift */,
+				26FE56661AC8779500E88806 /* GOCoordinate.swift */,
 				26FE56441AC8735A00E88806 /* AppDelegate.swift */,
 				26FE56461AC8735A00E88806 /* ViewController.swift */,
 				26FE56481AC8735A00E88806 /* Main.storyboard */,
@@ -214,6 +220,8 @@
 			files = (
 				26FE56471AC8735A00E88806 /* ViewController.swift in Sources */,
 				26FE56451AC8735A00E88806 /* AppDelegate.swift in Sources */,
+				26FE56651AC873B000E88806 /* GOGrid.swift in Sources */,
+				26FE56671AC8779500E88806 /* GOCoordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
