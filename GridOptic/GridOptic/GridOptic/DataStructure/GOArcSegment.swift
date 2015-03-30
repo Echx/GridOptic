@@ -13,17 +13,21 @@ class GOArcSegment: NSObject {
     var radius: CGFloat
     var radian: CGFloat
     //angle from [0, PI)
-    var normal: CGVector
+    var normalDirection: CGVector
     
-    init(center: GOCoordinate, radius: CGFloat, radian: CGFloat, normal: CGVector) {
+    init(center: GOCoordinate, radius: CGFloat, radian: CGFloat, normalDirection: CGVector) {
         self.center = center
         self.radius = radius
         self.radian = radian
-        self.normal = normal
+        self.normalDirection = normalDirection
     }
     
     var startPoint: CGPoint {
         get {
+            let startVector = CGVector(
+                dx: normalDirection.dx * cos(-radian) - normalDirection.dy * sin(-radian),
+                dy: normalDirection.dx * sin(radian) + normalDirection.dy * cos(radian)
+            )
             return CGPointZero
         }
     }
