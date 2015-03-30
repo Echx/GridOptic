@@ -38,6 +38,7 @@
 		26E9FB9A1AC94B1B009F3836 /* GOArcSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOArcSegment.swift; sourceTree = "<group>"; };
 		26E9FB9C1AC94B33009F3836 /* GORay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GORay.swift; sourceTree = "<group>"; };
 		26E9FB9E1AC95154009F3836 /* GOSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOSegment.swift; sourceTree = "<group>"; };
+		26E9FBA01AC95A57009F3836 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		26FE563F1AC8735A00E88806 /* GridOptic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridOptic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26FE56431AC8735A00E88806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26FE56441AC8735A00E88806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 				26FE564D1AC8735A00E88806 /* LaunchScreen.xib */,
 				26FE56421AC8735A00E88806 /* Supporting Files */,
 				628E95631AC9582500777393 /* CGVector+GOUtilities.swift */,
+				26E9FBA01AC95A57009F3836 /* MyPlayground.playground */,
 			);
 			path = GridOptic;
 			sourceTree = "<group>";

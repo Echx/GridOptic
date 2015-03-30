@@ -8,13 +8,12 @@
 
 import UIKit
 
-class GOLineSegment: NSObject {
+class GOLineSegment: GOSegment {
     var center: GOCoordinate
     var length: NSInteger
     
     //angle should be within [0, PI) from
     var direction: CGVector
-    
     
     init(center: GOCoordinate, length: NSInteger, direction: CGVector) {
         self.center = center;
@@ -26,15 +25,31 @@ class GOLineSegment: NSObject {
         }
     }
     
+    var directionInRadianFromXPlus: CGFloat {
+        get {
+            return self.direction.angleFromXPlus
+        }
+    }
+    
     var startPoint: CGPoint {
         get {
-            return CGPointZero
+            let radDirection = self.directionInRadianFromXPlus
+            let deltaX = -0.5 * CGFloat(self.length) * sin(radDirection)
+            let deltaY = -0.5 * CGFloat(self.length) * cos(radDirection)
+            return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
     }
     
     var endPoint: CGPoint {
         get {
-            return CGPointZero
+            let radDirection = self.directionInRadianFromXPlus
+            let deltaX = 0.5 * CGFloat(self.length) * sin(radDirection)
+            let deltaY = 0.5 * CGFloat(self.length) * cos(radDirection)
+            return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
+    }
+    
+    override func getRayAfterIntersaction(ray: GORay) -> GORay? {
+        return nil
     }
 }
