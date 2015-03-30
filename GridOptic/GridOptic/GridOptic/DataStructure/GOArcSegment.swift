@@ -3,7 +3,7 @@
 //  GridOptic
 //
 //  Created by NULL on 30/03/15.
-//  Copyright (c) 2015年 Echx. All rights reserved.
+//  Copyright (c) 2015 Echx. All rights reserved.
 //
 
 import UIKit
@@ -22,31 +22,51 @@ class GOArcSegment: NSObject {
         self.normalDirection = normalDirection
     }
     
-    var startPoint: CGPoint {
+    var scaledStartVector: CGVector {
         get {
             let startVector = CGVector(
                 dx: normalDirection.dx * cos(-radian) - normalDirection.dy * sin(-radian),
-                dy: normalDirection.dx * sin(radian) + normalDirection.dy * cos(radian)
+                dy: normalDirection.dx * sin(-radian) + normalDirection.dy * cos(-radian)
             )
-            return CGPointZero
+            return startVector.scaleTo(self.radius)
+        }
+    }
+    
+    var scaledEndVector: CGVector {
+        let endVector = CGVector(
+            dx: normalDirection.dx * cos(radian) - normalDirection.dy * sin(radian),
+            dy: normalDirection.dx * sin(radian) + normalDirection.dy * cos(radian)
+        )
+        return endVector.scaleTo(self.radius)
+    }
+    
+    var startPoint: CGPoint {
+        get {
+            return CGPoint(
+                x: CGFloat(center.x) + self.scaledStartVector.dx,
+                y: CGFloat(center.y) + self.scaledStartVector.dy
+            )
         }
     }
     
     var endPoint: CGPoint {
         get {
-            return CGPointZero
+            return CGPoint(
+                x: CGFloat(center.x) + self.scaledEndVector.dx,
+                y: CGFloat(center.y) + self.scaledEndVector.dy
+            )
         }
     }
     
     var startRadian: CGFloat {
         get {
-            return 0.0
+            return atan(self.scaledStartVector.dy / self.scaledStartVector.dx)
         }
     }
     
     var endRadian: CGFloat {
         get {
-            return 0.0
+            return atan(self.scaledEndVector.dy / self.scaledEndVector.dx)
         }
     }
 }
