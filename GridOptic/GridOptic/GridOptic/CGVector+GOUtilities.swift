@@ -8,5 +8,9 @@
 
 import UIKit
 
-extension
+extension CGVector {
+    var placeholder {
+        
+    }
+}
 
