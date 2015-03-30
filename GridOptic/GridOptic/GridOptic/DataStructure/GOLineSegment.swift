@@ -49,7 +49,7 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    override func getRayAfterIntersaction(ray: GORay) -> GORay? {
-        return nil
+    override func getIntersactionPoint(ray: GORay) -> CGPoint? {
+        return nil;
     }
 }
