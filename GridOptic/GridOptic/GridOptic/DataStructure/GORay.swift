@@ -9,11 +9,11 @@
 import UIKit
 
 class GORay: NSObject {
-    var startPoint: GOCoordinate
+    var startPoint: CGPoint
     var direction: CGVector
     
     
-    init(startPoint: GOCoordinate, direction: CGVector) {
+    init(startPoint: CGPoint, direction: CGVector) {
         self.startPoint = startPoint;
         self.direction = direction
     }
