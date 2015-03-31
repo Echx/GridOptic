@@ -11,6 +11,15 @@ import UIKit
 class GOLine: NSObject {
     var anyPoint: CGPoint
     var direction: CGVector
+    var slope: CGFloat {
+        get {
+            if self.direction.dx == 0 {
+                return CGFloat.max
+            }
+            
+            return self.direction.dy / self.direction.dx
+        }
+    }
     
     init(anyPoint: CGPoint, direction: CGVector) {
         self.anyPoint = anyPoint;
@@ -19,15 +28,58 @@ class GOLine: NSObject {
     
     //give the corresponding y of a given x, nil if not defined
     func getY(#x: CGFloat) -> CGFloat? {
+        if self.slope == CGFloat.max {
+            if x == self.anyPoint.x {
+                return anyPoint.y
+            } else {
+                return nil
+            }
+        } else if self.slope == 0 {
+            return self.anyPoint.y
+        }
+        
         let deltaX = x - self.anyPoint.x
-        let deltaY = deltaX * self.direction.dy / self.direction.dx
+        let deltaY = deltaX * self.slope
         return self.anyPoint.y + deltaY
     }
     
     //give the corresponding x of a given y, nil if not defined
     func getX(#y: CGFloat) -> CGFloat? {
+        if self.slope == 0 {
+            if y == self.anyPoint.y {
+                return anyPoint.x
+            } else {
+                return nil
+            }
+        } else if self.slope == CGFloat.max {
+            return anyPoint.x
+        }
+        
         let deltaY = y - self.anyPoint.y
-        let deltaX = deltaY * self.direction.dx / self.direction.dy
+        let deltaX = deltaY / self.slope
         return self.anyPoint.x + deltaX
+    }
+    
+    class func getIntersaction(#line1: GOLine, line2: GOLine) -> CGPoint? {
+        if line1.slope == line2.slope {
+            return nil
+        } else if line1.slope == CGFloat.max {
+            let x = line1.anyPoint.x
+            let y = line2.getY(x: x)!
+            return CGPointMake(x, y)
+        } else if line1.slope == CGFloat.max {
+            let x = line2.anyPoint.x
+            let y = line1.getY(x: x)!
+            return CGPointMake(x, y)
+        } else {
+            let x = (line2.anyPoint.y - line1.anyPoint.y +
+                line1.slope * line1.anyPoint.x - line2.slope * line2.anyPoint.x) /
+                (line1.slope - line2.slope)
+            if let y = line1.getY(x: x) {
+                return CGPointMake(x, y)
+            } else {
+                return nil
+            }
+        }
     }
 }

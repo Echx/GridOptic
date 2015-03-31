@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class GORayText: XCTestCase {
+class GORayTest: XCTestCase {
 
     func testRayGetY() {
         var ray = GORay(startPoint: CGPointMake(0, 0), direction: CGVectorMake(2, 1))
@@ -20,8 +20,8 @@ class GORayText: XCTestCase {
     
     func testRayGetX() {
         var ray = GORay(startPoint: CGPointMake(0, 0), direction: CGVectorMake(2, 1))
-        XCTAssertEqual(ray.getX(y: 2)!, CGFloat(4), "get y wrong")
-        XCTAssertEqual(ray.getX(y: 1.5)!, CGFloat(3), "get y wrong")
+        XCTAssertEqual(ray.getX(y: 2)!, CGFloat(4), "get x wrong")
+        XCTAssertEqual(ray.getX(y: 1.5)!, CGFloat(3), "get x wrong")
         XCTAssertTrue(ray.getX(y: -1) == nil, "get y wrong")
     }
 }
