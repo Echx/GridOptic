@@ -56,6 +56,19 @@ class GOLineSegment: GOSegment {
     }
     
     override func getIntersactionPoint(ray: GORay) -> CGPoint? {
+        if let lineIntersaction = GOLine.getIntersaction(line1: self.line, line2: ray.line) {
+            let start = self.startPoint
+            let end = self.endPoint
+            
+            let leftX = start.x < end.x ? start.x : end.x
+            let rightX = start.x < end.x ? end.x : start.x
+            
+            if lineIntersaction.x < leftX || lineIntersaction.x > rightX {
+                return nil
+            } else {
+                return lineIntersaction
+            }
+        }
         
         return nil
     }
