@@ -26,4 +26,8 @@ class GOUtilities {
         let dy = a.y - b.y
         return sqrt(dx * dx + dy * dy)
     }
+    
+    class func vectorFromRadius(radius: CGFloat) -> CGVector{
+        return CGVectorMake(cos(radius), sin(radius))
+    }
 }

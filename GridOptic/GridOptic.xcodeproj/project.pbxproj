@@ -32,6 +32,7 @@
 		26FE56651AC873B000E88806 /* GOGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56641AC873B000E88806 /* GOGrid.swift */; };
 		62452FA31ACAFED600481557 /* GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62452FA21ACAFED600481557 /* GOUtilities.swift */; };
 		628E95641AC9582500777393 /* CGVector+GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E95631AC9582500777393 /* CGVector+GOUtilities.swift */; };
+		98F873BE1ACB0A820096E3F5 /* GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62452FA21ACAFED600481557 /* GOUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,6 +293,7 @@
 				26BDD37D1ACA774600315588 /* GOArcSegment.swift in Sources */,
 				26BDD3801ACA781A00315588 /* CGVector+GOUtilities.swift in Sources */,
 				26BDD3851ACA823C00315588 /* GOLineTest.swift in Sources */,
+				98F873BE1ACB0A820096E3F5 /* GOUtilities.swift in Sources */,
 				26BDD3871ACA902200315588 /* GOLineSegmentTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
