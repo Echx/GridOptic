@@ -34,9 +34,7 @@ class GORay: NSObject {
             return nil
         }
         
-        let deltaX = x - self.startPoint.x
-        let deltaY = deltaX * self.direction.dy / self.direction.dx
-        return self.startPoint.y + deltaY
+        return self.line.getY(x: x)
     }
 
     //give the corresponding x of a given y, nil if not defined
@@ -49,8 +47,6 @@ class GORay: NSObject {
             return nil
         }
         
-        let deltaY = y - self.startPoint.y
-        let deltaX = deltaY * self.direction.dx / self.direction.dy
-        return self.startPoint.x + deltaX
+        return self.line.getX(y: y)
     }
 }

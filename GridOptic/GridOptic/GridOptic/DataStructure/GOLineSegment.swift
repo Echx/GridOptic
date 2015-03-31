@@ -60,9 +60,11 @@ class GOLineSegment: GOSegment {
             let start = self.startPoint
             let end = self.endPoint
             
+            //get the left and right most x of this line segment
             let leftX = start.x < end.x ? start.x : end.x
             let rightX = start.x < end.x ? end.x : start.x
             
+            //if the intersaction point is not within [leftX, rightX], then there is no intersaction point
             if lineIntersaction.x < leftX || lineIntersaction.x > rightX {
                 return nil
             } else {
