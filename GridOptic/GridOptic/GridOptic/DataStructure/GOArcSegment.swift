@@ -71,7 +71,7 @@ class GOArcSegment: GOSegment {
     }
     
     
-    override func getIntersactionPoint(ray: GORay) -> CGPoint? {
+    override func getIntersectionPoint(ray: GORay) -> CGPoint? {
         let lineOfRay = ray.line
         let k = lineOfRay.slope
         let c = lineOfRay.yIntercept
