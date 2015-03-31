@@ -87,4 +87,19 @@ class GOLineSegment: GOSegment {
             return nil
         }
     }
+    
+    func getRefelctionRay(ray: GORay) -> GORay? {
+        if self.isIntersacedWithRay(ray) {
+            // get intersaction point
+            let intersectionPoint = self.getIntersactionPoint(ray)!
+            // calculate the ray
+            let mirrorAngle = self.directionInRadianFromXPlus
+            let reflectionAngle = 2 * mirrorAngle + CGFloat(2 * M_PI) - ray.direction.angleFromXPlus
+            var reflectDirection = GOUtilities.vectorFromRadius(reflectionAngle)
+
+            return GORay(startPoint: intersectionPoint, direction: reflectDirection)
+        } else {
+            return nil
+        }
+    }
 }

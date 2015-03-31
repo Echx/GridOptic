@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GOArcSegment: NSObject {
+class GOArcSegment: GOSegment {
     var center: GOCoordinate
     var radius: CGFloat
     var radian: CGFloat
@@ -69,4 +69,50 @@ class GOArcSegment: NSObject {
             return atan(self.scaledEndVector.dy / self.scaledEndVector.dx)
         }
     }
+    
+    
+    override func getIntersactionPoint(ray: GORay) -> CGPoint? {
+        let lineOfRay = ray.line
+        let k = lineOfRay.slope
+        let c = lineOfRay.yIntercept
+        let r1 = CGFloat(self.center.x)
+        let r2 = CGFloat(self.center.y)
+        let r = self.radius
+        let termA = 1 + k * k
+        let termB = 2 * (c - r1 - r2)
+        let termC = r1 * r1 + (r2 - c) * (r2 - c) - r * r
+        
+        let xs = GOUtilities.solveQuadraticEquation(termA, b: termB, c: termC)
+        
+        if xs.0 == nil {
+            return nil
+        } else if xs.1 == nil {
+            // 相切
+            if let y = ray.getY(x: xs.0!) {
+                return CGPoint(x: xs.0!, y: y)
+            } else {
+                return nil
+            }
+        } else {
+            if let y0 = ray.getY(x: xs.0!) {
+                if let y1 = ray.getY(x: xs.1!) {
+                    if GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.0!, y: y0)) >
+                        GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.1!, y: y1)) {
+                        return CGPoint(x: xs.1!, y: y1)
+                    } else {
+                        return CGPoint(x: xs.0!, y: y0)
+                    }
+                } else {
+                    return CGPoint(x: xs.0!, y: y0)
+                }
+            } else {
+                if let y1 = ray.getY(x: xs.1!) {
+                    return CGPoint(x: xs.1!, y: y1)
+                } else {
+                    return nil
+                }
+            }
+        }
+    }
+    
 }

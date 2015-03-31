@@ -22,6 +22,12 @@ class GOLine: NSObject {
         }
     }
     
+    var yIntercept: CGFloat {
+        get {
+            return self.getY(x: 0)!
+        }
+    }
+    
     init(anyPoint: CGPoint, direction: CGVector) {
         self.anyPoint = anyPoint;
         if direction.dy < 0 || (direction.dy == 0 && direction.dx < 0){
