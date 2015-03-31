@@ -15,6 +15,12 @@ class GOLineSegment: GOSegment {
     //angle should be within [0, PI) from
     var direction: CGVector
     
+    var line: GOLine {
+        get {
+            return GOLine(anyPoint: CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y)), direction: self.direction)
+        }
+    }
+    
     init(center: GOCoordinate, length: NSInteger, direction: CGVector) {
         self.center = center;
         self.length = length;
@@ -50,6 +56,7 @@ class GOLineSegment: GOSegment {
     }
     
     override func getIntersactionPoint(ray: GORay) -> CGPoint? {
-        return nil;
+        
+        return nil
     }
 }
