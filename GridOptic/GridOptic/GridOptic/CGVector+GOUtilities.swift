@@ -15,6 +15,11 @@ extension CGVector {
         }
     }
     
+    var normalised: CGVector {
+        let length = self.length
+        return CGVectorMake(self.dx / length, self.dy / length)
+    }
+    
     func scaleTo(length: CGFloat) -> CGVector {
         let currentLength = self.length
         let newDx = self.dx * length / self.length
@@ -52,6 +57,10 @@ extension CGVector {
 
     static func vectorFromXPlusRadius(radius: CGFloat) -> CGVector{
         return CGVectorMake(cos(radius), sin(radius))
+    }
+    
+    static func dot(v1: CGVector, v2: CGVector) -> CGFloat {
+        return v1.dx * v2.dx + v1.dy * v2.dy
     }
 }
 

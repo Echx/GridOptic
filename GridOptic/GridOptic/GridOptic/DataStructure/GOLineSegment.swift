@@ -77,12 +77,16 @@ class GOLineSegment: GOSegment {
     
     func getRefractionVector(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
         if let intersectionPoint = self.getIntersectionPoint(rayIn) {
-            var angleForInterface = self.line.direction.angleFromXPlus //beta
-            var angleForIncidence = rayIn.direction.angleFromXPlus //alpha
-            var angleIn = (CGFloat(M_PI/2) - (angleForInterface - angleForIncidence).abs).abs
-            var angleOut = asin(indexIn / indexOut * sin(angleIn))
-            var angleOfSlope = CGFloat(-M_PI/2) + angleForInterface + angleOut
-            return GORay(startPoint: intersectionPoint, direction: CGVector.vectorFromXPlusRadius(angleOfSlope))
+            let l = rayIn.direction.normalised
+            let n = self.direction.normalised
+            
+            let cosTheta1 = CGVector.dot(n, v2: l)
+            let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
+            
+            let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
+            let y = (indexIn / indexOut) * l.dy + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dy
+            
+            return GORay(startPoint: intersectionPoint, direction: CGVectorMake(x, y))
         } else {
             return nil
         }
