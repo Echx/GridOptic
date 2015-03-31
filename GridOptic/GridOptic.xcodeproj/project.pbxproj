@@ -30,6 +30,7 @@
 		26FE564F1AC8735A00E88806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564D1AC8735A00E88806 /* LaunchScreen.xib */; };
 		26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE565A1AC8735A00E88806 /* GridOpticTests.swift */; };
 		26FE56651AC873B000E88806 /* GOGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56641AC873B000E88806 /* GOGrid.swift */; };
+		62452FA31ACAFED600481557 /* GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62452FA21ACAFED600481557 /* GOUtilities.swift */; };
 		628E95641AC9582500777393 /* CGVector+GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E95631AC9582500777393 /* CGVector+GOUtilities.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		26FE56591AC8735A00E88806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26FE565A1AC8735A00E88806 /* GridOpticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOpticTests.swift; sourceTree = "<group>"; };
 		26FE56641AC873B000E88806 /* GOGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GOGrid.swift; path = GridOptic/GOGrid.swift; sourceTree = "<group>"; };
+		62452FA21ACAFED600481557 /* GOUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GOUtilities.swift; path = GridOptic/GOUtilities.swift; sourceTree = "<group>"; };
 		628E95631AC9582500777393 /* CGVector+GOUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGVector+GOUtilities.swift"; path = "GridOptic/CGVector+GOUtilities.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				26FE564D1AC8735A00E88806 /* LaunchScreen.xib */,
 				26FE56421AC8735A00E88806 /* Supporting Files */,
 				628E95631AC9582500777393 /* CGVector+GOUtilities.swift */,
+				62452FA21ACAFED600481557 /* GOUtilities.swift */,
 			);
 			path = GridOptic;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				26FE56471AC8735A00E88806 /* ViewController.swift in Sources */,
 				26FE56451AC8735A00E88806 /* AppDelegate.swift in Sources */,
 				26E9FB9D1AC94B33009F3836 /* GORay.swift in Sources */,
+				62452FA31ACAFED600481557 /* GOUtilities.swift in Sources */,
 				628E95641AC9582500777393 /* CGVector+GOUtilities.swift in Sources */,
 				26FE56651AC873B000E88806 /* GOGrid.swift in Sources */,
 			);
