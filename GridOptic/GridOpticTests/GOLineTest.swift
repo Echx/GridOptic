@@ -39,14 +39,14 @@ class GOLineTest: XCTestCase {
         XCTAssertEqual(line3.getX(y: 0)!, CGFloat(0), "get y wrong")
     }
     
-    func testLineIntersaction() {
+    func testLineIntersection() {
         var line1 = GOLine(anyPoint: CGPointMake(1, 0), direction: CGVectorMake(1, 1))
         var line2 = GOLine(anyPoint: CGPointMake(0, 2), direction: CGVectorMake(1, -1))
-        XCTAssertEqual(GOLine.getIntersaction(line1: line1, line2: line2)!, CGPointMake(1.5, 0.5), "get y wrong")
+        XCTAssertEqual(GOLine.getIntersection(line1: line1, line2: line2)!, CGPointMake(1.5, 0.5), "get y wrong")
         
         var line3 = GOLine(anyPoint: CGPointMake(1, 0), direction: CGVectorMake(0, 1))
         var line4 = GOLine(anyPoint: CGPointMake(0, 2), direction: CGVectorMake(1, 0))
-        XCTAssertEqual(GOLine.getIntersaction(line1: line3, line2: line4)!, CGPointMake(1, 2), "get y wrong")
-        XCTAssertEqual(GOLine.getIntersaction(line1: line4, line2: line3)!, CGPointMake(1, 2), "get y wrong")
+        XCTAssertEqual(GOLine.getIntersection(line1: line3, line2: line4)!, CGPointMake(1, 2), "get y wrong")
+        XCTAssertEqual(GOLine.getIntersection(line1: line4, line2: line3)!, CGPointMake(1, 2), "get y wrong")
     }
 }

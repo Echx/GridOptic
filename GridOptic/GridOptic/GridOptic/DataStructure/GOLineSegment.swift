@@ -55,8 +55,8 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    override func getIntersactionPoint(ray: GORay) -> CGPoint? {
-        if let lineIntersaction = GOLine.getIntersaction(line1: self.line, line2: ray.line) {
+    override func getIntersectionPoint(ray: GORay) -> CGPoint? {
+        if let lineIntersection = GOLine.getIntersection(line1: self.line, line2: ray.line) {
             let start = self.startPoint
             let end = self.endPoint
             
@@ -64,14 +64,27 @@ class GOLineSegment: GOSegment {
             let leftX = start.x < end.x ? start.x : end.x
             let rightX = start.x < end.x ? end.x : start.x
             
-            //if the intersaction point is not within [leftX, rightX], then there is no intersaction point
-            if lineIntersaction.x < leftX || lineIntersaction.x > rightX {
+            //if the intersection point is not within [leftX, rightX], then there is no intersection point
+            if lineIntersection.x < leftX || lineIntersection.x > rightX {
                 return nil
             } else {
-                return lineIntersaction
+                return lineIntersection
             }
         }
         
         return nil
+    }
+    
+    func getRefractionVector(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+        if let intersectionPoint = self.getIntersectionPoint(rayIn) {
+            var angleForInterface = self.line.direction.angleFromXPlus //beta
+            var angleForIncidence = rayIn.direction.angleFromXPlus //alpha
+            var angleIn = (CGFloat(M_PI/2) - (angleForInterface - angleForIncidence).abs).abs
+            var angleOut = asin(indexIn / indexOut * sin(angleIn))
+            var angleOfSlope = CGFloat(-M_PI/2) + angleForInterface + angleOut
+            return GORay(startPoint: intersectionPoint, direction: CGVector.vectorFromXPlusRadius(angleOfSlope))
+        } else {
+            return nil
+        }
     }
 }

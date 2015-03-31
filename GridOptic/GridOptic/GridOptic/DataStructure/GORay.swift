@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GORay: NSObject {
+class GORay: NSObject, Printable {
     var startPoint: CGPoint
     var direction: CGVector
     
@@ -22,6 +22,10 @@ class GORay: NSObject {
     init(startPoint: CGPoint, direction: CGVector) {
         self.startPoint = startPoint;
         self.direction = direction
+    }
+    
+    override var description: String {
+        return "(\(self.startPoint.x), \(self.startPoint.y)) --> direction: (\(self.direction.dx), \(self.direction.dy))"
     }
     
     //give the corresponding y of a given x, nil if not defined
