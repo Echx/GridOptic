@@ -24,9 +24,15 @@ class GOLineSegment: GOSegment {
     init(center: GOCoordinate, length: NSInteger, direction: CGVector) {
         self.center = center;
         self.length = length;
-        if direction.dy <= 0 {
+        if direction.dy < 0 {
             self.direction = CGVectorMake(-direction.dx, -direction.dy)
-        } else  {
+        } else if direction.dy == 0 {
+            if direction.dx < 0 {
+                self.direction = CGVectorMake(-direction.dx, direction.dy)
+            } else {
+                self.direction = direction
+            }
+        } else {
             self.direction = direction
         }
     }
@@ -40,8 +46,8 @@ class GOLineSegment: GOSegment {
     var startPoint: CGPoint {
         get {
             let radDirection = self.directionInRadianFromXPlus
-            let deltaX = -0.5 * CGFloat(self.length) * sin(radDirection)
-            let deltaY = -0.5 * CGFloat(self.length) * cos(radDirection)
+            let deltaX = -0.5 * CGFloat(self.length) * cos(radDirection)
+            let deltaY = -0.5 * CGFloat(self.length) * sin(radDirection)
             return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
     }
@@ -49,8 +55,8 @@ class GOLineSegment: GOSegment {
     var endPoint: CGPoint {
         get {
             let radDirection = self.directionInRadianFromXPlus
-            let deltaX = 0.5 * CGFloat(self.length) * sin(radDirection)
-            let deltaY = 0.5 * CGFloat(self.length) * cos(radDirection)
+            let deltaX = 0.5 * CGFloat(self.length) * cos(radDirection)
+            let deltaY = 0.5 * CGFloat(self.length) * sin(radDirection)
             return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
     }
@@ -71,7 +77,6 @@ class GOLineSegment: GOSegment {
                 return lineIntersaction
             }
         }
-        
         return nil
     }
     

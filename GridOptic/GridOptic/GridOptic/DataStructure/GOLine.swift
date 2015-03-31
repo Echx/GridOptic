@@ -76,18 +76,22 @@ class GOLine: NSObject {
         if line1.slope == line2.slope {
             return nil
         } else if line1.slope == CGFloat.max {
-            let x = line1.anyPoint.x
-            let y = line2.getY(x: x)!
+            var x = line1.anyPoint.x
+            var y = line2.getY(x: x)!
+
             return CGPointMake(x, y)
-        } else if line1.slope == CGFloat.max {
-            let x = line2.anyPoint.x
-            let y = line1.getY(x: x)!
+        } else if line2.slope == CGFloat.max {
+            var x = line2.anyPoint.x
+            var y = line1.getY(x: x)!
+
             return CGPointMake(x, y)
         } else {
-            let x = (line2.anyPoint.y - line1.anyPoint.y +
+            var x = (line2.anyPoint.y - line1.anyPoint.y +
                 line1.slope * line1.anyPoint.x - line2.slope * line2.anyPoint.x) /
                 (line1.slope - line2.slope)
+
             if let y = line1.getY(x: x) {
+
                 return CGPointMake(x, y)
             } else {
                 return nil

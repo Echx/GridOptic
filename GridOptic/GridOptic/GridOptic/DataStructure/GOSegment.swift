@@ -15,6 +15,6 @@ class GOSegment {
     }
     
     func isIntersacedWithRay(ray: GORay) -> Bool {
-        return self.getIntersactionPoint(ray) == nil
+        return self.getIntersactionPoint(ray) != nil
     }
 }
