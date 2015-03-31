@@ -96,12 +96,11 @@ class GOArcSegment: GOSegment {
         } else {
             if let y0 = ray.getY(x: xs.0!) {
                 if let y1 = ray.getY(x: xs.1!) {
-                    if ray.direction.dx == 0 {
-                        
-                    } else if ray.direction.dx > 0 {
-                        
+                    if GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.0!, y: y0)) >
+                        GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.1!, y: y1)) {
+                        return CGPoint(x: xs.1!, y: y1)
                     } else {
-                        
+                        return CGPoint(x: xs.0!, y: y0)
                     }
                 } else {
                     return CGPoint(x: xs.0!, y: y0)
@@ -114,8 +113,6 @@ class GOArcSegment: GOSegment {
                 }
             }
         }
-        
-        return nil
     }
     
 }
