@@ -61,8 +61,8 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    override func getIntersactionPoint(ray: GORay) -> CGPoint? {
-        if let lineIntersaction = GOLine.getIntersaction(line1: self.line, line2: ray.line) {
+    override func getIntersectionPoint(ray: GORay) -> CGPoint? {
+        if let lineIntersection = GOLine.getIntersection(line1: self.line, line2: ray.line) {
             let start = self.startPoint
             let end = self.endPoint
             
@@ -70,20 +70,37 @@ class GOLineSegment: GOSegment {
             let leftX = start.x < end.x ? start.x : end.x
             let rightX = start.x < end.x ? end.x : start.x
             
-            //if the intersaction point is not within [leftX, rightX], then there is no intersaction point
-            if lineIntersaction.x < leftX || lineIntersaction.x > rightX {
+            //if the intersection point is not within [leftX, rightX], then there is no intersection point
+            if lineIntersection.x < leftX || lineIntersection.x > rightX {
                 return nil
             } else {
-                return lineIntersaction
+                return lineIntersection
             }
         }
         return nil
     }
     
+    func getRefractionVector(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+        if let intersectionPoint = self.getIntersectionPoint(rayIn) {
+            let l = rayIn.direction.normalised
+            let n = self.direction.normalised
+            
+            let cosTheta1 = CGVector.dot(n, v2: l)
+            let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
+            
+            let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
+            let y = (indexIn / indexOut) * l.dy + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dy
+            
+            return GORay(startPoint: intersectionPoint, direction: CGVectorMake(x, y))
+        } else {
+            return nil
+        }
+    }
+    
     func getRefelctionRay(ray: GORay) -> GORay? {
-        if self.isIntersacedWithRay(ray) {
-            // get intersaction point
-            let intersectionPoint = self.getIntersactionPoint(ray)!
+        if self.isIntersectedWithRay(ray) {
+            // get intersection point
+            let intersectionPoint = self.getIntersectionPoint(ray)!
             // calculate the ray
             let mirrorAngle = self.directionInRadianFromXPlus
             let reflectionAngle = 2 * mirrorAngle + CGFloat(2 * M_PI) - ray.direction.angleFromXPlus
@@ -94,5 +111,4 @@ class GOLineSegment: GOSegment {
             return nil
         }
     }
-    
 }

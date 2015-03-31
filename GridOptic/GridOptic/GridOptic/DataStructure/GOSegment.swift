@@ -10,11 +10,11 @@ import UIKit
 
 class GOSegment {
     
-    func getIntersactionPoint(ray: GORay) -> CGPoint? {
+    func getIntersectionPoint(ray: GORay) -> CGPoint? {
         return nil;
     }
     
-    func isIntersacedWithRay(ray: GORay) -> Bool {
-        return self.getIntersactionPoint(ray) != nil
+    func isIntersectedWithRay(ray: GORay) -> Bool {
+        return self.getIntersectionPoint(ray) != nil
     }
 }

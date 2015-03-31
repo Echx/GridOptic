@@ -12,7 +12,7 @@ class GOCoordinate: NSObject {
     let x: NSInteger
     let y: NSInteger
     
-    private init(x: NSInteger, y: NSInteger) {
+    init(x: NSInteger, y: NSInteger) {
         self.x = x
         self.y = y
     }

@@ -72,7 +72,7 @@ class GOLine: NSObject {
         return self.anyPoint.x + deltaX
     }
     
-    class func getIntersaction(#line1: GOLine, line2: GOLine) -> CGPoint? {
+    class func getIntersection(#line1: GOLine, line2: GOLine) -> CGPoint? {
         if line1.slope == line2.slope {
             return nil
         } else if line1.slope == CGFloat.max {

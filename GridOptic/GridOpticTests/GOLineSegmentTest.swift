@@ -22,8 +22,12 @@ class GOLineSegmentTest: XCTestCase {
     }
 
     func testLineSegment() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        var lineSegment = GOLineSegment(center: GOCoordinate(x: 4, y: 4), length: 4, direction: CGVectorMake(1, -2))
+        var rayOut = lineSegment.getRefractionVector(
+            rayIn: GORay(startPoint: CGPointMake(0, 0), direction: CGVectorMake(1, 1)),
+            indexIn: 0.2,
+            indexOut: 1)!
+        println("\n\n\n(\(rayOut.startPoint.x), \(rayOut.startPoint.y)) --> direction: (\(rayOut.direction.dx), \(rayOut.direction.dy))\n\n\n")
     }
 
     func testPerformanceExample() {
@@ -37,7 +41,7 @@ class GOLineSegmentTest: XCTestCase {
     func testIntersection() {
         let inputRay = GORay(startPoint: CGPoint(x: 8, y: 7), direction: CGVector(dx: 1, dy: 2))
         let mirror = GOLineSegment(center: GOCoordinate.GOCoordinateMake(10, y: 8), length: 10, direction: CGVector(dx: 1, dy: 0))
-        XCTAssertEqual(mirror.isIntersacedWithRay(inputRay), true, "They should intersected!")
+        XCTAssertEqual(mirror.isIntersectedWithRay(inputRay), true, "They should intersected!")
     }
     
     func testReflection() {

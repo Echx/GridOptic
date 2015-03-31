@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		268564821ACB04190072FA2D /* CGFLoat+GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268564811ACB04190072FA2D /* CGFLoat+GOUtilities.swift */; };
+		268564831ACB10CD0072FA2D /* CGFLoat+GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268564811ACB04190072FA2D /* CGFLoat+GOUtilities.swift */; };
 		26BDD3751ACA773200315588 /* GORayTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3741ACA773200315588 /* GORayTest.swift */; };
 		26BDD37B1ACA774600315588 /* GOCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB961AC94A9D009F3836 /* GOCoordinate.swift */; };
 		26BDD37C1ACA774600315588 /* GOLineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB981AC94AF1009F3836 /* GOLineSegment.swift */; };
@@ -46,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		268564811ACB04190072FA2D /* CGFLoat+GOUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGFLoat+GOUtilities.swift"; path = "GridOptic/CGFLoat+GOUtilities.swift"; sourceTree = "<group>"; };
 		26BDD3741ACA773200315588 /* GORayTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GORayTest.swift; sourceTree = "<group>"; };
 		26BDD3811ACA7BE300315588 /* GOLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLine.swift; sourceTree = "<group>"; };
 		26BDD3841ACA823C00315588 /* GOLineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLineTest.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 				26FE564D1AC8735A00E88806 /* LaunchScreen.xib */,
 				26FE56421AC8735A00E88806 /* Supporting Files */,
 				628E95631AC9582500777393 /* CGVector+GOUtilities.swift */,
+				268564811ACB04190072FA2D /* CGFLoat+GOUtilities.swift */,
 				62452FA21ACAFED600481557 /* GOUtilities.swift */,
 			);
 			path = GridOptic;
@@ -268,6 +272,7 @@
 				26E9FB971AC94A9D009F3836 /* GOCoordinate.swift in Sources */,
 				26BDD3821ACA7BE300315588 /* GOLine.swift in Sources */,
 				26E9FB991AC94AF1009F3836 /* GOLineSegment.swift in Sources */,
+				268564821ACB04190072FA2D /* CGFLoat+GOUtilities.swift in Sources */,
 				26E9FB9F1AC95154009F3836 /* GOSegment.swift in Sources */,
 				26E9FB9B1AC94B1B009F3836 /* GOArcSegment.swift in Sources */,
 				26FE56471AC8735A00E88806 /* ViewController.swift in Sources */,
@@ -292,6 +297,7 @@
 				26BDD37C1ACA774600315588 /* GOLineSegment.swift in Sources */,
 				26BDD37D1ACA774600315588 /* GOArcSegment.swift in Sources */,
 				26BDD3801ACA781A00315588 /* CGVector+GOUtilities.swift in Sources */,
+				268564831ACB10CD0072FA2D /* CGFLoat+GOUtilities.swift in Sources */,
 				26BDD3851ACA823C00315588 /* GOLineTest.swift in Sources */,
 				98F873BE1ACB0A820096E3F5 /* GOUtilities.swift in Sources */,
 				26BDD3871ACA902200315588 /* GOLineSegmentTest.swift in Sources */,
