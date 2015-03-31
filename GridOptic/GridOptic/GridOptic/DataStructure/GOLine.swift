@@ -10,6 +10,7 @@ import UIKit
 
 class GOLine: NSObject {
     var anyPoint: CGPoint
+    //angle in [0, PI)
     var direction: CGVector
     var slope: CGFloat {
         get {
@@ -23,7 +24,12 @@ class GOLine: NSObject {
     
     init(anyPoint: CGPoint, direction: CGVector) {
         self.anyPoint = anyPoint;
-        self.direction = direction
+        if direction.dy < 0 || (direction.dy == 0 && direction.dx < 0){
+            self.direction = CGVectorMake(-direction.dx, -direction.dy)
+        } else {
+            self.direction = direction
+        }
+
     }
     
     //give the corresponding y of a given x, nil if not defined
