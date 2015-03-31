@@ -74,4 +74,17 @@ class GOLineSegment: GOSegment {
         
         return nil
     }
+    
+    func getRefelctionRay(ray: GORay) -> GORay? {
+        if self.isIntersacedWithRay(ray) {
+            // calculate the ray
+            let product = ray.direction.dx * self.direction.dx +
+                            ray.direction.dy * self.direction.dy
+            
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
 }
