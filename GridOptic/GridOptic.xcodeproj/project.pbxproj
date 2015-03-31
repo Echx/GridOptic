@@ -14,6 +14,8 @@
 		26BDD37E1ACA774600315588 /* GORay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB9C1AC94B33009F3836 /* GORay.swift */; };
 		26BDD37F1ACA774600315588 /* GOSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB9E1AC95154009F3836 /* GOSegment.swift */; };
 		26BDD3801ACA781A00315588 /* CGVector+GOUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E95631AC9582500777393 /* CGVector+GOUtilities.swift */; };
+		26BDD3821ACA7BE300315588 /* GOLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3811ACA7BE300315588 /* GOLine.swift */; };
+		26BDD3831ACA7C7700315588 /* GOLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3811ACA7BE300315588 /* GOLine.swift */; };
 		26E9FB971AC94A9D009F3836 /* GOCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB961AC94A9D009F3836 /* GOCoordinate.swift */; };
 		26E9FB991AC94AF1009F3836 /* GOLineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB981AC94AF1009F3836 /* GOLineSegment.swift */; };
 		26E9FB9B1AC94B1B009F3836 /* GOArcSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9FB9A1AC94B1B009F3836 /* GOArcSegment.swift */; };
@@ -41,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		26BDD3741ACA773200315588 /* GORayText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GORayText.swift; sourceTree = "<group>"; };
+		26BDD3811ACA7BE300315588 /* GOLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLine.swift; sourceTree = "<group>"; };
 		26E9FB961AC94A9D009F3836 /* GOCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOCoordinate.swift; sourceTree = "<group>"; };
 		26E9FB981AC94AF1009F3836 /* GOLineSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLineSegment.swift; sourceTree = "<group>"; };
 		26E9FB9A1AC94B1B009F3836 /* GOArcSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOArcSegment.swift; sourceTree = "<group>"; };
@@ -84,8 +87,9 @@
 				26E9FB961AC94A9D009F3836 /* GOCoordinate.swift */,
 				26E9FB981AC94AF1009F3836 /* GOLineSegment.swift */,
 				26E9FB9A1AC94B1B009F3836 /* GOArcSegment.swift */,
-				26E9FB9C1AC94B33009F3836 /* GORay.swift */,
 				26E9FB9E1AC95154009F3836 /* GOSegment.swift */,
+				26E9FB9C1AC94B33009F3836 /* GORay.swift */,
+				26BDD3811ACA7BE300315588 /* GOLine.swift */,
 			);
 			name = DataStructure;
 			path = GridOptic/DataStructure;
@@ -252,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E9FB971AC94A9D009F3836 /* GOCoordinate.swift in Sources */,
+				26BDD3821ACA7BE300315588 /* GOLine.swift in Sources */,
 				26E9FB991AC94AF1009F3836 /* GOLineSegment.swift in Sources */,
 				26E9FB9F1AC95154009F3836 /* GOSegment.swift in Sources */,
 				26E9FB9B1AC94B1B009F3836 /* GOArcSegment.swift in Sources */,
@@ -269,6 +274,7 @@
 			files = (
 				26BDD37F1ACA774600315588 /* GOSegment.swift in Sources */,
 				26BDD37E1ACA774600315588 /* GORay.swift in Sources */,
+				26BDD3831ACA7C7700315588 /* GOLine.swift in Sources */,
 				26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */,
 				26BDD3751ACA773200315588 /* GORayText.swift in Sources */,
 				26BDD37B1ACA774600315588 /* GOCoordinate.swift in Sources */,

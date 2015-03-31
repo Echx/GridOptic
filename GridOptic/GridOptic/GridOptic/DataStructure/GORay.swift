@@ -8,17 +8,22 @@
 
 import UIKit
 
-class GORay: NSObject {
-    var startPoint: CGPoint
-    var direction: CGVector
+class GORay: GOLine {
+    var startPoint: CGPoint {
+        set {
+            self.anyPoint = newValue
+        }
+        get {
+            return self.anyPoint
+        }
+    }
     
     init(startPoint: CGPoint, direction: CGVector) {
-        self.startPoint = startPoint;
-        self.direction = direction
+        super.init(anyPoint: startPoint, direction: direction);
     }
     
     //give the corresponding y of a given x, nil if not defined
-    func getY(#x: CGFloat) -> CGFloat? {
+    override func getY(#x: CGFloat) -> CGFloat? {
         if self.direction.dx > 0 && x < self.startPoint.x {
             return nil
         }
@@ -33,7 +38,7 @@ class GORay: NSObject {
     }
 
     //give the corresponding x of a given y, nil if not defined
-    func getX(#y: CGFloat) -> CGFloat? {
+    override func getX(#y: CGFloat) -> CGFloat? {
         if self.direction.dy > 0 && y < self.startPoint.y {
             return nil
         }
