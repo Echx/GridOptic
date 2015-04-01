@@ -32,7 +32,7 @@ class GOConvexLensRep: GOOpticRep {
     
     var length: CGFloat {
         get {
-            return sqrt(self.curvatureRadius * self.curvatureRadius - (self.curvatureRadius - self.thickness) * (self.curvatureRadius - self.thickness))
+            return sqrt(self.curvatureRadius * self.curvatureRadius - (self.curvatureRadius - self.thickness/2) * (self.curvatureRadius - self.thickness/2))
         }
     }
     
@@ -51,7 +51,7 @@ class GOConvexLensRep: GOOpticRep {
     }
     
     private func setUpEdges() {
-        let radianSpan = acos((self.curvatureRadius - self.thickness) / self.curvatureRadius)
+        let radianSpan = acos((self.curvatureRadius - self.thickness/2) / self.curvatureRadius)
         
         //left arc
         let centerLeftArc = CGPointMake(CGFloat(self.center.x) + CGFloat(self.thickness)/2 - self.curvatureRadius, CGFloat(self.center.y))
