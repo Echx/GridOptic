@@ -26,21 +26,21 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat) {
+    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
-        super.init(refractionIndex: refractionIndex)
+        super.init(refractionIndex: refractionIndex, id: id)
         self.setUpEdges()
         self.setDirection(direction)
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
+    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
-        super.init()
+        super.init(id: id)
         self.setUpEdges()
         self.setDirection(direction)
     }

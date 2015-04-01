@@ -43,4 +43,5 @@ class GOGrid: NSObject {
         var y = round(point.y / self.unitLength - 0.5)
     }
 
+    
 }
