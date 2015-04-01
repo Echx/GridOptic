@@ -25,6 +25,28 @@ class GOGrid: NSObject {
         }
     }
     
+    var boundaries : [GOSegment] {
+        get {
+            var boundaries = [GOLineSegment]()
+            
+            let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
+                y: origin.y), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+            let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
+                y: origin.y + CGFloat(height)), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+            let leftBound = GOLineSegment(center: CGPoint(x: origin.x,
+                y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
+            let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width),
+                y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
+            
+            boundaries.append(bottomBound)
+            boundaries.append(upperBound)
+            boundaries.append(leftBound)
+            boundaries.append(rightBound)
+
+            return boundaries
+        }
+    }
+    
     init(width: NSInteger, height: NSInteger, andUnitLength unitLength: CGFloat) {
         self.width = width
         self.height = height
@@ -141,23 +163,24 @@ class GOGrid: NSObject {
         return edges
     }
     
+    func getAllEdges() -> [GOSegment]? {
+        // firstly add all boundaries
+        var output = self.boundaries
+        
+        // if it has instruments, add it to edge
+        if (!self.instruments.isEmpty) {
+            for item in self.instruments {
+                let currentEdges = item.edges
+                for edge in currentEdges {
+                        output.append(edge)
+                }
+            }
+        }
+        
+        return output
+    }
+    
     private func getIntersectionWithBoundary(#ray:GORay) -> CGPoint? {
-        var boundaries = [GOLineSegment]()
-        
-        let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-            y: origin.y), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
-        let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-            y: origin.y + CGFloat(height)), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
-        let leftBound = GOLineSegment(center: CGPoint(x: origin.x,
-            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
-        let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width),
-            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
-        
-        boundaries.append(bottomBound)
-        boundaries.append(upperBound)
-        boundaries.append(leftBound)
-        boundaries.append(rightBound)
-        
         for bound in boundaries {
             if let point = bound.getIntersectionPoint(ray) {
                 return point
