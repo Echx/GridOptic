@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc: GameTestViewController = sender!.destinationViewController as GameTestViewController
+        let vc: GameTestViewController = segue.destinationViewController as GameTestViewController
         if segue.identifier == "light" {
             vc.setUp(nil)
         } else if segue.identifier == "flatMirror" {

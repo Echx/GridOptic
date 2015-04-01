@@ -9,8 +9,8 @@
 import UIKit
 
 class GOFlatOpticRep: GOOpticRep {
-    var thickness: NSInteger = 1
-    var length: NSInteger = 6
+    var thickness: CGFloat = 1
+    var length: CGFloat = 6
     var center: GOCoordinate
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
@@ -26,7 +26,7 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat, id: String) {
+    init(center: GOCoordinate, thickness: CGFloat, length: CGFloat, direction: CGVector, refractionIndex: CGFloat, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
@@ -36,7 +36,7 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, id: String) {
+    init(center: GOCoordinate, thickness: CGFloat, length: CGFloat, direction: CGVector, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
@@ -64,19 +64,19 @@ class GOFlatOpticRep: GOOpticRep {
         //right edge
         let centerRightEdge = CGPointMake(CGFloat(self.center.x) + CGFloat(self.thickness)/2, CGFloat(self.center.y))
         let rightEdge = GOLineSegment(center: centerRightEdge, length: self.length, direction: self.direction)
-        leftEdge.tag = 0
+        rightEdge.tag = 0
         self.edges.append(rightEdge)
         
         //top edge
         let centerTopEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) + CGFloat(self.length)/2)
         let topEdge = GOLineSegment(center: centerTopEdge, length: self.thickness, direction: self.normalDirection)
-        leftEdge.tag = 1
+        topEdge.tag = 1
         self.edges.append(topEdge)
         
         //bottom edge
         let centerBottomEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) - CGFloat(self.length)/2)
         let bottomEdge = GOLineSegment(center: centerBottomEdge, length: self.thickness, direction: self.normalDirection)
-        leftEdge.tag = 1
+        bottomEdge.tag = 1
         self.edges.append(bottomEdge)
     }
     

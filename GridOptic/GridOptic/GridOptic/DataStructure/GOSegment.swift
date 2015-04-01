@@ -12,7 +12,7 @@ class GOSegment {
     
     //if both are true, only take refract (ignore the reflect ray)
     var willRefract: Bool = false
-    var willReflect: Bool = true
+    var willReflect: Bool = false
     var center: CGPoint = CGPointZero
     var tag: NSInteger = 0
     

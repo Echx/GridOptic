@@ -9,14 +9,14 @@
 import UIKit
 
 class GOLineSegment: GOSegment {
-    var length: NSInteger    
+    var length: CGFloat
     var line: GOLine {
         get {
             return GOLine(anyPoint: CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y)), direction: self.direction)
         }
     }
     
-    init(center: CGPoint, length: NSInteger, direction: CGVector) {
+    init(center: CGPoint, length: CGFloat, direction: CGVector) {
         self.length = length;
         super.init()
         self.center = center;
@@ -42,8 +42,8 @@ class GOLineSegment: GOSegment {
     var startPoint: CGPoint {
         get {
             let radDirection = self.directionInRadianFromXPlus
-            let deltaX = -0.5 * CGFloat(self.length) * cos(radDirection)
-            let deltaY = -0.5 * CGFloat(self.length) * sin(radDirection)
+            let deltaX = -0.5 * self.length * cos(radDirection)
+            let deltaY = -0.5 * self.length * sin(radDirection)
             return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
     }
@@ -51,8 +51,8 @@ class GOLineSegment: GOSegment {
     var endPoint: CGPoint {
         get {
             let radDirection = self.directionInRadianFromXPlus
-            let deltaX = 0.5 * CGFloat(self.length) * cos(radDirection)
-            let deltaY = 0.5 * CGFloat(self.length) * sin(radDirection)
+            let deltaX = 0.5 * self.length * cos(radDirection)
+            let deltaY = 0.5 * self.length * sin(radDirection)
             return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
         }
     }

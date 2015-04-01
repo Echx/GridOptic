@@ -51,35 +51,120 @@ class GOGrid: NSObject {
 
     //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
     func getRayPathCriticalPoints(ray: GORay) -> [CGPoint] {
-        let criticalPoints = [CGPoint]()
+        var criticalPoints = [CGPoint]()
         
-        //TODO
+        // first add the start point of the ray
+        criticalPoints.append(ray.startPoint)
         
+        // from the given ray, we found out each nearest edge
+        // loop through each resulted ray until we get nil result (no intersection anymore)
+        var edge = getNearestEdgeOnDirection(ray)
+        var currentRay : GORay = ray
+        // mark if the final ray will end at the boundary
+        var willEndAtBoundary = true
+        while (edge != nil) {
+            // it must hit the edge, add the intersection point
+            criticalPoints.append(edge!.getIntersectionPoint(currentRay)!)
+            
+            if let outcomeRay = getOutcomeRay(currentRay, edge: edge!) {
+                edge = getNearestEdgeOnDirection(outcomeRay)
+                currentRay = outcomeRay
+            } else {
+                // no outcome ray, hit wall or planck
+                willEndAtBoundary = false
+                break
+            }
+        }
+        
+        if willEndAtBoundary {
+            // found out the intersection with the boundary
+            // we treat boundary as 4 line segments
+            criticalPoints.append(getIntersectionWithBoundary(ray: currentRay)!)
+        }
         return criticalPoints
     }
     
     //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
     func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
-        
-        //TODO
-        
-        return nil
+        // first try get the nearest edge
+        if let nearestEdge = self.getNearestEdgeOnDirection(ray) {
+            // TODO: define indexIn and indexOut
+            return nearestEdge.getOutcomeRay(rayIn: ray, indexIn: 1.0, indexOut: 1.0)
+        } else {
+            return nil
+        }
     }
     
     //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
     func getNearestEdgeOnDirection(ray: GORay) -> GOSegment? {
+        // first retrieve back the edges on ray's path(if any)
+        var edges = self.getEdgesOnDirection(ray)
         
-        //TODO
+        // if no edge on the ray path, return nil
+        if edges.isEmpty {
+           return nil
+        }
         
-        return nil
+        // get each intersection point with the edge
+        // calculate its distance with the origin of the ray
+        // find out the minimum one and return
+        var minEdge = edges.first!
+        var minDistance : CGFloat = CGFloat.max
+        for edge in edges {
+            var intersectPoint = edge.getIntersectionPoint(ray)!
+            let distance = ray.startPoint.getDistanceToPoint(intersectPoint)
+            // if current point is nearer, set the result edge be it
+            if distance < minDistance {
+                minEdge = edge
+            }
+        }
+        
+        return minEdge
     }
     
     //given a ray to start, return all edges on the rays path
     func getEdgesOnDirection(ray: GORay) -> [GOSegment] {
-        let edges = [GOSegment]()
+        var edges = [GOSegment]()
         
-        //TODO
+        for item in self.instruments {
+            // iterate through each instrument, and check if the ray is
+            // intersect with the edges of the instruments
+            let currentEdges = item.edges
+            for edge in currentEdges {
+                // check if this edge is intersected with the ray
+                if edge.isIntersectedWithRay(ray) {
+                    edges.append(edge)
+                }
+            }
+        }
         
         return edges
     }
+    
+    private func getIntersectionWithBoundary(#ray:GORay) -> CGPoint? {
+        var boundaries = [GOLineSegment]()
+        
+        let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
+            y: origin.y), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+        let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
+            y: origin.y + CGFloat(height)), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+        let leftBound = GOLineSegment(center: CGPoint(x: origin.x,
+            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
+        let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width),
+            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
+        
+        boundaries.append(bottomBound)
+        boundaries.append(upperBound)
+        boundaries.append(leftBound)
+        boundaries.append(rightBound)
+        
+        for bound in boundaries {
+            if let point = bound.getIntersectionPoint(ray) {
+                return point
+            }
+        }
+        
+        return nil
+    }
+    
 }
