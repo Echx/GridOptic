@@ -69,5 +69,10 @@ class GameTestViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func setUp(object: GOOpticRep?) {
+        if object != nil {
+            
+        }
+    }
 }
 
