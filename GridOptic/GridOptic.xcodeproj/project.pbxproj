@@ -27,6 +27,7 @@
 		2639868D1ACBEB1300C21414 /* GOFlatOpticRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2639868C1ACBEB1300C21414 /* GOFlatOpticRep.swift */; };
 		26815A671ACBEEDF00E18238 /* GOFlatWallRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26815A661ACBEEDF00E18238 /* GOFlatWallRep.swift */; };
 		26815A681ACBEEEF00E18238 /* GOFlatWallRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26815A661ACBEEDF00E18238 /* GOFlatWallRep.swift */; };
+		26815A691ACC04A200E18238 /* GOFlatOpticRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2639868C1ACBEB1300C21414 /* GOFlatOpticRep.swift */; };
 		26BDD3751ACA773200315588 /* GORayTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3741ACA773200315588 /* GORayTest.swift */; };
 		26BDD3851ACA823C00315588 /* GOLineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3841ACA823C00315588 /* GOLineTest.swift */; };
 		26BDD3871ACA902200315588 /* GOLineSegmentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDD3861ACA902200315588 /* GOLineSegmentTest.swift */; };
@@ -361,6 +362,7 @@
 			files = (
 				26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */,
 				98F873DF1ACB250E0096E3F5 /* GOFlatLensRep.swift in Sources */,
+				26815A691ACC04A200E18238 /* GOFlatOpticRep.swift in Sources */,
 				98F873E21ACB25300096E3F5 /* GOConvexLensRep.swift in Sources */,
 				2639868B1ACBE59D00C21414 /* GOConstant.swift in Sources */,
 				26815A681ACBEEEF00E18238 /* GOFlatWallRep.swift in Sources */,
