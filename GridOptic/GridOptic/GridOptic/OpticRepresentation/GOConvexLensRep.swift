@@ -32,7 +32,7 @@ class GOConvexLensRep: GOOpticRep {
     
     var length: CGFloat {
         get {
-            return sqrt(self.curvatureRadius * self.curvatureRadius - (self.curvatureRadius - self.thickness/2) * (self.curvatureRadius - self.thickness/2))
+            return 2 * sqrt(self.curvatureRadius * self.curvatureRadius - (self.curvatureRadius - self.thickness/2) * (self.curvatureRadius - self.thickness/2))
         }
     }
     
