@@ -9,7 +9,7 @@
 import UIKit
 
 class GOLineSegment: GOSegment {
-    var center: GOCoordinate
+    var center: CGPoint
     var length: NSInteger
     
     //angle should be within [0, PI) from
@@ -21,7 +21,7 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    init(center: GOCoordinate, length: NSInteger, direction: CGVector) {
+    init(center: CGPoint, length: NSInteger, direction: CGVector) {
         self.center = center;
         self.length = length;
         if direction.dy < 0 {
