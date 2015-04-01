@@ -9,8 +9,8 @@
 import UIKit
 
 class GOFlatOpticRep: GOOpticRep {
-    var thickness: NSInteger = 1
-    var length: NSInteger = 6
+    var thickness: CGFloat = 1
+    var length: CGFloat = 6
     var center: GOCoordinate
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
@@ -26,7 +26,7 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat, id: String) {
+    init(center: GOCoordinate, thickness: CGFloat, length: CGFloat, direction: CGVector, refractionIndex: CGFloat, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
@@ -36,7 +36,7 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
-    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, id: String) {
+    init(center: GOCoordinate, thickness: CGFloat, length: CGFloat, direction: CGVector, id: String) {
         self.center = center
         self.thickness = thickness
         self.length = length
