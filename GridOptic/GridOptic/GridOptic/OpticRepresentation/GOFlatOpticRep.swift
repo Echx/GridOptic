@@ -9,8 +9,8 @@
 import UIKit
 
 class GOFlatOpticRep: GOOpticRep {
-    var thickness: NSInteger
-    var length: NSInteger
+    var thickness: NSInteger = 1
+    var length: NSInteger = 6
     var center: GOCoordinate
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
@@ -45,6 +45,13 @@ class GOFlatOpticRep: GOOpticRep {
         self.setDirection(direction)
     }
     
+    init(center: GOCoordinate, id: String) {
+        self.center = center
+        super.init(id: id)
+        self.setUpEdges()
+        self.setDirection(self.direction)
+    }
+    
     
     
     private func setUpEdges() {
@@ -73,7 +80,7 @@ class GOFlatOpticRep: GOOpticRep {
         self.edges.append(bottomEdge)
     }
     
-    func setDirection(direction: CGVector) {
+    override func setDirection(direction: CGVector) {
         self.direction = direction
         
         for edge in self.edges {
