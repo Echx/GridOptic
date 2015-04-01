@@ -11,6 +11,6 @@ import UIKit
 class GOFlatLensRep: GOFlatOpticRep {
     override init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
         super.init(center: center, thickness: thickness, length: length, direction: direction)
-        self.type = DeviceType.lens
+        self.setDeviceType(DeviceType.Lens)
     }
 }

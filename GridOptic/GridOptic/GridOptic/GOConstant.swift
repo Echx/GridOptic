@@ -12,8 +12,7 @@ struct Constant {
     static let angleCalculationPrecision:CGFloat = 1000
 }
 
-struct DeviceType {
-    static let defaultType = DeviceType.mirror
-    static let lens = "LENS"
-    static let mirror = "MIRROR"
+enum DeviceType: Int {
+    case Lens = 0
+    case Mirror, Wall
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class GOFlatOpticRep: GOOpticRep {
-    var type = DeviceType.defaultType
+    var type = DeviceType.Mirror
     var thickness: NSInteger
     var length: NSInteger
     var center: GOCoordinate
@@ -36,6 +36,11 @@ class GOFlatOpticRep: GOOpticRep {
         self.setDirection(direction)
     }
     
+    func setDeviceType(type: DeviceType) {
+        self.type = type
+        self.updateEdgesType()
+    }
+    
     private func setUpEdges() {
         //left edge
         let centerLeftEdge = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thickness)/2, CGFloat(self.center.y))
@@ -60,6 +65,24 @@ class GOFlatOpticRep: GOOpticRep {
         let bottomEdge = GOLineSegment(center: centerBottomEdge, length: self.thickness, direction: self.normalDirection)
         leftEdge.tag = 1
         self.edges.append(bottomEdge)
+    }
+    
+    private func updateEdgesType() {
+        for edge in self.edges {
+            switch self.type {
+            case DeviceType.Mirror:
+                edge.willReflect = true
+                edge.willRefract = false
+            case DeviceType.Lens:
+                edge.willReflect = false
+                edge.willRefract = true
+            case DeviceType.Wall:
+                edge.willReflect = false
+                edge.willRefract = false
+            default:
+                fatalError("Device Type Not Defined")
+            }
+        }
     }
     
     func setDirection(direction: CGVector) {
