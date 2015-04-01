@@ -17,12 +17,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pX-0g-dwo">
-                                <rect key="frame" x="472" y="369" width="80" height="30"/>
+                                <rect key="frame" x="472" y="274" width="80" height="30"/>
                                 <state key="normal" title="Shoot Light">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kRu-jv-dsO" kind="presentation" id="GC7-2t-xwv"/>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="light" id="GC7-2t-xwv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Vo-Up-bTt">
+                                <rect key="frame" x="461" y="312" width="103" height="30"/>
+                                <state key="normal" title="Test Flat Mirror">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="flatMirror" id="g9Z-g8-KLi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnJ-mk-lCe">
+                                <rect key="frame" x="467" y="350" width="91" height="30"/>
+                                <state key="normal" title="Test Flat Wall">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="flatWall" id="Hkx-wA-zLt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bt7-g1-NtQ">
+                                <rect key="frame" x="465" y="388" width="95" height="30"/>
+                                <state key="normal" title="Test Flat Lens">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="flatLens" id="sEX-xc-kS7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxd-Bb-XjS">
+                                <rect key="frame" x="451" y="426" width="122" height="30"/>
+                                <state key="normal" title="Test Convex Lens">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="convexLens" id="KC2-Ti-QxG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dl8-JD-C15">
+                                <rect key="frame" x="447" y="464" width="130" height="30"/>
+                                <state key="normal" title="Test Concave Lens">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="concaveLens" id="vD0-DC-bCx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -33,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304" y="-641"/>
+            <point key="canvasLocation" x="298" y="-651"/>
         </scene>
         <!--Game Test View Controller-->
         <scene sceneID="Gbm-SH-kTg">
@@ -56,4 +101,7 @@
             <point key="canvasLocation" x="304" y="251"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="vD0-DC-bCx"/>
+    </inferredMetricsTieBreakers>
 </document>
