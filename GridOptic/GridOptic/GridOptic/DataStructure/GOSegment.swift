@@ -12,7 +12,7 @@ class GOSegment {
     
     //if both are true, only take refract (ignore the reflect ray)
     var willRefract: Bool = false
-    var willReflect: Bool = true
+    var willReflect: Bool = false
     var center: CGPoint = CGPointZero
     var tag: NSInteger = 0
     
@@ -20,12 +20,12 @@ class GOSegment {
     var direction: CGVector = CGVector.zeroVector
     var normalDirection: CGVector {
         set {
-            if self.direction.dx > 0 {
-                self.normalDirection = CGVectorMake(-self.normalDirection.dy, self.direction.dx)
-            } else if self.direction.dx == 0 && self.direction.dy < 0 {
-                self.normalDirection = CGVectorMake(-self.direction.dy, 0)
+            if newValue.dx > 0 {
+                self.direction = CGVectorMake(-newValue.dy, newValue.dx)
+            } else if newValue.dx == 0 && newValue.dy < 0 {
+                self.direction = CGVectorMake(-newValue.dy, 0)
             } else {
-                self.normalDirection = CGVectorMake(self.direction.dy, -self.direction.dx)
+                self.direction = CGVectorMake(newValue.dy, -newValue.dx)
             }
         }
         get {
