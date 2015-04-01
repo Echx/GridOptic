@@ -145,13 +145,13 @@ class GOGrid: NSObject {
         var boundaries = [GOLineSegment]()
         
         let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-            y: origin.y), length: width, direction: CGVector(dx: 1, dy: 0))
+            y: origin.y), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
         let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-            y: origin.y + CGFloat(height)), length: width, direction: CGVector(dx: 1, dy: 0))
+            y: origin.y + CGFloat(height)), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
         let leftBound = GOLineSegment(center: CGPoint(x: origin.x,
-            y: origin.y + CGFloat(height / 2)), length: height, direction: CGVector(dx: 0, dy: 1))
+            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
         let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width),
-            y: origin.y + CGFloat(height / 2)), length: height, direction: CGVector(dx: 0, dy: 1))
+            y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
         
         boundaries.append(bottomBound)
         boundaries.append(upperBound)
