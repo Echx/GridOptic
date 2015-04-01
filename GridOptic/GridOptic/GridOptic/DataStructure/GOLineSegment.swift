@@ -80,7 +80,7 @@ class GOLineSegment: GOSegment {
         return nil
     }
     
-    func getRefractionVector(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+    func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
         if let intersectionPoint = self.getIntersectionPoint(rayIn) {
             let l = rayIn.direction.normalised
             let n = self.direction.normalised

@@ -23,7 +23,7 @@ class GOLineSegmentTest: XCTestCase {
 
     func testLineSegment() {
         var lineSegment = GOLineSegment(center: CGPointMake(4, 4), length: 4, direction: CGVectorMake(1, -2))
-        var rayOut = lineSegment.getRefractionVector(
+        var rayOut = lineSegment.getRefractionRay(
             rayIn: GORay(startPoint: CGPointMake(0, 0), direction: CGVectorMake(1, 1)),
             indexIn: 0.2,
             indexOut: 1)!
