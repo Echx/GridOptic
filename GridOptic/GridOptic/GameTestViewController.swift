@@ -21,6 +21,9 @@ class GameTestViewController: UIViewController {
         self.grid = GOGrid(width: 512,
             height: 384,
             andUnitLength: 2)
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: Selector("didSwipe:"))
+        self.view.addGestureRecognizer(swipeGesture)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -62,6 +65,9 @@ class GameTestViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func didSwipe(sender: UISwipeGestureRecognizer) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }
 
