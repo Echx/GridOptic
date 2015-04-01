@@ -13,8 +13,8 @@ class GOSegment {
     //if both are true, only take refract (ignore the reflect ray)
     var willRefract: Bool = false
     var willReflect: Bool = true
-    
     var center: CGPoint = CGPointZero
+    var tag: NSInteger = 0
     
     //angle should be within [0, PI) from
     var direction: CGVector = CGVector.zeroVector
