@@ -80,7 +80,7 @@ class GOLineSegment: GOSegment {
         return nil
     }
     
-    func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+    override func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
         if let intersectionPoint = self.getIntersectionPoint(rayIn) {
             let l = rayIn.direction.normalised
             let n = self.direction.normalised
@@ -97,7 +97,7 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    func getRefelctionRay(#rayIn: GORay) -> GORay? {
+    override func getReflectionRay(#rayIn: GORay) -> GORay? {
         if self.isIntersectedWithRay(rayIn) {
             // get intersection point
             let intersectionPoint = self.getIntersectionPoint(rayIn)!
