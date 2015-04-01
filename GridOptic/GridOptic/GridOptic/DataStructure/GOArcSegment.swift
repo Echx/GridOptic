@@ -14,6 +14,26 @@ class GOArcSegment: GOSegment {
     var radian: CGFloat
     //angle from [0, PI)
     var normalDirection: CGVector
+    var direction: CGVector {
+        set {
+            if self.direction.dx > 0 {
+                self.normalDirection = CGVectorMake(-self.direction.dy, self.direction.dx)
+            } else if self.direction.dx == 0 && self.direction.dy < 0 {
+                self.normalDirection = CGVectorMake(-self.direction.dy, 0)
+            } else {
+                self.normalDirection = CGVectorMake(self.direction.dy, -self.direction.dx)
+            }
+        }
+        get {
+            if self.normalDirection.dx > 0 {
+                return CGVectorMake(-self.normalDirection.dy, self.normalDirection.dx)
+            } else if self.normalDirection.dx == 0 && self.normalDirection.dy < 0 {
+                return CGVectorMake(-self.normalDirection.dy, 0)
+            } else {
+                return CGVectorMake(self.normalDirection.dy, -self.normalDirection.dx)
+            }
+        }
+    }
     
     init(center: CGPoint, radius: CGFloat, radian: CGFloat, normalDirection: CGVector) {
         self.center = center

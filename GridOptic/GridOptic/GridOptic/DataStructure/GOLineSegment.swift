@@ -14,6 +14,17 @@ class GOLineSegment: GOSegment {
     
     //angle should be within [0, PI) from
     var direction: CGVector
+    var normalDirection: CGVector {
+        get {
+            if self.direction.dx > 0 {
+                return CGVectorMake(-self.direction.dy, self.direction.dx)
+            } else if self.direction.dx == 0 && self.direction.dy < 0 {
+                return CGVectorMake(-self.direction.dy, 0)
+            } else {
+                return CGVectorMake(self.direction.dy, -self.direction.dx)
+            }
+        }
+    }
     
     var line: GOLine {
         get {
