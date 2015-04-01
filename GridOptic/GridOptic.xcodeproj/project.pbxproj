@@ -162,8 +162,8 @@
 				26BDD3741ACA773200315588 /* GORayTest.swift */,
 				26BDD3841ACA823C00315588 /* GOLineTest.swift */,
 				26FE565A1AC8735A00E88806 /* GridOpticTests.swift */,
-				26FE56581AC8735A00E88806 /* Supporting Files */,
 				26BDD3861ACA902200315588 /* GOLineSegmentTest.swift */,
+				26FE56581AC8735A00E88806 /* Supporting Files */,
 			);
 			path = GridOpticTests;
 			sourceTree = "<group>";
