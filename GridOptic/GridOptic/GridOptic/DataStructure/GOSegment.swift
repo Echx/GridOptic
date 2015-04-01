@@ -28,8 +28,9 @@ class GOSegment {
             return self.getRefractionRay(rayIn: rayIn, indexIn: indexIn, indexOut: indexOut)
         } else if self.willReflect {
             return self.getReflectionRay(rayIn: rayIn)
+        } else {
+            return nil
         }
-        return nil
     }
     
     func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
