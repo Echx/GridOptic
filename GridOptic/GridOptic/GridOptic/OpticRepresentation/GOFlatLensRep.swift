@@ -9,8 +9,8 @@
 import UIKit
 
 class GOFlatLensRep: GOFlatOpticRep {
-    override init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
-        super.init(center: center, thickness: thickness, length: length, direction: direction)
+    override init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat) {
+        super.init(center: center, thickness: thickness, length: length, direction: direction, refractionIndex: refractionIndex)
         self.setDeviceType(DeviceType.Lens)
     }
 }

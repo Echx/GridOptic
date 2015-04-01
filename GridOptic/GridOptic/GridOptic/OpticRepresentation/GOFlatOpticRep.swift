@@ -26,6 +26,16 @@ class GOFlatOpticRep: GOOpticRep {
     }
     
     
+    init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector, refractionIndex: CGFloat) {
+        self.center = center
+        self.thickness = thickness
+        self.length = length
+        super.init(refractionIndex: refractionIndex)
+        self.setUpEdges()
+        self.setDirection(direction)
+    }
+    
+    
     init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
         self.center = center
         self.thickness = thickness
@@ -34,6 +44,8 @@ class GOFlatOpticRep: GOOpticRep {
         self.setUpEdges()
         self.setDirection(direction)
     }
+    
+    
     
     private func setUpEdges() {
         //left edge

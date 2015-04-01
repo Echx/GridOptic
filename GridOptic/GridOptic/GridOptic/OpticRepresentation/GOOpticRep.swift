@@ -20,6 +20,16 @@ class GOOpticRep: NSObject {
     
     var refractionIndex : CGFloat = 1.0
     
+    override init() {
+        super.init()
+    }
+    
+    init(refractionIndex: CGFloat) {
+        self.refractionIndex = refractionIndex
+        super.init()
+    }
+    
+    
     func setDeviceType(type: DeviceType) {
         self.type = type
         self.updateEdgesType()
