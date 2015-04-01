@@ -21,7 +21,9 @@ class GameTestViewController: UIViewController {
         self.grid = GOGrid(width: 512,
             height: 384,
             andUnitLength: 2)
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         drawLight()
     }
     
@@ -37,23 +39,21 @@ class GameTestViewController: UIViewController {
         
         
         var shapeLayer = CAShapeLayer()
+        shapeLayer.strokeEnd = 0.0
         shapeLayer.path = path.CGPath
         shapeLayer.strokeColor = UIColor.whiteColor().CGColor
         shapeLayer.lineWidth = 2.0
-        shapeLayer.strokeEnd = 1.0
-        print(shapeLayer.strokeStart)
-        print(shapeLayer.strokeEnd)
         self.view.layer.addSublayer(shapeLayer)
         
-//        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//        pathAnimation.fromValue = 0.0;
-//        pathAnimation.toValue = 1.0;
-//        pathAnimation.duration = 3.0;
-//        pathAnimation.repeatCount = 1.0
-//        pathAnimation.fillMode = kCAFillModeForwards
-//        pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-//        
-//        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        pathAnimation.fromValue = 0.0;
+        pathAnimation.toValue = 1.0;
+        pathAnimation.duration = 3.0;
+        pathAnimation.repeatCount = 1.0
+        pathAnimation.fillMode = kCAFillModeForwards
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        
+        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
         
     }
     
