@@ -47,7 +47,7 @@ class GOSegment {
         return self.getIntersectionPoint(ray) != nil
     }
     
-    func getOutputRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+    func getOutcomeRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
         if self.willRefract {
             return self.getRefractionRay(rayIn: rayIn, indexIn: indexIn, indexOut: indexOut)
         } else if self.willReflect {
