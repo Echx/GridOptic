@@ -9,6 +9,7 @@
 import UIKit
 
 class GOOpticRep: NSObject {
+    var id: String
     var edges = [GOSegment]()
     var type = DeviceType.Mirror
     
@@ -19,6 +20,18 @@ class GOOpticRep: NSObject {
     }
     
     var refractionIndex : CGFloat = 1.0
+    
+    init(id: String) {
+        self.id = id
+        super.init()
+    }
+    
+    init(refractionIndex: CGFloat, id: String) {
+        self.id = id
+        self.refractionIndex = refractionIndex
+        super.init()
+    }
+    
     
     func setDeviceType(type: DeviceType) {
         self.type = type

@@ -11,13 +11,21 @@ import UIKit
 class GOArcSegment: GOSegment {
     var radius: CGFloat
     var radian: CGFloat
+    override var normalDirection: CGVector {
+        set {
+            self.normalDirection = CGVectorMake(-self.direction.dy, self.direction.dx)
+        }
+        get {
+            return CGVectorMake(self.direction.dy, -self.direction.dx)
+        }
+    }
     
     init(center: CGPoint, radius: CGFloat, radian: CGFloat, normalDirection: CGVector) {
         self.radius = radius
         self.radian = radian
         super.init()
-        self.center = center
         self.normalDirection = normalDirection
+        self.center = center
     }
     
     var scaledStartVector: CGVector {

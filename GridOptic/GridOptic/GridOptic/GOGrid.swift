@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol GOGridDelegate {
+    
+}
+
 class GOGrid: NSObject {
     var unitLength: CGFloat
     var width: NSInteger
     var height: NSInteger
     var origin: CGPoint = CGPointZero
+    var instruments = [GOOpticRep]()
+    var delegate: GOGridDelegate?
     var size: CGSize {
         get {
             return CGSizeMake(CGFloat(self.width) * self.unitLength, CGFloat(self.height) * self.unitLength)
@@ -39,8 +45,41 @@ class GOGrid: NSObject {
     }
     
     func getGridCoordinateForPoint(point: CGPoint) {
-        var x = round(point.x / self.unitLength - 0.5)
-        var y = round(point.y / self.unitLength - 0.5)
+        var x = round(point.x / self.unitLength)
+        var y = round(point.y / self.unitLength)
     }
 
+    //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
+    func getRayPathCriticalPoints(ray: GORay) -> [CGPoint] {
+        let criticalPoints = [CGPoint]()
+        
+        //TODO
+        
+        return criticalPoints
+    }
+    
+    //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
+    func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
+        
+        //TODO
+        
+        return nil
+    }
+    
+    //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
+    func getNearestEdgeOnDirection(ray: GORay) -> GOSegment? {
+        
+        //TODO
+        
+        return nil
+    }
+    
+    //given a ray to start, return all edges on the rays path
+    func getEdgesOnDirection(ray: GORay) -> [GOSegment] {
+        let edges = [GOSegment]()
+        
+        //TODO
+        
+        return edges
+    }
 }
