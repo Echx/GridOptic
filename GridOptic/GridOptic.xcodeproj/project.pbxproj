@@ -191,12 +191,12 @@
 		98F873C31ACB23F50096E3F5 /* DataStructure */ = {
 			isa = PBXGroup;
 			children = (
-				98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */,
 				98F873C51ACB23F50096E3F5 /* GOCoordinate.swift */,
 				98F873C61ACB23F50096E3F5 /* GOLine.swift */,
-				98F873C71ACB23F50096E3F5 /* GOLineSegment.swift */,
 				98F873C81ACB23F50096E3F5 /* GORay.swift */,
 				98F873C91ACB23F50096E3F5 /* GOSegment.swift */,
+				98F873C71ACB23F50096E3F5 /* GOLineSegment.swift */,
+				98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */,
 			);
 			path = DataStructure;
 			sourceTree = "<group>";
