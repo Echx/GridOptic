@@ -15,6 +15,14 @@ class GOLineSegment: GOSegment {
             return GOLine(anyPoint: CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y)), direction: self.direction)
         }
     }
+    override var bezierPath: UIBezierPath {
+        get {
+            var path = UIBezierPath()
+            path.moveToPoint(self.startPoint)
+            path.addLineToPoint(self.endPoint)
+            return path
+        }
+    }
     
     init(center: CGPoint, length: CGFloat, direction: CGVector) {
         self.length = length;

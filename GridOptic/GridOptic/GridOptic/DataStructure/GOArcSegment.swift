@@ -20,6 +20,15 @@ class GOArcSegment: GOSegment {
         }
     }
     
+    override var bezierPath: UIBezierPath {
+        get {
+            var path = UIBezierPath()
+            path.moveToPoint(self.startPoint)
+            path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.startRadian, endAngle: self.endRadian, clockwise: false)
+            return path
+        }
+    }
+    
     init(center: CGPoint, radius: CGFloat, radian: CGFloat, normalDirection: CGVector) {
         self.radius = radius
         self.radian = radian
