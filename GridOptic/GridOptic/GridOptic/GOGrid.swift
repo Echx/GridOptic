@@ -45,8 +45,8 @@ class GOGrid: NSObject {
     }
     
     func getGridCoordinateForPoint(point: CGPoint) {
-        var x = round(point.x / self.unitLength - 0.5)
-        var y = round(point.y / self.unitLength - 0.5)
+        var x = round(point.x / self.unitLength)
+        var y = round(point.y / self.unitLength)
     }
 
     //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
