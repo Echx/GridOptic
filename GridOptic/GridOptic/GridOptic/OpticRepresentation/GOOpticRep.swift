@@ -32,6 +32,9 @@ class GOOpticRep: NSObject {
         super.init()
     }
     
+    func setDirection(direction: CGVector) {
+        fatalError("setDirection must be overridden by child classes")
+    }
     
     func setDeviceType(type: DeviceType) {
         self.type = type
