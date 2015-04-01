@@ -34,7 +34,7 @@ class GameTestViewController: UIViewController {
         let ray = GORay(startPoint: CGPoint(x: 0, y: 50), direction: CGVector(dx: 1, dy: 0))
         let path = UIBezierPath()
         path.moveToPoint(CGPoint(x: ray.startPoint.x, y: ray.startPoint.y))
-        path.addLineToPoint(CGPoint(x: 700, y: 300))
+        path.addLineToPoint(CGPoint(x: ray.direction.dx * 1000 + ray.startPoint.x, y: ray.direction.dy * 1000 + ray.startPoint.y))
         path.closePath()
 //        path.lineWidth = 16
 //        UIColor.whiteColor().setStroke()

@@ -15,6 +15,11 @@ class GOSegment {
     var willReflect: Bool = false
     var center: CGPoint = CGPointZero
     var tag: NSInteger = 0
+    var bezierPath: UIBezierPath {
+        get {
+            return UIBezierPath()
+        }
+    }
     
     //angle should be within [0, PI) from
     var direction: CGVector = CGVector.zeroVector
