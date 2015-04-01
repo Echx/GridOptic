@@ -47,7 +47,7 @@ class GOLineSegmentTest: XCTestCase {
     func testReflection() {
         let inputRay = GORay(startPoint: CGPoint(x: 0, y: 0), direction: CGVector(dx: 1, dy: 1))
         let mirror = GOLineSegment(center: CGPointMake(7, 10), length: 10, direction: CGVector(dx: 1, dy: 0))
-        let outRay = mirror.getRefelctionRay(inputRay)!
+        let outRay = mirror.getRefelctionRay(rayIn: inputRay)!
         println("Direction of out array: \(outRay.direction.angleFromXPlus)\n")
         XCTAssertEqual(outRay.direction.angleFromXPlus, CGFloat(7 * M_PI / 4), "The reflection ray is wrong!")
     }
