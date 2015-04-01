@@ -35,6 +35,9 @@ class CGFloat_GOUtilitiesTest: XCTestCase {
         let pointA = CGPointMake(0, 0)
         let pointB = CGPointMake(1, 1)
         let pointC = CGPointMake(2, 1)
+        
+        let result = pointA.getPointAfterRotation(about: pointB, byAngle: CGFloat(M_PI/2))
+        println(result)
     }
 
     func testPerformanceExample() {

@@ -12,8 +12,17 @@ extension CGPoint {
     
     func getPointAfterRotation(#about: CGPoint, toAngle: CGFloat) -> CGPoint{
         let distance = self.getDistanceToPoint(about)
-        let newX = distance * cos(toAngle)
-        let newY = distance * sin(toAngle)
+        let newX = round(distance * cos(toAngle) * Constant.angleCalculationPrecision) / Constant.angleCalculationPrecision
+        let newY = round(distance * sin(toAngle) * Constant.angleCalculationPrecision) / Constant.angleCalculationPrecision
+        return CGPointMake(about.x + newX, about.y + newY)
+    }
+    
+    func getPointAfterRotation(#about: CGPoint, byAngle: CGFloat) -> CGPoint{
+        let distance = self.getDistanceToPoint(about)
+        let currentAngle = CGVectorMake(self.x - about.x, self.y - about.y).angleFromXPlus
+        let toAngle = currentAngle + byAngle
+        let newX = round(distance * cos(toAngle) * Constant.angleCalculationPrecision) / Constant.angleCalculationPrecision
+        let newY = round(distance * sin(toAngle) * Constant.angleCalculationPrecision) / Constant.angleCalculationPrecision
         return CGPointMake(about.x + newX, about.y + newY)
     }
     
