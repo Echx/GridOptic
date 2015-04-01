@@ -39,7 +39,7 @@ class GameTestViewController: UIViewController {
         
         
         var shapeLayer = CAShapeLayer()
-        shapeLayer.strokeEnd = 0.0
+        shapeLayer.strokeEnd = 1.0
         shapeLayer.path = path.CGPath
         shapeLayer.strokeColor = UIColor.whiteColor().CGColor
         shapeLayer.lineWidth = 2.0
