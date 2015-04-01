@@ -37,6 +37,7 @@
 		26FE564C1AC8735A00E88806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564B1AC8735A00E88806 /* Images.xcassets */; };
 		26FE564F1AC8735A00E88806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564D1AC8735A00E88806 /* LaunchScreen.xib */; };
 		26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE565A1AC8735A00E88806 /* GridOpticTests.swift */; };
+		6211BF081ACC080700C1073E /* GameTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6211BF071ACC080700C1073E /* GameTestViewController.swift */; };
 		98F873CF1ACB23F50096E3F5 /* GOArcSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */; };
 		98F873D01ACB23F50096E3F5 /* GOCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F873C51ACB23F50096E3F5 /* GOCoordinate.swift */; };
 		98F873D11ACB23F50096E3F5 /* GOLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F873C61ACB23F50096E3F5 /* GOLine.swift */; };
@@ -88,6 +89,7 @@
 		26FE56541AC8735A00E88806 /* GridOpticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridOpticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26FE56591AC8735A00E88806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26FE565A1AC8735A00E88806 /* GridOpticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOpticTests.swift; sourceTree = "<group>"; };
+		6211BF071ACC080700C1073E /* GameTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTestViewController.swift; sourceTree = "<group>"; };
 		98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOArcSegment.swift; sourceTree = "<group>"; };
 		98F873C51ACB23F50096E3F5 /* GOCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOCoordinate.swift; sourceTree = "<group>"; };
 		98F873C61ACB23F50096E3F5 /* GOLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOLine.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			children = (
 				98F873C01ACB23F50096E3F5 /* GridOptic */,
 				26FE56441AC8735A00E88806 /* AppDelegate.swift */,
+				6211BF071ACC080700C1073E /* GameTestViewController.swift */,
 				26FE56461AC8735A00E88806 /* ViewController.swift */,
 				26FE56481AC8735A00E88806 /* Main.storyboard */,
 				26FE564B1AC8735A00E88806 /* Images.xcassets */,
@@ -352,6 +355,7 @@
 				98F873DE1ACB25080096E3F5 /* GOFlatLensRep.swift in Sources */,
 				2639868A1ACBE53800C21414 /* GOConstant.swift in Sources */,
 				98F873D61ACB23F50096E3F5 /* GOUtilities.swift in Sources */,
+				6211BF081ACC080700C1073E /* GameTestViewController.swift in Sources */,
 				98F873D81ACB24550096E3F5 /* GOOpticRep.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +507,7 @@
 				INFOPLIST_FILE = GridOptic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -513,6 +518,7 @@
 				INFOPLIST_FILE = GridOptic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
