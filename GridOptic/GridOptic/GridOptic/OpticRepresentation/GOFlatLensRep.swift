@@ -8,6 +8,9 @@
 
 import UIKit
 
-class GOFlatLensRep: GOOpticRep {
-   
+class GOFlatLensRep: GOFlatOpticRep {
+    override init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
+        super.init(center: center, thickness: thickness, length: length, direction: direction)
+        self.type = DeviceType.lens
+    }
 }
