@@ -8,6 +8,9 @@
 
 import UIKit
 
-class GOFlatMirrorRep: GOOpticRep {
-   
+class GOFlatMirrorRep: GOFlatOpticRep {
+    override init(center: GOCoordinate, thickness: NSInteger, length: NSInteger, direction: CGVector) {
+        super.init(center: center, thickness: thickness, length: length, direction: direction)
+        self.type = DeviceType.mirror
+    }
 }

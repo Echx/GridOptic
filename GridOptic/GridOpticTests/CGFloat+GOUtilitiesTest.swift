@@ -2,8 +2,8 @@
 //  CGFloat+GOUtilitiesTest.swift
 //  GridOptic
 //
-//  Created by NULL on 01/04/15.
-//  Copyright (c) 2015年 Echx. All rights reserved.
+//  Created by Wang Jinghan on 01/04/15.
+//  Copyright (c) 2015 Echx. All rights reserved.
 //
 
 import UIKit
@@ -35,6 +35,9 @@ class CGFloat_GOUtilitiesTest: XCTestCase {
         let pointA = CGPointMake(0, 0)
         let pointB = CGPointMake(1, 1)
         let pointC = CGPointMake(2, 1)
+        
+        let result = pointA.getPointAfterRotation(about: pointB, byAngle: CGFloat(M_PI/2))
+        println(result)
     }
 
     func testPerformanceExample() {

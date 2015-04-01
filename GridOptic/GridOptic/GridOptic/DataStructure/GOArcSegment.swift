@@ -9,16 +9,14 @@
 import UIKit
 
 class GOArcSegment: GOSegment {
-    var center: CGPoint
     var radius: CGFloat
     var radian: CGFloat
-    //angle from [0, PI)
-    var normalDirection: CGVector
     
     init(center: CGPoint, radius: CGFloat, radian: CGFloat, normalDirection: CGVector) {
-        self.center = center
         self.radius = radius
         self.radian = radian
+        super.init()
+        self.center = center
         self.normalDirection = normalDirection
     }
     

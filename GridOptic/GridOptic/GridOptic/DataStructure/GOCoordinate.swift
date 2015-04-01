@@ -11,6 +11,11 @@ import UIKit
 class GOCoordinate: NSObject {
     let x: NSInteger
     let y: NSInteger
+    var point: CGPoint {
+        get {
+            return CGPointMake(CGFloat(self.x), CGFloat(self.y))
+        }
+    }
     
     init(x: NSInteger, y: NSInteger) {
         self.x = x
