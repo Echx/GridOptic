@@ -20,6 +20,7 @@ class GOSegment {
             fatalError("Property bezierPath need to be overriden by child classes")
         }
     }
+    var parent: String = ""
     
     //angle should be within [0, PI) from
     var direction: CGVector = CGVector(dx: 0, dy: 1)
@@ -45,7 +46,7 @@ class GOSegment {
     }
     
     func getIntersectionPoint(ray: GORay) -> CGPoint? {
-        return nil;
+        fatalError("getIntersectionPoint must by overriden")
     }
     
     func isIntersectedWithRay(ray: GORay) -> Bool {

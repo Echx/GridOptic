@@ -33,6 +33,7 @@ class GOFlatOpticRep: GOOpticRep {
         super.init(refractionIndex: refractionIndex, id: id)
         self.setUpEdges()
         self.setDirection(direction)
+        self.updateEdgesParent()
     }
     
     

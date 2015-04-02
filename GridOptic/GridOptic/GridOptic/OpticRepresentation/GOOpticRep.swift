@@ -39,6 +39,7 @@ class GOOpticRep: NSObject {
         self.id = id
         self.refractionIndex = refractionIndex
         super.init()
+        self.updateEdgesParent()
     }
     
     func setDirection(direction: CGVector) {
@@ -48,6 +49,12 @@ class GOOpticRep: NSObject {
     func setDeviceType(type: DeviceType) {
         self.type = type
         self.updateEdgesType()
+    }
+    
+    func updateEdgesParent() {
+        for edge in self.edges {
+            edge.parent = self.id
+        }
     }
     
     private func updateEdgesType() {

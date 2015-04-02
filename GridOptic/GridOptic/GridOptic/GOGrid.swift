@@ -17,9 +17,12 @@ class GOGrid: NSObject {
     let width: NSInteger
     let height: NSInteger
     let origin: CGPoint = CGPointZero
+    let backgroundRefractionIndex: CGPoint = 1.0
     
     var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
+    var refractionEdgeParentStack = GOStack<String>()
+    
     var size: CGSize {
         get {
             return CGSizeMake(CGFloat(self.width) * self.unitLength, CGFloat(self.height) * self.unitLength)
@@ -91,6 +94,10 @@ class GOGrid: NSObject {
         } else {
             return nil
         }
+    }
+    
+    func getRefractionIndexForID(id: String) -> CGFloat? {
+        return self.instruments[id]?.refractionIndex
     }
     
     func getInstrumentForID(id: String) -> GOOpticRep? {
@@ -166,7 +173,28 @@ class GOGrid: NSObject {
     
     //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
     func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
-        return edge.getOutcomeRay(rayIn: ray, indexIn: 1.0, indexOut: 1.0)
+        var indexIn: CGFloat
+        var indexOut: CGFloat
+        if edge.willRefract {
+            if self.refractionEdgeParentStack.peek() == edge.parent {
+                indexIn = self.getRefractionIndexForID(self.refractionEdgeParentStack.pop())!
+                if let nextInstrument = self.refractionEdgeParentStack.peek() {
+                    indexOut = self.getRefractionIndexForID(nextInstrument)!
+                } else {
+                    indexOut = self.backgroundRefractionIndex
+                }
+            } else {
+                if let previousInstrument = self.refractionEdgeParentStack.peek() {
+                    indexIn = self.getRefractionIndexForID(previousInstrument)!
+                } else {
+                    indexIn = self.backgroundRefractionIndex
+                }
+                indexOut = self.getRefractionIndexForID(edge.parent)
+                self.refractionEdgeParentStack.push(edge.parent)
+            }
+        }
+        
+        return edge.getOutcomeRay(rayIn: ray, indexIn: indexIn, indexOut: indexOut)
     }
     
     //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
@@ -238,6 +266,7 @@ class GOGrid: NSObject {
     private func getIntersectionWithBoundary(#ray:GORay) -> CGPoint? {
         for bound in boundaries {
             if let point = bound.getIntersectionPoint(ray) {
+                println(point)
                 return point
             }
         }
