@@ -13,7 +13,7 @@ class GOArcSegment: GOSegment {
     var radian: CGFloat
     override var normalDirection: CGVector {
         set {
-            self.direction = CGVectorMake(self.direction.dy, -self.direction.dx)
+            self.direction = CGVectorMake(-newValue.dy, newValue.dx)
         }
         get {
             return CGVectorMake(self.direction.dy, -self.direction.dx)
@@ -43,6 +43,11 @@ class GOArcSegment: GOSegment {
         self.radian = radian
         super.init()
         self.normalDirection = normalDirection
+        
+        println()
+        println("normalInput: \(normalDirection)")
+        println("normalStore: \(self.normalDirection)")
+        
         self.center = center
     }
     
