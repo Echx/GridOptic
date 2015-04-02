@@ -29,17 +29,7 @@ class GOLineSegment: GOSegment {
         self.length = length;
         super.init()
         self.center = center;
-        if direction.dy < 0 {
-            self.direction = CGVectorMake(-direction.dx, -direction.dy)
-        } else if direction.dy == 0 {
-            if direction.dx < 0 {
-                self.direction = CGVectorMake(-direction.dx, direction.dy)
-            } else {
-                self.direction = direction
-            }
-        } else {
-            self.direction = direction
-        }
+        self.direction = direction
     }
     
     var directionInRadianFromXPlus: CGFloat {
