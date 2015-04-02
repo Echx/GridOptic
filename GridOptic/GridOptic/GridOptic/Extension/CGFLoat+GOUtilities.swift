@@ -25,4 +25,12 @@ extension CGFloat {
         
         return result
     }
+    
+    func equalWithPrecision(f: CGFloat) -> Bool{
+        if self - f < Constant.overallPrecision {
+            return true
+        } else {
+            return false
+        }
+    }
 }
