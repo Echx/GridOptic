@@ -17,13 +17,6 @@ class GOLineSegment: GOSegment {
     }
     override var bezierPath: UIBezierPath {
         get {
-            println("\n\n\n\n")
-            println("start:         \(self.startPoint)")
-            println("end:           \(self.startPoint)")
-            println("center:        \(self.center)")
-            println("length:        \(self.length)")
-            println("direction:     \(self.direction)")
-            println("radius:        \(self.directionInRadianFromXPlus)")
             var path = UIBezierPath()
             path.moveToPoint(self.startPoint)
             path.addLineToPoint(self.endPoint)
