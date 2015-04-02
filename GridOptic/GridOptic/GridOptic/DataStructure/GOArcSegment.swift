@@ -22,16 +22,16 @@ class GOArcSegment: GOSegment {
     
     override var bezierPath: UIBezierPath {
         get {
-            println("\n\n\n\n")
-            println("start:         \(self.startPoint)")
-            println("end:           \(self.startPoint)")
-            println("center:        \(self.center)")
-            println("radius:        \(self.radius)")
-            println("radian:        \(self.radian)")
-            println("startA:        \(self.startRadian)")
-            println("endA:          \(self.endRadian)")
-            println("direction:     \(self.direction)")
-            println("directionA:    \(self.direction.angleFromXPlus)")
+//            println("\n\n\n\n")
+//            println("start:         \(self.startPoint)")
+//            println("end:           \(self.startPoint)")
+//            println("center:        \(self.center)")
+//            println("radius:        \(self.radius)")
+//            println("radian:        \(self.radian)")
+//            println("startA:        \(self.startRadian)")
+//            println("endA:          \(self.endRadian)")
+//            println("direction:     \(self.direction)")
+//            println("directionA:    \(self.direction.angleFromXPlus)")
             var path = UIBezierPath()
             path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.endRadian, endAngle: self.startRadian, clockwise: false)
             return path
