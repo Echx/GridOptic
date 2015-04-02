@@ -12,6 +12,7 @@ import SpriteKit
 class GameTestViewController: UIViewController {
     
     var grid: GOGrid?
+    var object: GOOpticRep?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,33 +32,57 @@ class GameTestViewController: UIViewController {
     }
     
     func drawLight() {
-        let ray = GORay(startPoint: CGPoint(x: 0, y: 50), direction: CGVector(dx: 1, dy: 0))
-        let path = UIBezierPath()
-        path.moveToPoint(CGPoint(x: ray.startPoint.x, y: ray.startPoint.y))
-        path.addLineToPoint(CGPoint(x: ray.direction.dx * 1000 + ray.startPoint.x, y: ray.direction.dy * 1000 + ray.startPoint.y))
-        path.closePath()
-//        path.lineWidth = 16
-//        UIColor.whiteColor().setStroke()
-//        path.stroke()
-        
-        
-        var shapeLayer = CAShapeLayer()
-        shapeLayer.strokeEnd = 1.0
-        shapeLayer.path = path.CGPath
-        shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-        shapeLayer.lineWidth = 2.0
-        self.view.layer.addSublayer(shapeLayer)
-        
-        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        pathAnimation.fromValue = 0.0;
-        pathAnimation.toValue = 1.0;
-        pathAnimation.duration = 3.0;
-        pathAnimation.repeatCount = 1.0
-        pathAnimation.fillMode = kCAFillModeForwards
-        pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        
-        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
-        
+        if let opticRep = self.object {
+            for edge in opticRep.edges {
+                let bezierPath = edge.bezierPath
+                
+                var shapeLayer = CAShapeLayer()
+                shapeLayer.strokeEnd = 1.0
+                shapeLayer.path = bezierPath.CGPath
+                shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+                shapeLayer.lineWidth = 2.0
+                self.view.layer.addSublayer(shapeLayer)
+                
+                let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                pathAnimation.fromValue = 0.0;
+                pathAnimation.toValue = 1.0;
+                pathAnimation.duration = 1.0;
+                pathAnimation.repeatCount = 1.0
+                pathAnimation.fillMode = kCAFillModeForwards
+                pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+                
+                shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+            }
+            
+            
+        } else {
+            let ray = GORay(startPoint: CGPoint(x: 0, y: 50), direction: CGVector(dx: 1, dy: 0))
+            let path = UIBezierPath()
+            path.moveToPoint(CGPoint(x: ray.startPoint.x, y: ray.startPoint.y))
+            path.addLineToPoint(CGPoint(x: ray.direction.dx * 1000 + ray.startPoint.x, y: ray.direction.dy * 1000 + ray.startPoint.y))
+            path.closePath()
+            //        path.lineWidth = 16
+            //        UIColor.whiteColor().setStroke()
+            //        path.stroke()
+            
+            
+            var shapeLayer = CAShapeLayer()
+            shapeLayer.strokeEnd = 1.0
+            shapeLayer.path = path.CGPath
+            shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+            shapeLayer.lineWidth = 2.0
+            self.view.layer.addSublayer(shapeLayer)
+            
+            let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+            pathAnimation.fromValue = 0.0;
+            pathAnimation.toValue = 1.0;
+            pathAnimation.duration = 3.0;
+            pathAnimation.repeatCount = 1.0
+            pathAnimation.fillMode = kCAFillModeForwards
+            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            
+            shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,9 +95,7 @@ class GameTestViewController: UIViewController {
     }
     
     func setUp(object: GOOpticRep?) {
-        if object != nil {
-            
-        }
+        self.object = object
     }
 }
 
