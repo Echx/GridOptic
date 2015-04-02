@@ -72,6 +72,26 @@ class GOLineSegment: GOSegment {
                 return nil
             } else if lineIntersection.x < leftX || lineIntersection.x > rightX {
                 return nil
+            } else if lineIntersection.x == ray.startPoint.x { // check vertical intersection
+                if lineIntersection.y < ray.startPoint.y {
+                    // the intersection is above ray start point
+                    if ray.direction.dy < 0 {
+                        // if ray is towards top, this is the point
+                        return lineIntersection
+                    } else {
+                        // if ray is towards bottom, cannot reach this point
+                        return nil
+                    }
+                } else {
+                    // the intersection is below ray start point
+                    if ray.direction.dy < 0 {
+                        // if ray is towards top, cannot reach this point
+                        return nil
+                    } else {
+                        // if ray is towards bottom, cannot reach this point
+                        return lineIntersection
+                    }
+                }
             } else if ray.direction.dx > 0 && lineIntersection.x <= ray.startPoint.x {
                 return nil
             } else if ray.direction.dx < 0 && lineIntersection.x >= ray.startPoint.x {
@@ -125,8 +145,9 @@ class GOLineSegment: GOSegment {
             let intermidiateX = 2 * cosTheta1 * n.dx
             let intermidiateY = 2 * cosTheta1 * n.dy
             
-            let reflectDirection = CGVector(dx: l.dx + intermidiateX,
+            var reflectDirection = CGVector(dx: l.dx + intermidiateX,
                                             dy: l.dy + intermidiateY)
+            
             return GORay(startPoint: intersectionPoint, direction: reflectDirection)
         } else {
             return nil
