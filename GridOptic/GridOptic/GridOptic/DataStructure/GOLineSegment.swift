@@ -95,7 +95,7 @@ class GOLineSegment: GOSegment {
                 n = CGVectorMake(-self.normalDirection.dx, -self.normalDirection.dy).normalised
             }
             
-            let cosTheta1 = CGVector.dot(n, v2: l)
+            let cosTheta1 = -CGVector.dot(n, v2: l)
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
             
             let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
