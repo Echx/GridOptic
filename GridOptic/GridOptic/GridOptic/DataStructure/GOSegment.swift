@@ -17,7 +17,7 @@ class GOSegment {
     var tag: NSInteger = 0
     var bezierPath: UIBezierPath {
         get {
-            return UIBezierPath()
+            fatalError("Property bezierPath need to be overriden by child classes")
         }
     }
     
