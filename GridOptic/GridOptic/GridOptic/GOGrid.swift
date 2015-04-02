@@ -17,7 +17,7 @@ class GOGrid: NSObject {
     var width: NSInteger
     var height: NSInteger
     var origin: CGPoint = CGPointZero
-    var instruments = [GOOpticRep]()
+    var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
     var size: CGSize {
         get {
@@ -148,7 +148,7 @@ class GOGrid: NSObject {
     func getEdgesOnDirection(ray: GORay) -> [GOSegment] {
         var edges = [GOSegment]()
         
-        for item in self.instruments {
+        for (name, item) in self.instruments {
             // iterate through each instrument, and check if the ray is
             // intersect with the edges of the instruments
             let currentEdges = item.edges
@@ -169,7 +169,7 @@ class GOGrid: NSObject {
         
         // if it has instruments, add it to edge
         if (!self.instruments.isEmpty) {
-            for item in self.instruments {
+            for (name, item) in self.instruments {
                 let currentEdges = item.edges
                 for edge in currentEdges {
                         output.append(edge)
