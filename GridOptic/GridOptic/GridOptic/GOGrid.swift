@@ -269,7 +269,13 @@ class GOGrid: NSObject {
         for bound in boundaries {
             if let point = bound.getIntersectionPoint(ray) {
                 println(point)
-                return point
+                // check the point is in the visible space
+                // heigh: [0, height]
+                // width: [0, width]
+                if point.x >= 0 && point.x <= CGFloat(width) &&
+                    point.y >= 0 && point.y <= CGFloat(height) {
+                        return point
+                }
             }
         }
         
