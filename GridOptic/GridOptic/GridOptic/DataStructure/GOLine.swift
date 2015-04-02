@@ -14,7 +14,7 @@ class GOLine: NSObject {
     var direction: CGVector
     var slope: CGFloat {
         get {
-            if self.direction.dx < Constant.overallPrecision {
+            if self.direction.dx.abs < Constant.overallPrecision {
                 return CGFloat.max
             }
             

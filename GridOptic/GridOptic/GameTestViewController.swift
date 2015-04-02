@@ -69,8 +69,8 @@ class GameTestViewController: UIViewController {
 //        self.grid?.addInstrument(flatLens)
         let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 20, y: 15), direction: CGVectorMake(1, 4), thicknessCenter: 1, thicknessEdge: 3, curvatureRadius: 5, id: "CONCAVE_LENS_1", refractionIndex: 0.8)
 //        self.grid?.addInstrument(concaveLens)
-        let convexLens = GOConvexLensRep(center: GOCoordinate(x: 44, y: 25), direction: CGVectorMake(0, -1), thickness: 2, curvatureRadius: 3, id: "CONVEX_LENS_1", refractionIndex: 1.8)
-//        self.grid?.addInstrument(convexLens)
+        let convexLens = GOConvexLensRep(center: GOCoordinate(x: 44, y: 25), direction: CGVectorMake(0, -1), thickness: 2, curvatureRadius: 4, id: "CONVEX_LENS_1", refractionIndex: 1.3)
+        self.grid?.addInstrument(convexLens)
     }
     
     private func drawGrid() {
