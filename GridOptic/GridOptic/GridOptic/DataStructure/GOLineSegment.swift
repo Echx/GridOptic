@@ -17,9 +17,17 @@ class GOLineSegment: GOSegment {
     }
     override var bezierPath: UIBezierPath {
         get {
+            println("\n\n\n\n")
+            println("start:         \(self.startPoint)")
+            println("end:           \(self.startPoint)")
+            println("center:        \(self.center)")
+            println("length:        \(self.length)")
+            println("direction:     \(self.direction)")
+            println("radius:        \(self.directionInRadianFromXPlus)")
             var path = UIBezierPath()
             path.moveToPoint(self.startPoint)
             path.addLineToPoint(self.endPoint)
+            path.closePath()
             return path
         }
     }
@@ -52,7 +60,7 @@ class GOLineSegment: GOSegment {
             let radDirection = self.directionInRadianFromXPlus
             let deltaX = -0.5 * self.length * cos(radDirection)
             let deltaY = -0.5 * self.length * sin(radDirection)
-            return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
+            return CGPointMake(center.x + deltaX, center.y + deltaY)
         }
     }
     
@@ -61,7 +69,7 @@ class GOLineSegment: GOSegment {
             let radDirection = self.directionInRadianFromXPlus
             let deltaX = 0.5 * self.length * cos(radDirection)
             let deltaY = 0.5 * self.length * sin(radDirection)
-            return CGPointMake(CGFloat(center.x) + deltaX, CGFloat(center.y) + deltaY)
+            return CGPointMake(center.x + deltaX, center.y + deltaY)
         }
     }
     

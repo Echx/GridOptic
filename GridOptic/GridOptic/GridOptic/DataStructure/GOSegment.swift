@@ -22,7 +22,7 @@ class GOSegment {
     }
     
     //angle should be within [0, PI) from
-    var direction: CGVector = CGVector.zeroVector
+    var direction: CGVector = CGVector(dx: 0, dy: 1)
     var normalDirection: CGVector {
         set {
             if newValue.dx > 0 {

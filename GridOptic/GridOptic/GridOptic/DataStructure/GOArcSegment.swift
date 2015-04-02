@@ -13,7 +13,7 @@ class GOArcSegment: GOSegment {
     var radian: CGFloat
     override var normalDirection: CGVector {
         set {
-            self.normalDirection = CGVectorMake(-self.direction.dy, self.direction.dx)
+            self.direction = CGVectorMake(-self.direction.dy, self.direction.dx)
         }
         get {
             return CGVectorMake(self.direction.dy, -self.direction.dx)
@@ -25,6 +25,7 @@ class GOArcSegment: GOSegment {
             var path = UIBezierPath()
             path.moveToPoint(self.startPoint)
             path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.startRadian, endAngle: self.endRadian, clockwise: false)
+            path.closePath()
             return path
         }
     }

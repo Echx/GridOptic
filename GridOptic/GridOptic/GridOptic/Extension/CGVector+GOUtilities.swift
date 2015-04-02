@@ -8,7 +8,14 @@
 
 import UIKit
 
-extension CGVector {
+extension CGVector: Printable {
+    
+    public var description: String {
+        get {
+            return "(dx: \(self.dx), dy: \(self.dy))"
+        }
+    }
+    
     var length: CGFloat {
         get {
             return sqrt(self.dx * self.dx + self.dy * self.dy)

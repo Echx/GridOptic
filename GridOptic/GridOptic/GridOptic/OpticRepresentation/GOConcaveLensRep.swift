@@ -85,17 +85,18 @@ class GOConcaveLensRep: GOOpticRep {
     }
     
     override func setDirection(direction: CGVector) {
+        let directionDifference = direction.angleFromXPlus - self.direction.angleFromXPlus
         self.direction = direction
         
         for edge in self.edges {
             if edge.tag == 0 {
-                var newCenter = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
                 edge.normalDirection = self.normalDirection
             } else if edge.tag == 1 {
-                var newCenter = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
                 edge.normalDirection = self.inverseNormalDirection
             } else {
-                var newCenter = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
                 edge.direction = self.normalDirection
             }
         }
