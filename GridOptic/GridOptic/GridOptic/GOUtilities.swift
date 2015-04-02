@@ -14,6 +14,8 @@ class GOUtilities {
         let sqrtTerm = b * b - 4 * a * c
         if a == 0 {
             return (nil, nil);
+        } else if sqrtTerm < 0 {
+            return (nil, nil)
         } else if sqrtTerm == 0 {
             return (-b / 2 / a, nil)
         } else {

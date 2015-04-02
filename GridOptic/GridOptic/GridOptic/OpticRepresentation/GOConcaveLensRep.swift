@@ -45,6 +45,7 @@ class GOConcaveLensRep: GOOpticRep {
         self.refractionIndex = refractionIndex
         self.setUpEdges()
         self.setDirection(direction)
+        self.setDeviceType(DeviceType.Lens)
     }
     
     init(center: GOCoordinate, direction: CGVector, id: String, refractionIndex: CGFloat) {
