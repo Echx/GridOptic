@@ -12,4 +12,17 @@ extension CGFloat {
     var abs: CGFloat {
         return self < 0 ? -self : self
     }
+    
+    var restrictWithin2Pi: CGFloat {
+        var result = self
+        if result < 0 {
+            result = CGFloat(M_PI * 2.0) - result
+        }
+        
+        if result > CGFloat(M_PI * 2.0) {
+            result = result % CGFloat(M_PI * 2.0)
+        }
+        
+        return result
+    }
 }

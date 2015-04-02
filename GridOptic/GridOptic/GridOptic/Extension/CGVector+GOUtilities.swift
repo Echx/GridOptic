@@ -30,7 +30,7 @@ extension CGVector: Printable {
     func scaleTo(length: CGFloat) -> CGVector {
         let currentLength = self.length
         let newDx = self.dx * length / self.length
-        let newDy = self.dx * length / self.length
+        let newDy = self.dy * length / self.length
         return CGVector(dx: newDx, dy: newDy)
     }
     
@@ -68,6 +68,18 @@ extension CGVector: Printable {
     
     static func dot(v1: CGVector, v2: CGVector) -> CGFloat {
         return v1.dx * v2.dx + v1.dy * v2.dy
+    }
+    
+    func rotate(deg: CGFloat) -> CGVector {
+        let newDx = self.dx * cos(deg) - self.dy * sin(deg)
+        let newDy = self.dx * sin(deg) + self.dy * cos(deg)
+        
+        return CGVector(dx: newDx, dy: newDy)
+    }
+    
+    func getRadiusFromXPlus() -> CGFloat {
+        // swift can handle 90 deg case
+        return atan(self.dy / self.dx)
     }
 }
 
