@@ -21,13 +21,7 @@ class GOConcaveLensRep: GOOpticRep {
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
         get {
-            if self.direction.dx > 0 {
-                return CGVectorMake(-self.direction.dy, self.direction.dx)
-            } else if self.direction.dx == 0 && self.direction.dy < 0 {
-                return CGVectorMake(-self.direction.dy, 0)
-            } else {
-                return CGVectorMake(self.direction.dy, -self.direction.dx)
-            }
+            return CGVectorMake(self.direction.dy, -self.direction.dx)
         }
     }
     var inverseNormalDirection: CGVector {
@@ -40,6 +34,16 @@ class GOConcaveLensRep: GOOpticRep {
         get {
             return 2 * sqrt(self.curvatureRadius * self.curvatureRadius - (self.curvatureRadius - self.thicknessDifference/2) * (self.curvatureRadius - self.thicknessDifference/2))
         }
+    }
+    
+    init(center: GOCoordinate, direction: CGVector, thicknessCenter: CGFloat, thicknessEdge: CGFloat, curvatureRadius: CGFloat, id: String) {
+        self.thicknessCenter = thicknessCenter
+        self.thicknessEdge = thicknessEdge
+        self.curvatureRadius = curvatureRadius
+        self.center = center
+        super.init(id: id)
+        self.setUpEdges()
+        self.setDirection(direction)
     }
     
     init(center: GOCoordinate, direction: CGVector, id: String) {
@@ -57,7 +61,7 @@ class GOConcaveLensRep: GOOpticRep {
     }
     
     private func setUpEdges() {
-        let radianSpan = acos((self.curvatureRadius - self.thicknessDifference/2) / self.curvatureRadius)
+        let radianSpan = acos((self.curvatureRadius - self.thicknessDifference/2) / self.curvatureRadius) * 2
         
         //left arc
         let centerLeftArc = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thicknessCenter)/2 - self.curvatureRadius, CGFloat(self.center.y))
@@ -79,7 +83,7 @@ class GOConcaveLensRep: GOOpticRep {
         
         //bottom line segment
         let centerBottomEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) - CGFloat(self.length)/2)
-        let bottomEdge = GOLineSegment(center: centerTopEdge, length: self.thicknessEdge, direction: self.normalDirection)
+        let bottomEdge = GOLineSegment(center: centerBottomEdge, length: self.thicknessEdge, direction: self.normalDirection)
         bottomEdge.tag = 2
         self.edges.append(bottomEdge)
     }
@@ -90,13 +94,13 @@ class GOConcaveLensRep: GOOpticRep {
         
         for edge in self.edges {
             if edge.tag == 0 {
-                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.normalDirection = self.normalDirection
             } else if edge.tag == 1 {
-                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.normalDirection = self.inverseNormalDirection
             } else {
-                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.direction = self.normalDirection
             }
         }
