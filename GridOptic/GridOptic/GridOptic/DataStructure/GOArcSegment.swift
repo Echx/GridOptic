@@ -86,14 +86,14 @@ class GOArcSegment: GOSegment {
     
     var startRadian: CGFloat {
         get {
-            var result = self.normalDirection.angleFromXPlus - self.radian/2
+            var result = self.normalDirection.angleFromXPlus - self.radian / 2
             return result.restrictWithin2Pi
         }
     }
     
     var endRadian: CGFloat {
         get {
-            var result = self.normalDirection.angleFromXPlus + self.radian/2
+            var result = self.normalDirection.angleFromXPlus + self.radian / 2
             return result.restrictWithin2Pi
         }
     }
@@ -107,7 +107,7 @@ class GOArcSegment: GOSegment {
         let r2 = CGFloat(self.center.y)
         let r = self.radius
         let termA = 1 + k * k
-        let termB = 2 * (c - r1 - r2)
+        let termB = 2 * ((c - r2) * k - r1)
         let termC = r1 * r1 + (r2 - c) * (r2 - c) - r * r
         
         let xs = GOUtilities.solveQuadraticEquation(termA, b: termB, c: termC)
@@ -188,8 +188,8 @@ class GOArcSegment: GOSegment {
     
     func containsPoint(point: CGPoint) -> Bool {
         if point.getDistanceToPoint(self.center) == self.radius {
-            let pointRadian = point.getRadiusFromXPlus()
-            let normalRadian = self.normalDirection.getRadiusFromXPlus()
+            let pointRadian = point.getRadiusFrom(self.center)
+            let normalRadian = self.normalDirection.angleFromXPlus
             let maxRadian = max(self.startRadian, self.endRadian)
             let minRadian = min(self.startRadian, self.endRadian)
         
