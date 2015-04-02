@@ -25,13 +25,15 @@ class ViewController: UIViewController {
         if segue.identifier == "light" {
             vc.setUp(nil)
         } else if segue.identifier == "flatMirror" {
-            vc.setUp(GOFlatMirrorRep(center: GOCoordinate(x: 500, y: 500), thickness: 10, length: 60, direction: CGVector(dx: 1, dy: 2), id: "flat mirror"))
+            vc.setUp(GOFlatMirrorRep(center: GOCoordinate(x: 512, y: 384), thickness: 50, length: 200, direction: CGVector(dx: 1, dy: 2), id: "flat mirror"))
         } else if segue.identifier == "flatWall" {
-            vc.setUp(GOFlatWallRep(center: GOCoordinate(x: 500, y: 500), thickness: 10, length: 60, direction: CGVector(dx: 1, dy: 2), id: "flat wall"))
+            vc.setUp(GOFlatWallRep(center: GOCoordinate(x: 512, y: 384), thickness: 50, length: 200, direction: CGVector(dx: 1, dy: 2), id: "flat wall"))
+        } else if segue.identifier == "flatLens" {
+            vc.setUp(GOFlatLensRep(center: GOCoordinate(x: 512, y: 384), thickness: 50, length: 200, direction: CGVector(dx: 1, dy: 2), refractionIndex: 0.5, id: "flat lens"))
         } else if segue.identifier == "convexLens" {
-            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 500, y: 350), direction: CGVector(dx: 1, dy: 2), thickness: 10, curvatureRadius: 50, id: "convex lens"))
+            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 2), thickness: 50, curvatureRadius: 500, id: "convex lens"))
         } else if segue.identifier == "concaveLens" {
-            vc.setUp(GOConcaveLensRep(center: GOCoordinate(x: 500, y: 500), direction: CGVector(dx: 0, dy: 1), thicknessCenter: 100, thicknessEdge: 200, curvatureRadius: 500, id: "concave lens"))
+            vc.setUp(GOConcaveLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 2), thicknessCenter: 50, thicknessEdge: 100, curvatureRadius: 500, id: "concave lens"))
         }
     }
 }

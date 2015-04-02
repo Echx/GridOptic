@@ -47,7 +47,7 @@ class GameTestViewController: UIViewController {
                 let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
                 pathAnimation.fromValue = 0.0;
                 pathAnimation.toValue = 1.0;
-                pathAnimation.duration = 1.0;
+                pathAnimation.duration = 0.1;
                 pathAnimation.repeatCount = 1.0
                 pathAnimation.fillMode = kCAFillModeForwards
                 pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
