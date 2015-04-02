@@ -187,8 +187,8 @@ class GOArcSegment: GOSegment {
     }
     
     func containsPoint(point: CGPoint) -> Bool {
-        if point.getDistanceToPoint(self.center) == self.radius {
-            let pointRadian = point.getRadiusFrom(self.center)
+        if ((point.getDistanceToPoint(self.center) - self.radius).abs <= CGFloat(0.0001)) {
+            let pointRadian = point.getRadiusFrom(self.center).restrictWithin2Pi
             let normalRadian = self.normalDirection.angleFromXPlus
             let maxRadian = max(self.startRadian, self.endRadian)
             let minRadian = min(self.startRadian, self.endRadian)

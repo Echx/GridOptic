@@ -83,11 +83,11 @@ class GOArcSegmentTest: XCTestCase {
 //        
         let dev = CGFloat(0.001)
         
-        XCTAssertLessThanOrEqual(arcSegment1.startPoint.x - 4, dev, "WTH")
-        XCTAssertLessThanOrEqual(arcSegment1.startPoint.y - 10, dev, "WTH")
+        XCTAssertLessThanOrEqual((arcSegment1.startPoint.x - 4).abs, dev, "WTH")
+        XCTAssertLessThanOrEqual((arcSegment1.startPoint.y - 10).abs, dev, "WTH")
         
-        XCTAssertLessThanOrEqual(arcSegment1.endPoint.x - 4, dev, "WTH")
-        XCTAssertLessThanOrEqual(arcSegment1.startPoint.y - 10, dev, "WTH")
+        XCTAssertLessThanOrEqual((arcSegment1.endPoint.x - 4).abs, dev, "WTH")
+        XCTAssertLessThanOrEqual((arcSegment1.startPoint.y - 10).abs, dev, "WTH")
     }
 }
 
