@@ -30,4 +30,10 @@ extension CGPoint {
         return sqrt((self.x - point.x) * (self.x - point.x) +
                     (self.y - point.y) * (self.y - point.y))
     }
+    
+    func getRadiusFromXPlus() -> CGFloat {
+        // swift can handle 90 deg case
+        return atan(self.y / self.x)
+    }
+    
 }

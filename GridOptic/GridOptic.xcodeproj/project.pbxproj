@@ -37,6 +37,7 @@
 		26FE564C1AC8735A00E88806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564B1AC8735A00E88806 /* Images.xcassets */; };
 		26FE564F1AC8735A00E88806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26FE564D1AC8735A00E88806 /* LaunchScreen.xib */; };
 		26FE565B1AC8735A00E88806 /* GridOpticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE565A1AC8735A00E88806 /* GridOpticTests.swift */; };
+		620BB1801ACD799F00667333 /* GOArcSegmentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620BB17F1ACD799F00667333 /* GOArcSegmentTest.swift */; };
 		6211BF081ACC080700C1073E /* GameTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6211BF071ACC080700C1073E /* GameTestViewController.swift */; };
 		98F873CF1ACB23F50096E3F5 /* GOArcSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */; };
 		98F873D01ACB23F50096E3F5 /* GOCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F873C51ACB23F50096E3F5 /* GOCoordinate.swift */; };
@@ -89,6 +90,7 @@
 		26FE56541AC8735A00E88806 /* GridOpticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridOpticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26FE56591AC8735A00E88806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26FE565A1AC8735A00E88806 /* GridOpticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOpticTests.swift; sourceTree = "<group>"; };
+		620BB17F1ACD799F00667333 /* GOArcSegmentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOArcSegmentTest.swift; sourceTree = "<group>"; };
 		6211BF071ACC080700C1073E /* GameTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTestViewController.swift; sourceTree = "<group>"; };
 		98F873C41ACB23F50096E3F5 /* GOArcSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOArcSegment.swift; sourceTree = "<group>"; };
 		98F873C51ACB23F50096E3F5 /* GOCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOCoordinate.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		26FE56571AC8735A00E88806 /* GridOpticTests */ = {
 			isa = PBXGroup;
 			children = (
+				620BB17F1ACD799F00667333 /* GOArcSegmentTest.swift */,
 				26BDD3741ACA773200315588 /* GORayTest.swift */,
 				26BDD3841ACA823C00315588 /* GOLineTest.swift */,
 				26FE565A1AC8735A00E88806 /* GridOpticTests.swift */,
@@ -372,6 +375,7 @@
 				26815A681ACBEEEF00E18238 /* GOFlatWallRep.swift in Sources */,
 				98F873DC1ACB24CF0096E3F5 /* GOFlatMirrorRep.swift in Sources */,
 				26BDD3751ACA773200315588 /* GORayTest.swift in Sources */,
+				620BB1801ACD799F00667333 /* GOArcSegmentTest.swift in Sources */,
 				98F873D91ACB24630096E3F5 /* GOOpticRep.swift in Sources */,
 				98F873E51ACB25580096E3F5 /* GOConcaveLensRep.swift in Sources */,
 				2639867A1ACBCD2000C21414 /* CGFLoat+GOUtilities.swift in Sources */,

@@ -49,8 +49,8 @@ class GOArcSegment: GOSegment {
     var scaledStartVector: CGVector {
         get {
             let startVector = CGVector(
-                dx: normalDirection.dx * cos(-radian) - normalDirection.dy * sin(-radian),
-                dy: normalDirection.dx * sin(-radian) + normalDirection.dy * cos(-radian)
+                dx: normalDirection.dx * cos(-radian / 2) - normalDirection.dy * sin(-radian / 2),
+                dy: normalDirection.dx * sin(-radian / 2) + normalDirection.dy * cos(-radian / 2)
             )
             return startVector.scaleTo(self.radius)
         }
@@ -58,8 +58,8 @@ class GOArcSegment: GOSegment {
     
     var scaledEndVector: CGVector {
         let endVector = CGVector(
-            dx: normalDirection.dx * cos(radian) - normalDirection.dy * sin(radian),
-            dy: normalDirection.dx * sin(radian) + normalDirection.dy * cos(radian)
+            dx: normalDirection.dx * cos(radian / 2) - normalDirection.dy * sin(radian / 2),
+            dy: normalDirection.dx * sin(radian / 2) + normalDirection.dy * cos(radian / 2)
         )
         return endVector.scaleTo(self.radius)
     }
@@ -82,15 +82,19 @@ class GOArcSegment: GOSegment {
         }
     }
     
+    // radian will be [0, 2*Pi)
+    
     var startRadian: CGFloat {
         get {
-            return self.normalDirection.angleFromXPlus - self.radian/2
+            var result = self.normalDirection.angleFromXPlus - self.radian/2
+            return result.restrictWithin2Pi
         }
     }
     
     var endRadian: CGFloat {
         get {
-            return self.normalDirection.angleFromXPlus + self.radian/2
+            var result = self.normalDirection.angleFromXPlus + self.radian/2
+            return result.restrictWithin2Pi
         }
     }
     
@@ -113,7 +117,12 @@ class GOArcSegment: GOSegment {
         } else if xs.1 == nil {
             // 相切
             if let y = ray.getY(x: xs.0!) {
-                return CGPoint(x: xs.0!, y: y)
+                let point = CGPoint(x: xs.0!, y: y)
+                if self.containsPoint(point) {
+                    return point
+                } else {
+                    return nil
+                }
             } else {
                 return nil
             }
@@ -122,20 +131,75 @@ class GOArcSegment: GOSegment {
                 if let y1 = ray.getY(x: xs.1!) {
                     if GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.0!, y: y0)) >
                         GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.1!, y: y1)) {
-                        return CGPoint(x: xs.1!, y: y1)
+                        let point = CGPoint(x: xs.1!, y: y1)
+                        if self.containsPoint(point) {
+                            return point
+                        }
+                    }
+                    let point = CGPoint(x: xs.0!, y: y0)
+                    if self.containsPoint(point) {
+                        return point
                     } else {
-                        return CGPoint(x: xs.0!, y: y0)
+                        return nil
                     }
                 } else {
-                    return CGPoint(x: xs.0!, y: y0)
+                    let point = CGPoint(x: xs.0!, y: y0)
+                    if self.containsPoint(point) {
+                        return point
+                    } else {
+                        return nil
+                    }
                 }
             } else {
                 if let y1 = ray.getY(x: xs.1!) {
-                    return CGPoint(x: xs.1!, y: y1)
+                    let point = CGPoint(x: xs.1!, y: y1)
+                    if self.containsPoint(point) {
+                        return point
+                    } else {
+                        return nil
+                    }
                 } else {
                     return nil
                 }
             }
+        }
+    }
+    
+    override func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+        if let intersectionPoint = self.getIntersectionPoint(rayIn) {
+            let l = rayIn.direction.normalised
+            let tangentNormal = CGVector(dx: intersectionPoint.x - self.center.x,
+                dy: intersectionPoint.y - self.center.y)
+            let deg = M_PI / 2
+            let tangent = tangentNormal.rotate(CGFloat(deg))
+            let n = tangent.normalised
+            
+            let cosTheta1 = CGVector.dot(n, v2: l)
+            let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
+            
+            let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
+            let y = (indexIn / indexOut) * l.dy + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dy
+            
+            return GORay(startPoint: intersectionPoint, direction: CGVectorMake(x, y))
+        } else {
+            return nil
+        }
+    }
+    
+    func containsPoint(point: CGPoint) -> Bool {
+        if point.getDistanceToPoint(self.center) == self.radius {
+            let pointRadian = point.getRadiusFromXPlus()
+            let normalRadian = self.normalDirection.getRadiusFromXPlus()
+            let maxRadian = max(self.startRadian, self.endRadian)
+            let minRadian = min(self.startRadian, self.endRadian)
+        
+            if normalRadian > maxRadian || normalRadian < minRadian {
+                return pointRadian > maxRadian || pointRadian < minRadian
+            } else {
+                return pointRadian <= maxRadian && pointRadian >= minRadian
+            }
+        } else {
+            return false
         }
     }
     
