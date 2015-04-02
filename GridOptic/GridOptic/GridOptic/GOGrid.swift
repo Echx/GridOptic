@@ -97,6 +97,27 @@ class GOGrid: NSObject {
         var x = round(point.x / self.unitLength)
         var y = round(point.y / self.unitLength)
     }
+    
+    func getDisplayPointForGridPoint(point: CGPoint) -> CGPoint {
+        return CGPointApplyAffineTransform(point, self.transformToDisplay)
+    }
+    
+    func getGridPointForDisplayPoint(point: CGPoint) -> CGPoint {
+        return CGPointApplyAffineTransform(point, self.transformToGrid)
+    }
+    
+    //the ray is in the grid coordinate system
+    func getRayPath(ray: GORay) -> UIBezierPath {
+        var path = UIBezierPath()
+        path.moveToPoint(ray.startPoint)
+        let criticalPoints = self.getRayPathCriticalPoints(ray)
+        
+        for point in criticalPoints {
+            path.addLineToPoint(point)
+        }
+        
+        return path
+    }
 
     //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
     func getRayPathCriticalPoints(ray: GORay) -> [CGPoint] {
