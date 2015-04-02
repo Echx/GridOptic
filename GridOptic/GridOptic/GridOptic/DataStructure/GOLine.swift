@@ -30,11 +30,11 @@ class GOLine: NSObject {
     
     init(anyPoint: CGPoint, direction: CGVector) {
         self.anyPoint = anyPoint;
-//        if direction.dy < 0 || (direction.dy == 0 && direction.dx < 0){
-//            self.direction = CGVectorMake(-direction.dx, -direction.dy)
-//        } else {
+        if direction.dy < 0 || (direction.dy == 0 && direction.dx < 0){
+            self.direction = CGVectorMake(-direction.dx, -direction.dy)
+        } else {
             self.direction = direction
-//        }
+        }
     }
     
     //give the corresponding y of a given x, nil if not defined
