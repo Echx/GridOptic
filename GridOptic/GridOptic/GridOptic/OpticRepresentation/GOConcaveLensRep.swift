@@ -58,6 +58,7 @@ class GOConcaveLensRep: GOOpticRep {
         super.init(id: id)
         self.setUpEdges()
         self.setDirection(self.direction)
+        self.updateEdgesParent()
     }
     
     private func setUpEdges() {
