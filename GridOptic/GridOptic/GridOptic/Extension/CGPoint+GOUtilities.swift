@@ -40,4 +40,8 @@ extension CGPoint {
         }
     }
     
+    func isNearEnough(point: CGPoint) -> Bool {
+        return (self.x - point.x).abs < Constant.overallPrecision &&
+            (self.y - point.y).abs < Constant.overallPrecision
+    }
 }
