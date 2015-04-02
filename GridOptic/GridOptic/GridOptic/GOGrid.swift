@@ -151,7 +151,13 @@ class GOGrid: NSObject {
         var willEndAtBoundary = true
         while (edge != nil) {
             // it must hit the edge, add the intersection point
-            criticalPoints.append(edge!.getIntersectionPoint(currentRay)!)
+            let newPoint = edge!.getIntersectionPoint(currentRay)!
+            criticalPoints.append(newPoint)
+            print(newPoint.x)
+            println()
+            print(newPoint.y)
+            println()
+            println()
             
             if let outcomeRay = getOutcomeRay(currentRay, edge: edge!) {
                 edge = getNearestEdgeOnDirection(outcomeRay)
