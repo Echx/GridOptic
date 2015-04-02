@@ -63,11 +63,11 @@ class GOConcaveLensRep: GOOpticRep {
     private func setUpEdges() {
         let radianSpan = acos((self.curvatureRadius - self.thicknessDifference/2) / self.curvatureRadius) * 2
         
-        //left arc
-        let centerLeftArc = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thicknessCenter)/2 - self.curvatureRadius, CGFloat(self.center.y))
-        let leftArc = GOArcSegment(center: centerLeftArc, radius: self.curvatureRadius, radian: radianSpan, normalDirection: self.normalDirection)
-        leftArc.tag = 0
-        self.edges.append(leftArc)
+        //top line segment
+        let centerTopEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) + CGFloat(self.length)/2)
+        let topEdge = GOLineSegment(center: centerTopEdge, length: self.thicknessEdge, direction: self.normalDirection)
+        topEdge.tag = 2
+        self.edges.append(topEdge)
         
         //right arc
         let centerRightArc = CGPointMake(CGFloat(self.center.x) + CGFloat(self.thicknessCenter)/2 + self.curvatureRadius, CGFloat(self.center.y))
@@ -75,17 +75,18 @@ class GOConcaveLensRep: GOOpticRep {
         rightArc.tag = 1
         self.edges.append(rightArc)
         
-        //top line segment
-        let centerTopEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) + CGFloat(self.length)/2)
-        let topEdge = GOLineSegment(center: centerTopEdge, length: self.thicknessEdge, direction: self.normalDirection)
-        topEdge.tag = 2
-        self.edges.append(topEdge)
         
         //bottom line segment
         let centerBottomEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) - CGFloat(self.length)/2)
         let bottomEdge = GOLineSegment(center: centerBottomEdge, length: self.thicknessEdge, direction: self.normalDirection)
         bottomEdge.tag = 2
         self.edges.append(bottomEdge)
+        
+        //left arc
+        let centerLeftArc = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thicknessCenter)/2 - self.curvatureRadius, CGFloat(self.center.y))
+        let leftArc = GOArcSegment(center: centerLeftArc, radius: self.curvatureRadius, radian: radianSpan, normalDirection: self.normalDirection)
+        leftArc.tag = 0
+        self.edges.append(leftArc)
     }
     
     override func setDirection(direction: CGVector) {
