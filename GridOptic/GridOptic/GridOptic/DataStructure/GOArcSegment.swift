@@ -178,6 +178,26 @@ class GOArcSegment: GOSegment {
         }
     }
     
+    override func getReflectionRay(#rayIn: GORay) -> GORay? {
+        if let intersectionPoint = self.getIntersectionPoint(rayIn) {
+            let l = rayIn.direction.normalised
+            let tangentNormal = CGVector(dx: intersectionPoint.x - self.center.x,
+                dy: intersectionPoint.y - self.center.y)
+            let deg = M_PI / 2
+            let tangent = tangentNormal.rotate(CGFloat(deg))
+            
+            // calculate the ray
+            let tangentAngle = tangent.angleFromXPlus
+            let reflectionAngle = 2 * tangentAngle + CGFloat(2 * M_PI) - rayIn.direction.angleFromXPlus
+            var reflectDirection = GOUtilities.vectorFromRadius(reflectionAngle)
+            
+            return GORay(startPoint: intersectionPoint, direction: reflectDirection)
+        } else {
+            return nil
+        }
+    }
+
+    
     func containsPoint(point: CGPoint) -> Bool {
         if ((point.getDistanceToPoint(self.center) - self.radius).abs <= CGFloat(0.0001)) {
             let pointRadian = point.getRadiusFrom(self.center).restrictWithin2Pi
