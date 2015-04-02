@@ -76,15 +76,19 @@ class GOLineSegment: GOSegment {
             let rightX = start.x < end.x ? end.x : start.x
             
             //if the intersection point is not within [leftX, rightX], then there is no intersection point
-            if lineIntersection == ray.startPoint {
+            if lineIntersection.x - ray.startPoint.x < Constant.overallPrecision &&
+                lineIntersection.y - ray.startPoint.y < Constant.overallPrecision {
+                println("intersection is ray startPoint")
                 return nil
             } else if lineIntersection.x < leftX || lineIntersection.x > rightX {
                 return nil
-            } else if ray.direction.dx > 0 && lineIntersection.x < ray.startPoint.x {
+            } else if ray.direction.dx > 0 && lineIntersection.x <= ray.startPoint.x {
                 return nil
-            } else if ray.direction.dx < 0 && lineIntersection.x > ray.startPoint.x {
+            } else if ray.direction.dx < 0 && lineIntersection.x >= ray.startPoint.x {
                 return nil
             } else {
+                println("intersection:  \(lineIntersection)")
+                println("start point:   \(ray.startPoint)")
                 return lineIntersection
             }
         }
@@ -114,14 +118,25 @@ class GOLineSegment: GOSegment {
     }
     
     override func getReflectionRay(#rayIn: GORay) -> GORay? {
-        if self.isIntersectedWithRay(rayIn) {
-            // get intersection point
-            let intersectionPoint = self.getIntersectionPoint(rayIn)!
-            // calculate the ray
-            let mirrorAngle = self.directionInRadianFromXPlus
-            let reflectionAngle = 2 * mirrorAngle + CGFloat(2 * M_PI) - rayIn.direction.angleFromXPlus
-            var reflectDirection = GOUtilities.vectorFromRadius(reflectionAngle)
-
+        if let intersectionPoint = self.getIntersectionPoint(rayIn) {
+//            // calculate the ray
+//            let mirrorAngle = self.directionInRadianFromXPlus
+//            let reflectionAngle = 2 * mirrorAngle + CGFloat(2 * M_PI) - rayIn.direction.angleFromXPlus
+//            var reflectDirection = GOUtilities.vectorFromRadius(reflectionAngle)
+            let l = rayIn.direction.normalised
+            var n: CGVector
+            if CGVector.dot(rayIn.direction, v2: self.normalDirection) < 0 {
+                n = self.normalDirection.normalised
+            } else {
+                n = CGVectorMake(-self.normalDirection.dx, -self.normalDirection.dy).normalised
+            }
+            let cosTheta1 = -CGVector.dot(n, v2: l)
+            
+            let intermidiateX = 2 * cosTheta1 * n.dx
+            let intermidiateY = 2 * cosTheta1 * n.dy
+            
+            let reflectDirection = CGVector(dx: l.dx + intermidiateX,
+                                            dy: l.dy + intermidiateY)
             return GORay(startPoint: intersectionPoint, direction: reflectDirection)
         } else {
             return nil

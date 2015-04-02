@@ -37,6 +37,7 @@ class GameTestViewController: UIViewController {
         
         
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: Selector("didSwipe:"))
+        swipeGesture.direction = UISwipeGestureRecognizerDirection.Down
         self.view.addGestureRecognizer(swipeGesture)
         self.directionSlider?.addTarget(self, action: "updateObjectDirection:", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -63,7 +64,9 @@ class GameTestViewController: UIViewController {
     
     private func setUpGrid() {
         let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 32, y: 24), thickness: 2, length: 6, direction: CGVectorMake(1, 1), id: "MIRROR_1")
-//        self.grid?.addInstrument(mirror)
+        self.grid?.addInstrument(mirror)
+        let flatLens = GOFlatLensRep(center: GOCoordinate(x: 32, y: 31), thickness: 8, length: 8, direction: CGVectorMake(1, 0), refractionIndex: 1.33, id: "FLAT_LENS_1")
+//        self.grid?.addInstrument(flatLens)
         let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 20, y: 15), direction: CGVectorMake(1, 4), thicknessCenter: 1, thicknessEdge: 3, curvatureRadius: 5, id: "CONCAVE_LENS_1", refractionIndex: 0.8)
 //        self.grid?.addInstrument(concaveLens)
         let convexLens = GOConvexLensRep(center: GOCoordinate(x: 44, y: 33), direction: CGVectorMake(-2, -1), thickness: 2, curvatureRadius: 5, id: "CONVEX_LENS_1", refractionIndex: 0.8)
@@ -79,7 +82,7 @@ class GameTestViewController: UIViewController {
     }
     
     private func drawRay() {
-        let ray = GORay(startPoint: CGPoint(x:0.1, y: 24), direction: CGVector(dx: 1, dy: 0))
+        let ray = GORay(startPoint: CGPoint(x:10, y: 30), direction: CGVector(dx: 2, dy: -0.8))
         let layer = self.getPreviewShapeLayer()
         println("before path calculation")
         let path = self.grid!.getRayPath(ray)
