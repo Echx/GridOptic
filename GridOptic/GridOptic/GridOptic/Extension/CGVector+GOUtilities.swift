@@ -76,10 +76,5 @@ extension CGVector: Printable {
         
         return CGVector(dx: newDx, dy: newDy)
     }
-    
-    func getRadiusFromXPlus() -> CGFloat {
-        // swift can handle 90 deg case
-        return atan(self.dy / self.dx)
-    }
 }
 
