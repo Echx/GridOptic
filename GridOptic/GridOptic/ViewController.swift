@@ -26,8 +26,12 @@ class ViewController: UIViewController {
             vc.setUp(nil)
         } else if segue.identifier == "flatMirror" {
             vc.setUp(GOFlatMirrorRep(center: GOCoordinate(x: 500, y: 500), thickness: 10, length: 60, direction: CGVector(dx: 1, dy: 2), id: "flat mirror"))
+        } else if segue.identifier == "flatWall" {
+            vc.setUp(GOFlatWallRep(center: GOCoordinate(x: 500, y: 500), thickness: 10, length: 60, direction: CGVector(dx: 1, dy: 2), id: "flat wall"))
         } else if segue.identifier == "convexLens" {
-            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 500, y: 500), direction: CGVector(dx: 0, dy: 1), thickness: 300, curvatureRadius: 500, id: "convex lens"))
+            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 500, y: 350), direction: CGVector(dx: 1, dy: 2), thickness: 10, curvatureRadius: 50, id: "convex lens"))
+        } else if segue.identifier == "concaveLens" {
+            vc.setUp(GOConcaveLensRep(center: GOCoordinate(x: 500, y: 500), direction: CGVector(dx: 0, dy: 1), thicknessCenter: 100, thicknessEdge: 200, curvatureRadius: 500, id: "concave lens"))
         }
     }
 }
