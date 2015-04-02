@@ -11,6 +11,7 @@ import UIKit
 struct Constant {
     static let angleCalculationPrecision:CGFloat = 1000
     static let overallPrecision: CGFloat = 0.00001
+    static let boundaryOffset : CGFloat = 1
 }
 
 enum DeviceType: Int {

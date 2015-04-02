@@ -46,12 +46,12 @@ class GOGrid: NSObject {
             var boundaries = [GOLineSegment]()
             
             let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-                y: origin.y), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+                y: origin.y - Constant.boundaryOffset), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
             let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-                y: origin.y + CGFloat(height)), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
-            let leftBound = GOLineSegment(center: CGPoint(x: origin.x,
+                y: origin.y + CGFloat(height) + Constant.boundaryOffset), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
+            let leftBound = GOLineSegment(center: CGPoint(x: origin.x - Constant.boundaryOffset,
                 y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
-            let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width),
+            let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width) + Constant.boundaryOffset,
                 y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
             
             boundaries.append(bottomBound)
@@ -153,11 +153,7 @@ class GOGrid: NSObject {
             // it must hit the edge, add the intersection point
             let newPoint = edge!.getIntersectionPoint(currentRay)!
             criticalPoints.append(newPoint)
-            print(newPoint.x)
-            println()
-            print(newPoint.y)
-            println()
-            println()
+
             
             if let outcomeRay = getOutcomeRay(currentRay, edge: edge!) {
                 edge = getNearestEdgeOnDirection(outcomeRay)
@@ -278,8 +274,8 @@ class GOGrid: NSObject {
                 // check the point is in the visible space
                 // heigh: [0, height]
                 // width: [0, width]
-                if point.x >= 0 && point.x <= CGFloat(width) &&
-                    point.y >= 0 && point.y <= CGFloat(height) {
+                if point.x >= (-Constant.boundaryOffset) && point.x <= CGFloat(width) + Constant.boundaryOffset &&
+                    point.y >= (-Constant.boundaryOffset) && point.y <= CGFloat(height) + Constant.boundaryOffset {
                         return point
                 }
             }
