@@ -40,6 +40,7 @@ class GameTestViewController: UIViewController {
                 shapeLayer.strokeEnd = 1.0
                 shapeLayer.path = bezierPath.CGPath
                 shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+                shapeLayer.fillColor = UIColor.clearColor().CGColor
                 shapeLayer.lineWidth = 2.0
                 self.view.layer.addSublayer(shapeLayer)
                 
