@@ -76,8 +76,9 @@ class GOGrid: NSObject {
     
     func getInstrumentDisplayPathForID(id: String) -> UIBezierPath? {
         if let instrument = self.getInstrumentForID(id) {
-            
-            return nil
+            let bezierPath = instrument.bezierPath.copy() as UIBezierPath
+            bezierPath.applyTransform(self.transformToDisplay)
+            return bezierPath
         } else {
             return nil
         }
