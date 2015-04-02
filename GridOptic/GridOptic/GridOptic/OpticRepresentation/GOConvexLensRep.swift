@@ -15,13 +15,7 @@ class GOConvexLensRep: GOOpticRep {
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
         get {
-            if self.direction.dx > 0 {
-                return CGVectorMake(-self.direction.dy, self.direction.dx)
-            } else if self.direction.dx == 0 && self.direction.dy < 0 {
-                return CGVectorMake(-self.direction.dy, 0)
-            } else {
-                return CGVectorMake(self.direction.dy, -self.direction.dx)
-            }
+            return CGVectorMake(self.direction.dy, -self.direction.dx)
         }
     }
     var inverseNormalDirection: CGVector {
