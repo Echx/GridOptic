@@ -63,10 +63,10 @@ class GameTestViewController: UIViewController {
     }
     
     private func setUpGrid() {
-        let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 32, y: 24), thickness: 2, length: 6, direction: CGVectorMake(1, 1), id: "MIRROR_1")
-//        self.grid?.addInstrument(mirror)
-        let flatLens = GOFlatLensRep(center: GOCoordinate(x: 32, y: 31), thickness: 8, length: 8, direction: CGVectorMake(1, 0), refractionIndex: 1.33, id: "FLAT_LENS_1")
-//        self.grid?.addInstrument(flatLens)
+        let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 60, y: 24), thickness: 2, length: 6, direction: CGVectorMake(0.1, 1), id: "MIRROR_1")
+        self.grid?.addInstrument(mirror)
+        let flatLens = GOFlatLensRep(center: GOCoordinate(x: 23, y: 34), thickness: 8, length: 8, direction: CGVectorMake(1, 1), refractionIndex: 1.33, id: "FLAT_LENS_1")
+        self.grid?.addInstrument(flatLens)
         let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 44, y: 26), direction: CGVectorMake(0, 1), thicknessCenter: 1, thicknessEdge: 4, curvatureRadius: 20, id: "CONCAVE_LENS_1", refractionIndex: 1.50)
         self.grid?.addInstrument(concaveLens)
         let convexLens = GOConvexLensRep(center: GOCoordinate(x: 35, y: 26), direction: CGVectorMake(0, -1), thickness: 3, curvatureRadius: 20, id: "CONVEX_LENS_1", refractionIndex: 1.50)
@@ -82,7 +82,7 @@ class GameTestViewController: UIViewController {
     }
     
     private func drawRay() {
-        let ray = GORay(startPoint: CGPoint(x:0.1, y: 22), direction: CGVector(dx: 1, dy: 0))
+        let ray = GORay(startPoint: CGPoint(x:0.1, y: 24), direction: CGVector(dx: 1, dy: 0))
         let layer = self.getPreviewShapeLayer()
         println("before path calculation")
         let path = self.grid!.getRayPath(ray)
