@@ -30,26 +30,29 @@ class GOConvexLensRep: GOOpticRep {
         }
     }
     
-    init(center: GOCoordinate, direction: CGVector, thickness: CGFloat, curvatureRadius: CGFloat, id: String) {
+    init(center: GOCoordinate, direction: CGVector, thickness: CGFloat, curvatureRadius: CGFloat, id: String, refractionIndex: CGFloat) {
         self.thickness = thickness
         self.curvatureRadius = curvatureRadius
         self.center = center
         super.init(id: id)
+        self.refractionIndex = refractionIndex
         self.setUpEdges()
         self.setDirection(direction)
         self.updateEdgesParent()
     }
     
-    init(center: GOCoordinate, direction: CGVector, id: String) {
+    init(center: GOCoordinate, direction: CGVector, id: String, refractionIndex: CGFloat) {
         self.center = center
         super.init(id: id)
+        self.refractionIndex = refractionIndex
         self.setUpEdges()
         self.setDirection(direction)
     }
     
-    init(center: GOCoordinate, id: String) {
+    init(center: GOCoordinate, id: String, refractionIndex: CGFloat) {
         self.center = center
         super.init(id: id)
+        self.refractionIndex = refractionIndex
         self.setUpEdges()
         self.setDirection(self.direction)
     }

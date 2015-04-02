@@ -17,7 +17,7 @@ class GOGrid: NSObject {
     let width: NSInteger
     let height: NSInteger
     let origin: CGPoint = CGPointZero
-    let backgroundRefractionIndex: CGPoint = 1.0
+    let backgroundRefractionIndex: CGFloat = 1.0
     
     var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
@@ -173,11 +173,11 @@ class GOGrid: NSObject {
     
     //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
     func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
-        var indexIn: CGFloat
-        var indexOut: CGFloat
+        var indexIn: CGFloat = 1.0
+        var indexOut: CGFloat = 1.0
         if edge.willRefract {
             if self.refractionEdgeParentStack.peek() == edge.parent {
-                indexIn = self.getRefractionIndexForID(self.refractionEdgeParentStack.pop())!
+                indexIn = self.getRefractionIndexForID(self.refractionEdgeParentStack.pop()!)!
                 if let nextInstrument = self.refractionEdgeParentStack.peek() {
                     indexOut = self.getRefractionIndexForID(nextInstrument)!
                 } else {
@@ -189,7 +189,7 @@ class GOGrid: NSObject {
                 } else {
                     indexIn = self.backgroundRefractionIndex
                 }
-                indexOut = self.getRefractionIndexForID(edge.parent)
+                indexOut = self.getRefractionIndexForID(edge.parent)!
                 self.refractionEdgeParentStack.push(edge.parent)
             }
         }

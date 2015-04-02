@@ -31,9 +31,9 @@ class ViewController: UIViewController {
         } else if segue.identifier == "flatLens" {
             vc.setUp(GOFlatLensRep(center: GOCoordinate(x: 512, y: 384), thickness: 50, length: 200, direction: CGVector(dx: 1, dy: 0), refractionIndex: 0.5, id: "flat lens"))
         } else if segue.identifier == "convexLens" {
-            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 0), thickness: 50, curvatureRadius: 500, id: "convex lens"))
+            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 0), thickness: 50, curvatureRadius: 500, id: "convex lens", refractionIndex: 0.8))
         } else if segue.identifier == "concaveLens" {
-            vc.setUp(GOConcaveLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 0), thicknessCenter: 50, thicknessEdge: 100, curvatureRadius: 500, id: "concave lens"))
+            vc.setUp(GOConcaveLensRep(center: GOCoordinate(x: 512, y: 384), direction: CGVector(dx: 1, dy: 0), thicknessCenter: 50, thicknessEdge: 100, curvatureRadius: 500, id: "concave lens", refractionIndex: 0.8))
         }
     }
 }
