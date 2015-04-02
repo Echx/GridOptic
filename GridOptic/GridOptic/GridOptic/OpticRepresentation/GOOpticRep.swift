@@ -12,6 +12,15 @@ class GOOpticRep: NSObject {
     var id: String
     var edges = [GOSegment]()
     var type = DeviceType.Mirror
+    var bezierPath: UIBezierPath {
+        get {
+            var path = UIBezierPath()
+            for edge in self.edges {
+                path.appendPath(edge.bezierPath)
+            }
+            return path
+        }
+    }
     
     var numOfEdges : Int {
         get {
