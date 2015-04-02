@@ -13,15 +13,28 @@ protocol GOGridDelegate {
 }
 
 class GOGrid: NSObject {
-    var unitLength: CGFloat
-    var width: NSInteger
-    var height: NSInteger
-    var origin: CGPoint = CGPointZero
-    var instruments = [String: GOOpticRep]()
+    let unitLength: CGFloat
+    let width: NSInteger
+    let height: NSInteger
+    let origin: CGPoint = CGPointZero
+    
+    private var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
     var size: CGSize {
         get {
             return CGSizeMake(CGFloat(self.width) * self.unitLength, CGFloat(self.height) * self.unitLength)
+        }
+    }
+    
+    var transformToDisplay: CGAffineTransform {
+        get {
+            return CGAffineTransformMakeScale(self.unitLength, self.unitLength)
+        }
+    }
+    
+    var transformToGrid: CGAffineTransform {
+        get {
+            return CGAffineTransformMakeScale(1/self.unitLength, 1/self.unitLength)
         }
     }
     
@@ -59,6 +72,19 @@ class GOGrid: NSObject {
         self.height = coordinate.y
         self.unitLength = unitLength
         super.init()
+    }
+    
+    func getInstrumentDisplayPathForID(id: String) -> UIBezierPath? {
+        if let instrument = self.getInstrumentForID(id) {
+            
+            return nil
+        } else {
+            return nil
+        }
+    }
+    
+    func getInstrumentForID(id: String) -> GOOpticRep? {
+        return self.instruments[id]
     }
     
     func getCenterForGridCell(coordinate: GOCoordinate) -> CGPoint {
