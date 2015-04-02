@@ -63,6 +63,7 @@ class GameTestViewController: UIViewController {
     }
     
     private func setUpGrid() {
+
         let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 32, y: 24), thickness: 2, length: 6, direction: CGVectorMake(1, 1), id: "MIRROR_1")
 //        self.grid?.addInstrument(mirror)
         let flatLens = GOFlatLensRep(center: GOCoordinate(x: 32, y: 31), thickness: 8, length: 8, direction: CGVectorMake(1, 0), refractionIndex: 1.33, id: "FLAT_LENS_1")
@@ -82,7 +83,7 @@ class GameTestViewController: UIViewController {
     }
     
     private func drawRay() {
-        let ray = GORay(startPoint: CGPoint(x:10, y: 30), direction: CGVector(dx: 2, dy: -0.8))
+        let ray = GORay(startPoint: CGPoint(x:0.1, y: 24), direction: CGVector(dx: 1, dy: 0))
         let layer = self.getPreviewShapeLayer()
         println("before path calculation")
         let path = self.grid!.getRayPath(ray)
