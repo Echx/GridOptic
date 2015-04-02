@@ -57,17 +57,17 @@ class GameTestViewController: UIViewController {
         } else {
             self.setUpGrid()
             self.drawGrid()
-//            self.drawRay()
+            self.drawRay()
         }
     }
     
     private func setUpGrid() {
         let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 32, y: 24), thickness: 2, length: 6, direction: CGVectorMake(0, 1), id: "MIRROR_1")
-        self.grid?.addInstrument(mirror)
+//        self.grid?.addInstrument(mirror)
         let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 20, y: 15), direction: CGVectorMake(1, 4), thicknessCenter: 1, thicknessEdge: 3, curvatureRadius: 5, id: "CONCAVE_LENS_1")
-        self.grid?.addInstrument(concaveLens)
+//        self.grid?.addInstrument(concaveLens)
         let convexLens = GOConvexLensRep(center: GOCoordinate(x: 44, y: 33), direction: CGVectorMake(-2, -1), thickness: 2, curvatureRadius: 5, id: "CONVEX_LENS_1")
-        self.grid?.addInstrument(convexLens)
+//        self.grid?.addInstrument(convexLens)
     }
     
     private func drawGrid() {
@@ -79,7 +79,7 @@ class GameTestViewController: UIViewController {
     }
     
     private func drawRay() {
-        let ray = GORay(startPoint: CGPoint(x: 0, y: 16), direction: CGVector(dx: 1, dy: 0))
+        let ray = GORay(startPoint: CGPoint(x: 0, y: 33), direction: CGVector(dx: 1, dy: 0))
         let layer = self.getPreviewShapeLayer()
         println("before path calculation")
         let path = self.grid!.getRayPath(ray)

@@ -123,8 +123,9 @@ class GOGrid: NSObject {
         
         for point in criticalPoints {
             path.addLineToPoint(point)
+            println(point)
         }
-        
+        path.applyTransform(self.transformToDisplay)
         return path
     }
 
