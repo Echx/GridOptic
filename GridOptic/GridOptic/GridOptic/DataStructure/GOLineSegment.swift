@@ -94,7 +94,12 @@ class GOLineSegment: GOSegment {
     override func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
         if let intersectionPoint = self.getIntersectionPoint(rayIn) {
             let l = rayIn.direction.normalised
-            let n = self.normalDirection.normalised
+            var n: CGVector
+            if CGVector.dot(rayIn.direction, v2: self.normalDirection) < 0 {
+                n = self.normalDirection.normalised
+            } else {
+                n = CGVectorMake(-self.normalDirection.dx, -self.normalDirection.dy).normalised
+            }
             
             let cosTheta1 = CGVector.dot(n, v2: l)
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
