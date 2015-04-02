@@ -22,26 +22,14 @@ class GOSegment {
     }
     var parent: String = ""
     
-    //angle should be within [0, PI) from
+    //angle should be within [0, 2PI) from
     var direction: CGVector = CGVector(dx: 0, dy: 1)
     var normalDirection: CGVector {
         set {
-            if newValue.dx > 0 {
-                self.direction = CGVectorMake(-newValue.dy, newValue.dx)
-            } else if newValue.dx == 0 && newValue.dy < 0 {
-                self.direction = CGVectorMake(-newValue.dy, 0)
-            } else {
-                self.direction = CGVectorMake(newValue.dy, -newValue.dx)
-            }
+            self.direction = CGVectorMake(-newValue.dy, newValue.dx)
         }
         get {
-            if self.direction.dx > 0 {
-                return CGVectorMake(-self.direction.dy, self.direction.dx)
-            } else if self.direction.dx == 0 && self.direction.dy < 0 {
-                return CGVectorMake(-self.direction.dy, 0)
-            } else {
-                return CGVectorMake(self.direction.dy, -self.direction.dx)
-            }
+            return CGVectorMake(self.direction.dy, -self.direction.dx)
         }
     }
     

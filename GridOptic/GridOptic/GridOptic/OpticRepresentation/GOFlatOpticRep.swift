@@ -15,13 +15,19 @@ class GOFlatOpticRep: GOOpticRep {
     var direction: CGVector = CGVectorMake(0, 1)
     var normalDirection: CGVector {
         get {
-            if self.direction.dx > 0 {
-                return CGVectorMake(-self.direction.dy, self.direction.dx)
-            } else if self.direction.dx == 0 && self.direction.dy < 0 {
-                return CGVectorMake(-self.direction.dy, 0)
-            } else {
-                return CGVectorMake(self.direction.dy, -self.direction.dx)
-            }
+            return CGVectorMake(self.direction.dy, -self.direction.dx)
+        }
+    }
+    
+    var inversedDirection: CGVector {
+        get {
+            return CGVectorMake(-self.direction.dx, -self.direction.dy)
+        }
+    }
+    
+    var inversedNormalDirection: CGVector {
+        get {
+            return CGVectorMake(-self.direction.dy, self.direction.dx)
         }
     }
     
@@ -58,26 +64,26 @@ class GOFlatOpticRep: GOOpticRep {
     private func setUpEdges() {
         //top edge
         let centerTopEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) + CGFloat(self.length)/2)
-        let topEdge = GOLineSegment(center: centerTopEdge, length: self.thickness, direction: self.normalDirection)
-        topEdge.tag = 1
+        let topEdge = GOLineSegment(center: centerTopEdge, length: self.thickness, direction: self.inversedNormalDirection)
+        topEdge.tag = 0
         self.edges.append(topEdge)
         
         //right edge
         let centerRightEdge = CGPointMake(CGFloat(self.center.x) + CGFloat(self.thickness)/2, CGFloat(self.center.y))
-        let rightEdge = GOLineSegment(center: centerRightEdge, length: self.length, direction: self.direction)
-        rightEdge.tag = 0
+        let rightEdge = GOLineSegment(center: centerRightEdge, length: self.length, direction: self.inversedDirection)
+        rightEdge.tag = 1
         self.edges.append(rightEdge)
         
         //bottom edge
         let centerBottomEdge = CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y) - CGFloat(self.length)/2)
         let bottomEdge = GOLineSegment(center: centerBottomEdge, length: self.thickness, direction: self.normalDirection)
-        bottomEdge.tag = 1
+        bottomEdge.tag = 2
         self.edges.append(bottomEdge)
         
         //left edge
         let centerLeftEdge = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thickness)/2, CGFloat(self.center.y))
         let leftEdge = GOLineSegment(center: centerLeftEdge, length: self.length, direction: self.direction)
-        leftEdge.tag = 0
+        leftEdge.tag = 3
         self.edges.append(leftEdge)
     }
     
@@ -88,10 +94,16 @@ class GOFlatOpticRep: GOOpticRep {
         for edge in self.edges {
             if edge.tag == 0 {
                 edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
-                edge.direction = self.direction
-            } else {
+                edge.direction = self.inversedNormalDirection
+            } else if edge.tag == 1{
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
+                edge.direction = self.inversedDirection
+            } else if edge.tag == 2{
                 edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.direction = self.normalDirection
+            } else if edge.tag == 3{
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
+                edge.direction = self.direction
             }
         }
     }

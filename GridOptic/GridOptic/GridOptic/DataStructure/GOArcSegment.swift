@@ -11,14 +11,6 @@ import UIKit
 class GOArcSegment: GOSegment {
     var radius: CGFloat
     var radian: CGFloat
-    override var normalDirection: CGVector {
-        set {
-            self.direction = CGVectorMake(-newValue.dy, newValue.dx)
-        }
-        get {
-            return CGVectorMake(self.direction.dy, -self.direction.dx)
-        }
-    }
     
     override var bezierPath: UIBezierPath {
         get {
