@@ -36,6 +36,15 @@ class GOConvexLensRep: GOOpticRep {
         }
     }
     
+    init(center: GOCoordinate, direction: CGVector, thickness: CGFloat, curvatureRadius: CGFloat, id: String) {
+        self.thickness = thickness
+        self.curvatureRadius = curvatureRadius
+        self.center = center
+        super.init(id: id)
+        self.setUpEdges()
+        self.setDirection(direction)
+    }
+    
     init(center: GOCoordinate, direction: CGVector, id: String) {
         self.center = center
         super.init(id: id)
@@ -72,10 +81,10 @@ class GOConvexLensRep: GOOpticRep {
         
         for edge in self.edges {
             if edge.tag == 0 {
-                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.normalDirection = self.normalDirection
             } else {
-                edge.center = edge.center.getPointAfterRotation(about: self.center.point, toAngle: direction.angleFromXPlus)
+                edge.center = edge.center.getPointAfterRotation(about: self.center.point, byAngle: directionDifference)
                 edge.normalDirection = self.inverseNormalDirection
             }
         }

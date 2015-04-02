@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         } else if segue.identifier == "flatMirror" {
             vc.setUp(GOFlatMirrorRep(center: GOCoordinate(x: 50, y: 50), thickness: 10, length: 60, direction: CGVector(dx: 1, dy: 2), id: "flat mirror"))
         } else if segue.identifier == "convexLens" {
-            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 0, y: 0), direction: CGVector(dx: 0, dy: 1), id: "convex lens"))
+            vc.setUp(GOConvexLensRep(center: GOCoordinate(x: 50, y: 50), direction: CGVector(dx: 0, dy: 1), thickness: 10, curvatureRadius: 50, id: "convex lens"))
         }
     }
 }

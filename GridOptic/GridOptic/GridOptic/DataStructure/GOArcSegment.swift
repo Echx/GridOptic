@@ -22,6 +22,16 @@ class GOArcSegment: GOSegment {
     
     override var bezierPath: UIBezierPath {
         get {
+            println("\n\n\n\n")
+            println("start:         \(self.startPoint)")
+            println("end:           \(self.startPoint)")
+            println("center:        \(self.center)")
+            println("radius:        \(self.radius)")
+            println("radian:        \(self.radian)")
+            println("startA:        \(self.startRadian)")
+            println("endA:          \(self.endRadian)")
+            println("direction:     \(self.direction)")
+            println("directionA:    \(self.direction.angleFromXPlus)")
             var path = UIBezierPath()
             path.moveToPoint(self.startPoint)
             path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.startRadian, endAngle: self.endRadian, clockwise: false)
@@ -76,13 +86,13 @@ class GOArcSegment: GOSegment {
     
     var startRadian: CGFloat {
         get {
-            return atan(self.scaledStartVector.dy / self.scaledStartVector.dx)
+            return self.direction.angleFromXPlus - self.radian/2
         }
     }
     
     var endRadian: CGFloat {
         get {
-            return atan(self.scaledEndVector.dy / self.scaledEndVector.dx)
+            return self.direction.angleFromXPlus + self.radian/2
         }
     }
     
