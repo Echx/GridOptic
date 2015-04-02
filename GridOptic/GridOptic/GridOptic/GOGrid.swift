@@ -219,6 +219,7 @@ class GOGrid: NSObject {
             let distance = ray.startPoint.getDistanceToPoint(intersectPoint)
             // if current point is nearer, set the result edge be it
             if distance < minDistance {
+                minDistance = distance
                 minEdge = edge
             }
         }
