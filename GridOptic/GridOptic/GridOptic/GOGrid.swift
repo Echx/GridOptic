@@ -129,8 +129,8 @@ class GOGrid: NSObject {
         let criticalPoints = self.getRayPathCriticalPoints(ray)
         
         for point in criticalPoints {
+            println("\n\(point)")
             path.addLineToPoint(point)
-            println(point)
         }
         path.applyTransform(self.transformToDisplay)
         return path
@@ -167,6 +167,7 @@ class GOGrid: NSObject {
             // found out the intersection with the boundary
             // we treat boundary as 4 line segments
             criticalPoints.append(getIntersectionWithBoundary(ray: currentRay)!)
+
         }
         return criticalPoints
     }

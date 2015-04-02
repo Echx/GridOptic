@@ -77,14 +77,17 @@ class GOLineSegment: GOSegment {
             
             //if the intersection point is not within [leftX, rightX], then there is no intersection point
             if lineIntersection == ray.startPoint {
+                println("intersection is ray startPoint")
                 return nil
             } else if lineIntersection.x < leftX || lineIntersection.x > rightX {
                 return nil
-            } else if ray.direction.dx > 0 && lineIntersection.x < ray.startPoint.x {
+            } else if ray.direction.dx > 0 && lineIntersection.x <= ray.startPoint.x {
                 return nil
-            } else if ray.direction.dx < 0 && lineIntersection.x > ray.startPoint.x {
+            } else if ray.direction.dx < 0 && lineIntersection.x >= ray.startPoint.x {
                 return nil
             } else {
+                println("intersection:  \(lineIntersection)")
+                println("start point:   \(ray.startPoint)")
                 return lineIntersection
             }
         }
