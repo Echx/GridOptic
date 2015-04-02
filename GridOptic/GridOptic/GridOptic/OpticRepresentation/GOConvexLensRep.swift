@@ -49,6 +49,7 @@ class GOConvexLensRep: GOOpticRep {
         self.setUpEdges()
         self.setDirection(direction)
         self.setDeviceType(DeviceType.Lens)
+        self.updateEdgesParent()
     }
     
     init(center: GOCoordinate, id: String, refractionIndex: CGFloat) {
@@ -58,6 +59,7 @@ class GOConvexLensRep: GOOpticRep {
         self.setUpEdges()
         self.setDirection(self.direction)
         self.setDeviceType(DeviceType.Lens)
+        self.updateEdgesParent()
     }
     
     private func setUpEdges() {
