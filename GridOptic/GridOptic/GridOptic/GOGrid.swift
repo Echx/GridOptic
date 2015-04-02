@@ -18,7 +18,7 @@ class GOGrid: NSObject {
     let height: NSInteger
     let origin: CGPoint = CGPointZero
     
-    private var instruments = [String: GOOpticRep]()
+    var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
     var size: CGSize {
         get {
@@ -72,6 +72,15 @@ class GOGrid: NSObject {
         self.height = coordinate.y
         self.unitLength = unitLength
         super.init()
+    }
+    
+    func addInstrument(instrument: GOOpticRep) -> Bool{
+        if self.instruments[instrument.id] == nil {
+            self.instruments[instrument.id] = instrument
+            return true
+        } else {
+            return false
+        }
     }
     
     func getInstrumentDisplayPathForID(id: String) -> UIBezierPath? {
