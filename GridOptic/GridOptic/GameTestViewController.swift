@@ -21,6 +21,10 @@ class GameTestViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.layer.addSublayer(shapeLayer)
+        shapeLayer.strokeEnd = 1.0
+        shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+        shapeLayer.fillColor = UIColor.clearColor().CGColor
+        shapeLayer.lineWidth = 2.0
         
         // Do any additional setup after loading the view, typically from a nib.
         self.view.backgroundColor = UIColor.grayColor()
@@ -43,28 +47,7 @@ class GameTestViewController: UIViewController {
     
     func drawLight() {
         if let opticRep = self.object {
-
-            let bezierPath = opticRep.bezierPath
-
-            shapeLayer.strokeEnd = 1.0
-            shapeLayer.path = bezierPath.CGPath
-            shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-            shapeLayer.fillColor = UIColor.clearColor().CGColor
-            shapeLayer.lineWidth = 2.0
-
-            
-            let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-            pathAnimation.fromValue = 0.0;
-            pathAnimation.toValue = 1.0;
-            pathAnimation.duration = 0.1;
-            pathAnimation.repeatCount = 1.0
-            pathAnimation.fillMode = kCAFillModeForwards
-            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-            
-            shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
-
-            
-            
+            shapeLayer.path = opticRep.bezierPath.CGPath
         } else {
             let ray = GORay(startPoint: CGPoint(x: 0, y: 50), direction: CGVector(dx: 1, dy: 0))
             let path = UIBezierPath()
