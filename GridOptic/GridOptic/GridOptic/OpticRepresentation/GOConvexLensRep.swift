@@ -60,16 +60,18 @@ class GOConvexLensRep: GOOpticRep {
     }
     
     private func setUpEdges() {
-        let radianSpan = acos((self.curvatureRadius - self.thickness/2) / self.curvatureRadius)
+        let radianSpan = acos((self.curvatureRadius - self.thickness/2) / self.curvatureRadius) * 2
         
         //left arc
         let centerLeftArc = CGPointMake(CGFloat(self.center.x) + CGFloat(self.thickness)/2 - self.curvatureRadius, CGFloat(self.center.y))
+        println("normal: \(self.normalDirection)")
         let leftArc = GOArcSegment(center: centerLeftArc, radius: self.curvatureRadius, radian: radianSpan, normalDirection: self.normalDirection)
         leftArc.tag = 0
         self.edges.append(leftArc)
         
         //right arc
         let centerRightArc = CGPointMake(CGFloat(self.center.x) - CGFloat(self.thickness)/2 + self.curvatureRadius, CGFloat(self.center.y))
+        println("inverseNormal: \(self.inverseNormalDirection)")
         let rightArc = GOArcSegment(center: centerRightArc, radius: self.curvatureRadius, radian: radianSpan, normalDirection: self.inverseNormalDirection)
         rightArc.tag = 1
         self.edges.append(rightArc)
