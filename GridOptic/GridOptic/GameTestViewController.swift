@@ -11,21 +11,32 @@ import SpriteKit
 
 class GameTestViewController: UIViewController {
     
+    @IBOutlet var directionSlider: UISlider?
+    
     var grid: GOGrid?
     var object: GOOpticRep?
+    var shapeLayer = CAShapeLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.layer.addSublayer(shapeLayer)
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.view.backgroundColor = UIColor.grayColor()
-        self.grid = GOGrid(width: 512,
-            height: 384,
-            andUnitLength: 2)
+        self.grid = GOGrid(width: 512, height: 384, andUnitLength: 2)
         
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: Selector("didSwipe:"))
         self.view.addGestureRecognizer(swipeGesture)
+        self.directionSlider?.addTarget(self, action: "updateObjectDirection:", forControlEvents: UIControlEvents.ValueChanged)
     }
+    
+    func updateObjectDirection(sender: UISlider) {
+        println("update direction")
+        self.object?.setDirection(CGVector.vectorFromXPlusRadius(CGFloat(sender.value)))
+        drawLight()
+    }
+
     
     override func viewDidAppear(animated: Bool) {
         drawLight()
@@ -33,27 +44,26 @@ class GameTestViewController: UIViewController {
     
     func drawLight() {
         if let opticRep = self.object {
-            for edge in opticRep.edges {
-                let bezierPath = edge.bezierPath
-                
-                var shapeLayer = CAShapeLayer()
-                shapeLayer.strokeEnd = 1.0
-                shapeLayer.path = bezierPath.CGPath
-                shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-                shapeLayer.fillColor = UIColor.clearColor().CGColor
-                shapeLayer.lineWidth = 2.0
-                self.view.layer.addSublayer(shapeLayer)
-                
-                let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-                pathAnimation.fromValue = 0.0;
-                pathAnimation.toValue = 1.0;
-                pathAnimation.duration = 0.1;
-                pathAnimation.repeatCount = 1.0
-                pathAnimation.fillMode = kCAFillModeForwards
-                pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-                
-                shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
-            }
+
+            let bezierPath = opticRep.bezierPath
+
+            shapeLayer.strokeEnd = 1.0
+            shapeLayer.path = bezierPath.CGPath
+            shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+            shapeLayer.fillColor = UIColor.clearColor().CGColor
+            shapeLayer.lineWidth = 2.0
+
+            
+            let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+            pathAnimation.fromValue = 0.0;
+            pathAnimation.toValue = 1.0;
+            pathAnimation.duration = 0.1;
+            pathAnimation.repeatCount = 1.0
+            pathAnimation.fillMode = kCAFillModeForwards
+            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            
+            shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+
             
             
         } else {
@@ -66,8 +76,6 @@ class GameTestViewController: UIViewController {
             //        UIColor.whiteColor().setStroke()
             //        path.stroke()
             
-            
-            var shapeLayer = CAShapeLayer()
             shapeLayer.strokeEnd = 1.0
             shapeLayer.path = path.CGPath
             shapeLayer.strokeColor = UIColor.whiteColor().CGColor
