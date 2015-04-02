@@ -13,7 +13,7 @@ class GOArcSegment: GOSegment {
     var radian: CGFloat
     override var normalDirection: CGVector {
         set {
-            self.direction = CGVectorMake(-self.direction.dy, self.direction.dx)
+            self.direction = CGVectorMake(self.direction.dy, -self.direction.dx)
         }
         get {
             return CGVectorMake(self.direction.dy, -self.direction.dx)
@@ -33,9 +33,7 @@ class GOArcSegment: GOSegment {
             println("direction:     \(self.direction)")
             println("directionA:    \(self.direction.angleFromXPlus)")
             var path = UIBezierPath()
-            path.moveToPoint(self.startPoint)
-            path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.startRadian, endAngle: self.endRadian, clockwise: false)
-            path.closePath()
+            path.addArcWithCenter(self.center, radius: self.radius, startAngle: self.endRadian, endAngle: self.startRadian, clockwise: false)
             return path
         }
     }
@@ -86,13 +84,13 @@ class GOArcSegment: GOSegment {
     
     var startRadian: CGFloat {
         get {
-            return self.direction.angleFromXPlus - self.radian/2
+            return self.normalDirection.angleFromXPlus - self.radian/2
         }
     }
     
     var endRadian: CGFloat {
         get {
-            return self.direction.angleFromXPlus + self.radian/2
+            return self.normalDirection.angleFromXPlus + self.radian/2
         }
     }
     
