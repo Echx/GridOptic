@@ -111,6 +111,11 @@ class GOArcSegment: GOSegment {
             if let y = ray.getY(x: xs.0!) {
                 let point = CGPoint(x: xs.0!, y: y)
                 if self.containsPoint(point) {
+                    if point.x - ray.startPoint.x < Constant.overallPrecision &&
+                        point.y - ray.startPoint.y < Constant.overallPrecision {
+                            println("intersection is ray startPoint")
+                            return nil
+                    }
                     return point
                 } else {
                     return nil
@@ -163,8 +168,13 @@ class GOArcSegment: GOSegment {
             let tangentNormal = CGVector(dx: intersectionPoint.x - self.center.x,
                 dy: intersectionPoint.y - self.center.y)
             let deg = M_PI / 2
-            let tangent = tangentNormal.rotate(CGFloat(deg))
-            let n = tangent.normalised
+            var n: CGVector
+            
+            if CGVector.dot(rayIn.direction, v2: tangentNormal) < 0 {
+                n = tangentNormal.normalised
+            } else {
+                n = CGVectorMake(-tangentNormal.dx, -tangentNormal.dy).normalised
+            }
             
             let cosTheta1 = CGVector.dot(n, v2: l)
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
