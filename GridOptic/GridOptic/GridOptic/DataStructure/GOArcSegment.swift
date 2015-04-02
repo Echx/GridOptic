@@ -111,12 +111,12 @@ class GOArcSegment: GOSegment {
             if let y = ray.getY(x: xs.0!) {
                 let point = CGPoint(x: xs.0!, y: y)
                 if self.containsPoint(point) {
-                    if point.x - ray.startPoint.x < Constant.overallPrecision &&
-                        point.y - ray.startPoint.y < Constant.overallPrecision {
-                            println("intersection is ray startPoint")
-                            return nil
+                    if point.isNearEnough(ray.startPoint) {
+                        println("intersection is ray startPoint")
+                        return nil
+                    } else {
+                        return point
                     }
-                    return point
                 } else {
                     return nil
                 }
@@ -130,19 +130,34 @@ class GOArcSegment: GOSegment {
                         GOUtilities.getDistanceBetweenPoints(ray.startPoint, b: CGPoint(x: xs.1!, y: y1)) {
                         let point = CGPoint(x: xs.1!, y: y1)
                         if self.containsPoint(point) {
-                            return point
+                            if point.isNearEnough(ray.startPoint) {
+                                println("intersection is ray startPoint")
+                                return nil
+                            } else {
+                                return point
+                            }
                         }
                     }
                     let point = CGPoint(x: xs.0!, y: y0)
                     if self.containsPoint(point) {
-                        return point
+                        if point.isNearEnough(ray.startPoint) {
+                            println("intersection is ray startPoint")
+                            return nil
+                        } else {
+                            return point
+                        }
                     } else {
                         return nil
                     }
                 } else {
                     let point = CGPoint(x: xs.0!, y: y0)
                     if self.containsPoint(point) {
-                        return point
+                        if point.isNearEnough(ray.startPoint) {
+                            println("intersection is ray startPoint")
+                            return nil
+                        } else {
+                            return point
+                        }
                     } else {
                         return nil
                     }
@@ -151,7 +166,12 @@ class GOArcSegment: GOSegment {
                 if let y1 = ray.getY(x: xs.1!) {
                     let point = CGPoint(x: xs.1!, y: y1)
                     if self.containsPoint(point) {
-                        return point
+                        if point.isNearEnough(ray.startPoint) {
+                            println("intersection is ray startPoint")
+                            return nil
+                        } else {
+                            return point
+                        }
                     } else {
                         return nil
                     }
