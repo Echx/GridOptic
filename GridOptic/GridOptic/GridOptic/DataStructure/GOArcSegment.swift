@@ -43,11 +43,6 @@ class GOArcSegment: GOSegment {
         self.radian = radian
         super.init()
         self.normalDirection = normalDirection
-        
-        println()
-        println("normalInput: \(normalDirection)")
-        println("normalStore: \(self.normalDirection)")
-        
         self.center = center
     }
     

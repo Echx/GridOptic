@@ -32,7 +32,6 @@ class GameTestViewController: UIViewController {
     }
     
     func updateObjectDirection(sender: UISlider) {
-        println("update direction")
         self.object?.setDirection(CGVector.vectorFromXPlusRadius(CGFloat(sender.value)))
         drawLight()
     }
