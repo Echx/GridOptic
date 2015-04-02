@@ -70,6 +70,15 @@
                                     <segue destination="kRu-jv-dsO" kind="presentation" identifier="concaveLens" id="vD0-DC-bCx"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K0A-hG-RFV">
+                                <rect key="frame" x="481" y="236" width="62" height="30"/>
+                                <state key="normal" title="Test Grid">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kRu-jv-dsO" kind="presentation" identifier="grid" id="R6r-8A-N9o"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -106,10 +115,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hzH-wD-3ng" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304" y="251"/>
+            <point key="canvasLocation" x="298" y="252"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KC2-Ti-QxG"/>
+        <segue reference="vD0-DC-bCx"/>
     </inferredMetricsTieBreakers>
 </document>
