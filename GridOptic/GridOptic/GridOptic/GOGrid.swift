@@ -13,15 +13,28 @@ protocol GOGridDelegate {
 }
 
 class GOGrid: NSObject {
-    var unitLength: CGFloat
-    var width: NSInteger
-    var height: NSInteger
-    var origin: CGPoint = CGPointZero
-    var instruments = [GOOpticRep]()
+    let unitLength: CGFloat
+    let width: NSInteger
+    let height: NSInteger
+    let origin: CGPoint = CGPointZero
+    
+    var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
     var size: CGSize {
         get {
             return CGSizeMake(CGFloat(self.width) * self.unitLength, CGFloat(self.height) * self.unitLength)
+        }
+    }
+    
+    var transformToDisplay: CGAffineTransform {
+        get {
+            return CGAffineTransformMakeScale(self.unitLength, self.unitLength)
+        }
+    }
+    
+    var transformToGrid: CGAffineTransform {
+        get {
+            return CGAffineTransformMakeScale(1/self.unitLength, 1/self.unitLength)
         }
     }
     
@@ -61,6 +74,29 @@ class GOGrid: NSObject {
         super.init()
     }
     
+    func addInstrument(instrument: GOOpticRep) -> Bool{
+        if self.instruments[instrument.id] == nil {
+            self.instruments[instrument.id] = instrument
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getInstrumentDisplayPathForID(id: String) -> UIBezierPath? {
+        if let instrument = self.getInstrumentForID(id) {
+            let bezierPath = instrument.bezierPath.copy() as UIBezierPath
+            bezierPath.applyTransform(self.transformToDisplay)
+            return bezierPath
+        } else {
+            return nil
+        }
+    }
+    
+    func getInstrumentForID(id: String) -> GOOpticRep? {
+        return self.instruments[id]
+    }
+    
     func getCenterForGridCell(coordinate: GOCoordinate) -> CGPoint {
         return CGPointMake(origin.x + CGFloat(coordinate.x) * self.unitLength,
                            origin.y + CGFloat(coordinate.y) * self.unitLength)
@@ -69,6 +105,28 @@ class GOGrid: NSObject {
     func getGridCoordinateForPoint(point: CGPoint) {
         var x = round(point.x / self.unitLength)
         var y = round(point.y / self.unitLength)
+    }
+    
+    func getDisplayPointForGridPoint(point: CGPoint) -> CGPoint {
+        return CGPointApplyAffineTransform(point, self.transformToDisplay)
+    }
+    
+    func getGridPointForDisplayPoint(point: CGPoint) -> CGPoint {
+        return CGPointApplyAffineTransform(point, self.transformToGrid)
+    }
+    
+    //the ray is in the grid coordinate system
+    func getRayPath(ray: GORay) -> UIBezierPath {
+        var path = UIBezierPath()
+        path.moveToPoint(ray.startPoint)
+        let criticalPoints = self.getRayPathCriticalPoints(ray)
+        
+        for point in criticalPoints {
+            path.addLineToPoint(point)
+            println(point)
+        }
+        path.applyTransform(self.transformToDisplay)
+        return path
     }
 
     //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
@@ -108,17 +166,12 @@ class GOGrid: NSObject {
     
     //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
     func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
-        // first try get the nearest edge
-        if let nearestEdge = self.getNearestEdgeOnDirection(ray) {
-            // TODO: define indexIn and indexOut
-            return nearestEdge.getOutcomeRay(rayIn: ray, indexIn: 1.0, indexOut: 1.0)
-        } else {
-            return nil
-        }
+        return edge.getOutcomeRay(rayIn: ray, indexIn: 1.0, indexOut: 1.0)
     }
     
     //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
     func getNearestEdgeOnDirection(ray: GORay) -> GOSegment? {
+        println("getNearestEdgesOnDirection")
         // first retrieve back the edges on ray's path(if any)
         var edges = self.getEdgesOnDirection(ray)
         
@@ -146,9 +199,10 @@ class GOGrid: NSObject {
     
     //given a ray to start, return all edges on the rays path
     func getEdgesOnDirection(ray: GORay) -> [GOSegment] {
+        println("getEdgesOnDirection")
         var edges = [GOSegment]()
         
-        for item in self.instruments {
+        for (name, item) in self.instruments {
             // iterate through each instrument, and check if the ray is
             // intersect with the edges of the instruments
             let currentEdges = item.edges
@@ -164,12 +218,13 @@ class GOGrid: NSObject {
     }
     
     func getAllEdges() -> [GOSegment]? {
+        println("getAllEdges")
         // firstly add all boundaries
         var output = self.boundaries
         
         // if it has instruments, add it to edge
         if (!self.instruments.isEmpty) {
-            for item in self.instruments {
+            for (name, item) in self.instruments {
                 let currentEdges = item.edges
                 for edge in currentEdges {
                         output.append(edge)

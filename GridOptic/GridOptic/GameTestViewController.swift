@@ -28,7 +28,13 @@ class GameTestViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         self.view.backgroundColor = UIColor.grayColor()
-        self.grid = GOGrid(width: 512, height: 384, andUnitLength: 2)
+        self.grid = GOGrid(width: 64, height: 48, andUnitLength: 16)
+        
+        if self.object == nil {
+            self.directionSlider?.userInteractionEnabled = false
+            self.directionSlider?.alpha = 0
+        }
+        
         
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: Selector("didSwipe:"))
         self.view.addGestureRecognizer(swipeGesture)
@@ -37,43 +43,69 @@ class GameTestViewController: UIViewController {
     
     func updateObjectDirection(sender: UISlider) {
         self.object?.setDirection(CGVector.vectorFromXPlusRadius(CGFloat(sender.value)))
-        drawLight()
+        drawInitContent()
     }
 
     
     override func viewDidAppear(animated: Bool) {
-        drawLight()
+        drawInitContent()
     }
     
-    func drawLight() {
+    func drawInitContent() {
         if let opticRep = self.object {
             shapeLayer.path = opticRep.bezierPath.CGPath
         } else {
-            let ray = GORay(startPoint: CGPoint(x: 0, y: 50), direction: CGVector(dx: 1, dy: 0))
-            let path = UIBezierPath()
-            path.moveToPoint(CGPoint(x: ray.startPoint.x, y: ray.startPoint.y))
-            path.addLineToPoint(CGPoint(x: ray.direction.dx * 1000 + ray.startPoint.x, y: ray.direction.dy * 1000 + ray.startPoint.y))
-            path.closePath()
-            //        path.lineWidth = 16
-            //        UIColor.whiteColor().setStroke()
-            //        path.stroke()
-            
-            shapeLayer.strokeEnd = 1.0
-            shapeLayer.path = path.CGPath
-            shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-            shapeLayer.lineWidth = 2.0
-            self.view.layer.addSublayer(shapeLayer)
-            
-            let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-            pathAnimation.fromValue = 0.0;
-            pathAnimation.toValue = 1.0;
-            pathAnimation.duration = 3.0;
-            pathAnimation.repeatCount = 1.0
-            pathAnimation.fillMode = kCAFillModeForwards
-            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-            
-            shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+            self.setUpGrid()
+            self.drawGrid()
+            self.drawRay()
         }
+    }
+    
+    private func setUpGrid() {
+        let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 32, y: 24), thickness: 2, length: 6, direction: CGVectorMake(0, 1), id: "MIRROR_1")
+//        self.grid?.addInstrument(mirror)
+        let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 20, y: 15), direction: CGVectorMake(1, 4), thicknessCenter: 1, thicknessEdge: 3, curvatureRadius: 5, id: "CONCAVE_LENS_1")
+//        self.grid?.addInstrument(concaveLens)
+        let convexLens = GOConvexLensRep(center: GOCoordinate(x: 44, y: 33), direction: CGVectorMake(-2, -1), thickness: 2, curvatureRadius: 5, id: "CONVEX_LENS_1")
+//        self.grid?.addInstrument(convexLens)
+    }
+    
+    private func drawGrid() {
+        for (id, instrument) in self.grid!.instruments {
+            let layer = self.getPreviewShapeLayer()
+            layer.path = self.grid!.getInstrumentDisplayPathForID(id)?.CGPath
+            self.view.layer.addSublayer(layer)
+        }
+    }
+    
+    private func drawRay() {
+        let ray = GORay(startPoint: CGPoint(x: 0, y: 33), direction: CGVector(dx: 1, dy: 0))
+        let layer = self.getPreviewShapeLayer()
+        println("before path calculation")
+        let path = self.grid!.getRayPath(ray)
+        println("after path calculation")
+        println(path.CGPath)
+        layer.path = path.CGPath
+        self.view.layer.addSublayer(layer)
+        
+        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        pathAnimation.fromValue = 0.0;
+        pathAnimation.toValue = 1.0;
+        pathAnimation.duration = 3.0;
+        pathAnimation.repeatCount = 1.0
+        pathAnimation.fillMode = kCAFillModeForwards
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+
+        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEnd")
+    }
+    
+    private func getPreviewShapeLayer() -> CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.strokeEnd = 1.0
+        layer.strokeColor = UIColor.whiteColor().CGColor
+        layer.fillColor = UIColor.clearColor().CGColor
+        layer.lineWidth = 2.0
+        return layer
     }
     
     override func didReceiveMemoryWarning() {
