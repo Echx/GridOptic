@@ -190,13 +190,20 @@ class GOArcSegment: GOSegment {
             let deg = M_PI / 2
             var n: CGVector
             
+            println("*********************")
+            println(tangentNormal.dx)
+            println(tangentNormal.dy)
+            println(self.center.x)
+            println(self.center.y)
+            println("*********************")
+            
             if CGVector.dot(rayIn.direction, v2: tangentNormal) < 0 {
                 n = tangentNormal.normalised
             } else {
                 n = CGVectorMake(-tangentNormal.dx, -tangentNormal.dy).normalised
             }
             
-            let cosTheta1 = CGVector.dot(n, v2: l)
+            let cosTheta1 = -CGVector.dot(n, v2: l)
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
             
             let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
