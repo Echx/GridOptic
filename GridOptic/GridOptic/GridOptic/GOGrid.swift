@@ -201,6 +201,8 @@ class GOGrid: NSObject {
             }
         }
         
+        println("indexIn:   \(indexIn)")
+        println("indexOut:  \(indexOut)")
         return edge.getOutcomeRay(rayIn: ray, indexIn: indexIn, indexOut: indexOut)
     }
     

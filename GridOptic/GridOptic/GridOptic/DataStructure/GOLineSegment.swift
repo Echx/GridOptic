@@ -118,6 +118,12 @@ class GOLineSegment: GOSegment {
             }
             
             let cosTheta1 = -CGVector.dot(n, v2: l)
+            
+            //全反射
+            if 1.0 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1) < 0 {
+                return self.getReflectionRay(rayIn: rayIn)
+            }
+            
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
             
             let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx

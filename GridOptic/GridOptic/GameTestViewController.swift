@@ -65,7 +65,7 @@ class GameTestViewController: UIViewController {
     private func setUpGrid() {
         let mirror = GOFlatMirrorRep(center: GOCoordinate(x: 60, y: 35), thickness: 2, length: 6, direction: CGVectorMake(-0.3, 1), id: "MIRROR_1")
         self.grid?.addInstrument(mirror)
-        let flatLens = GOFlatLensRep(center: GOCoordinate(x: 29, y: 29), thickness: 8, length: 8, direction: CGVectorMake(1, 1), refractionIndex: 1.33, id: "FLAT_LENS_1")
+        let flatLens = GOFlatLensRep(center: GOCoordinate(x: 27, y: 29), thickness: 8, length: 8, direction: CGVectorMake(1, 1), refractionIndex: 1.33, id: "FLAT_LENS_1")
         self.grid?.addInstrument(flatLens)
         let concaveLens = GOConcaveLensRep(center: GOCoordinate(x: 44, y: 33), direction: CGVectorMake(0, 1), thicknessCenter: 1, thicknessEdge: 4, curvatureRadius: 5, id: "CONCAVE_LENS_1", refractionIndex: 1.50)
         self.grid?.addInstrument(concaveLens)
