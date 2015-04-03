@@ -156,6 +156,10 @@ class GOGrid: NSObject {
 
             
             if let outcomeRay = getOutcomeRay(currentRay, edge: edge!) {
+                println("\n\n\n\n\n\n")
+                println("currentRay:    \(currentRay.direction) from \(currentRay.startPoint)")
+                println("edge:          \(edge?.parent)  center: \(edge?.center)   direction: \(edge?.direction))")
+                println("outcomeRay:    \(outcomeRay.direction) from \(outcomeRay.startPoint)")
                 edge = getNearestEdgeOnDirection(outcomeRay)
                 currentRay = outcomeRay
             } else {
@@ -202,7 +206,6 @@ class GOGrid: NSObject {
     
     //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
     func getNearestEdgeOnDirection(ray: GORay) -> GOSegment? {
-        println("getNearestEdgesOnDirection")
         // first retrieve back the edges on ray's path(if any)
         var edges = self.getEdgesOnDirection(ray)
         
@@ -231,7 +234,6 @@ class GOGrid: NSObject {
     
     //given a ray to start, return all edges on the rays path
     func getEdgesOnDirection(ray: GORay) -> [GOSegment] {
-        println("getEdgesOnDirection")
         var edges = [GOSegment]()
         
         for (name, item) in self.instruments {
