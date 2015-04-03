@@ -85,7 +85,6 @@ class GOLine: NSObject {
 
             return CGPointMake(x, y)
         } else {
-            println("getIntersection: \(line1.slope), \(line2.slope)")
             var x = (line2.anyPoint.y - line1.anyPoint.y +
                 line1.slope * line1.anyPoint.x - line2.slope * line2.anyPoint.x) /
                 (line1.slope - line2.slope)

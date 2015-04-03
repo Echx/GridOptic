@@ -64,13 +64,17 @@ class GOLineSegment: GOSegment {
             //get the left and right most x of this line segment
             let leftX = start.x < end.x ? start.x : end.x
             let rightX = start.x < end.x ? end.x : start.x
+            let topY = start.y < end.y ? start.y : end.y
+            let bottomY = start.y < end.y ? end.y : start.y
             
             //if the intersection point is not within [leftX, rightX], then there is no intersection point
             if abs(lineIntersection.x - ray.startPoint.x) < Constant.overallPrecision &&
                 abs(lineIntersection.y - ray.startPoint.y) < Constant.overallPrecision {
-                println("intersection is ray startPoint")
                 return nil
-            } else if lineIntersection.x < leftX || lineIntersection.x > rightX {
+            } else if lineIntersection.x < leftX ||
+                lineIntersection.x > rightX ||
+                lineIntersection.y < topY ||
+                lineIntersection.y > bottomY {
                 return nil
             } else if lineIntersection.x == ray.startPoint.x { // check vertical intersection
                 if lineIntersection.y < ray.startPoint.y {
@@ -97,8 +101,6 @@ class GOLineSegment: GOSegment {
             } else if ray.direction.dx < 0 && lineIntersection.x >= ray.startPoint.x {
                 return nil
             } else {
-                println("intersection:  \(lineIntersection)")
-                println("start point:   \(ray.startPoint)")
                 return lineIntersection
             }
         }

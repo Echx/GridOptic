@@ -50,6 +50,7 @@ class GOFlatOpticRep: GOOpticRep {
         super.init(id: id)
         self.setUpEdges()
         self.setDirection(direction)
+        self.updateEdgesParent()
     }
     
     init(center: GOCoordinate, id: String) {
@@ -57,6 +58,7 @@ class GOFlatOpticRep: GOOpticRep {
         super.init(id: id)
         self.setUpEdges()
         self.setDirection(self.direction)
+        self.updateEdgesParent()
     }
     
     

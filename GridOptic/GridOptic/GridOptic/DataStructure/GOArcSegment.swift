@@ -190,13 +190,6 @@ class GOArcSegment: GOSegment {
             let deg = M_PI / 2
             var n: CGVector
             
-            println("*********************")
-            println(tangentNormal.dx)
-            println(tangentNormal.dy)
-            println(self.center.x)
-            println(self.center.y)
-            println("*********************")
-            
             if CGVector.dot(rayIn.direction, v2: tangentNormal) < 0 {
                 n = tangentNormal.normalised
             } else {
