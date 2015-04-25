@@ -13,7 +13,7 @@ class GOUtilities {
     class func solveQuadraticEquation(a: CGFloat, b: CGFloat, c: CGFloat) -> (CGFloat?, CGFloat?) {
         let sqrtTerm = b * b - 4 * a * c
         if a == 0 {
-            return (nil, nil);
+            return (nil, nil)
         } else if sqrtTerm < 0 {
             return (nil, nil)
         } else if sqrtTerm == 0 {
@@ -23,7 +23,7 @@ class GOUtilities {
         }
     }
     
-    class func getDistanceBetweenPoints(a: CGPoint, b: CGPoint) -> CGFloat {
+    class func getDistanceBetweenPoint(a: CGPoint, andPoint b: CGPoint) -> CGFloat {
         let dx = a.x - b.x
         let dy = a.y - b.y
         return sqrt(dx * dx + dy * dy)
@@ -31,5 +31,9 @@ class GOUtilities {
     
     class func vectorFromRadius(radius: CGFloat) -> CGVector{
         return CGVectorMake(cos(radius), sin(radius))
+    }
+    
+    class func areaOfTriangle(#first: CGPoint, second: CGPoint, third: CGPoint) -> CGFloat{
+        return 0.5 * (first.x * (second.y - third.y) + second.x * (third.y - first.y) + third.x * (first.y - second.y))
     }
 }

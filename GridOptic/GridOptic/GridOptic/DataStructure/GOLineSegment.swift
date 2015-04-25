@@ -8,11 +8,14 @@
 
 import UIKit
 
+// GOLineSegment is the representation of line segment in GO library
 class GOLineSegment: GOSegment {
     var length: CGFloat
+    // return the embeded GOLine
     var line: GOLine {
         get {
-            return GOLine(anyPoint: CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y)), direction: self.direction)
+            return GOLine(anyPoint: CGPointMake(CGFloat(self.center.x),
+                CGFloat(self.center.y)), direction: self.direction)
         }
     }
     override var bezierPath: UIBezierPath {
@@ -20,16 +23,47 @@ class GOLineSegment: GOSegment {
             var path = UIBezierPath()
             path.moveToPoint(self.startPoint)
             path.addLineToPoint(self.endPoint)
-            path.closePath()
             return path
         }
     }
     
     init(center: CGPoint, length: CGFloat, direction: CGVector) {
-        self.length = length;
+        self.length = length
         super.init()
-        self.center = center;
+        self.center = center
         self.direction = direction
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let willRefract = aDecoder.decodeBoolForKey(GOCodingKey.segment_willRef)
+        let willReflect = aDecoder.decodeBoolForKey(GOCodingKey.segment_willRel)
+        
+        let center = aDecoder.decodeCGPointForKey(GOCodingKey.segment_center)
+        let tag = aDecoder.decodeObjectForKey(GOCodingKey.segment_tag) as NSInteger
+        
+        let parent = aDecoder.decodeObjectForKey(GOCodingKey.segment_parent) as String
+        
+        let length = aDecoder.decodeObjectForKey(GOCodingKey.segment_length) as CGFloat
+        
+        let direction = aDecoder.decodeCGVectorForKey(GOCodingKey.segment_direction)
+        
+        self.init(center: center, length: length, direction: direction)
+        self.willReflect = willReflect
+        self.willRefract = willRefract
+
+        self.tag = tag
+        self.parent = parent
+    }
+    
+    override func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeBool(willRefract, forKey: GOCodingKey.segment_willRef)
+        aCoder.encodeBool(willReflect, forKey: GOCodingKey.segment_willRel)
+        aCoder.encodeCGPoint(center, forKey: GOCodingKey.segment_center)
+        aCoder.encodeCGVector(direction, forKey: GOCodingKey.segment_direction)
+        aCoder.encodeObject(tag, forKey: GOCodingKey.segment_tag)
+        aCoder.encodeObject(parent, forKey: GOCodingKey.segment_parent)
+        
+        aCoder.encodeObject(length, forKey: GOCodingKey.segment_length)
     }
     
     var directionInRadianFromXPlus: CGFloat {
@@ -38,7 +72,8 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    var startPoint: CGPoint {
+    override var startPoint: CGPoint {
+        // return the starting point of the line segment
         get {
             let radDirection = self.directionInRadianFromXPlus
             let deltaX = -0.5 * self.length * cos(radDirection)
@@ -47,7 +82,8 @@ class GOLineSegment: GOSegment {
         }
     }
     
-    var endPoint: CGPoint {
+    override var endPoint: CGPoint {
+        // return the ending point of the line segment
         get {
             let radDirection = self.directionInRadianFromXPlus
             let deltaX = 0.5 * self.length * cos(radDirection)
@@ -68,8 +104,8 @@ class GOLineSegment: GOSegment {
             let bottomY = start.y < end.y ? end.y : start.y
             
             //if the intersection point is not within [leftX, rightX], then there is no intersection point
-            if abs(lineIntersection.x - ray.startPoint.x) < Constant.overallPrecision &&
-                abs(lineIntersection.y - ray.startPoint.y) < Constant.overallPrecision {
+            if lineIntersection.x.equalWithPrecision(ray.startPoint.x) &&
+                lineIntersection.y.equalWithPrecision(ray.startPoint.y) {
                 return nil
             } else if lineIntersection.x < leftX ||
                 lineIntersection.x > rightX ||
@@ -107,7 +143,7 @@ class GOLineSegment: GOSegment {
         return nil
     }
     
-    override func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> GORay? {
+    override func getRefractionRay(#rayIn: GORay, indexIn: CGFloat, indexOut: CGFloat) -> (GORay, Bool)? {
         if let intersectionPoint = self.getIntersectionPoint(rayIn) {
             let l = rayIn.direction.normalised
             var n: CGVector
@@ -119,9 +155,13 @@ class GOLineSegment: GOSegment {
             
             let cosTheta1 = -CGVector.dot(n, v2: l)
             
-            //全反射
+            // Total reflection
             if 1.0 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1) < 0 {
-                return self.getReflectionRay(rayIn: rayIn)
+                if let reflectionRay = self.getReflectionRay(rayIn: rayIn) {
+                    return (reflectionRay, true)
+                } else {
+                    return nil
+                }
             }
             
             let cosTheta2 = sqrt(1 - (indexIn / indexOut) * (indexIn / indexOut) * (1 - cosTheta1 * cosTheta1))
@@ -129,7 +169,7 @@ class GOLineSegment: GOSegment {
             let x = (indexIn / indexOut) * l.dx + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dx
             let y = (indexIn / indexOut) * l.dy + (indexIn / indexOut * cosTheta1 - cosTheta2) * n.dy
             
-            return GORay(startPoint: intersectionPoint, direction: CGVectorMake(x, y))
+            return (GORay(startPoint: intersectionPoint, direction: CGVectorMake(x, y)), false)
         } else {
             return nil
         }
@@ -142,7 +182,8 @@ class GOLineSegment: GOSegment {
             if CGVector.dot(rayIn.direction, v2: self.normalDirection) < 0 {
                 n = self.normalDirection.normalised
             } else {
-                n = CGVectorMake(-self.normalDirection.dx, -self.normalDirection.dy).normalised
+                n = CGVectorMake(-self.normalDirection.dx,
+                    -self.normalDirection.dy).normalised
             }
             let cosTheta1 = -CGVector.dot(n, v2: l)
             
@@ -154,6 +195,7 @@ class GOLineSegment: GOSegment {
             
             return GORay(startPoint: intersectionPoint, direction: reflectDirection)
         } else {
+            // no intersecion point, thus no reflection ray
             return nil
         }
     }

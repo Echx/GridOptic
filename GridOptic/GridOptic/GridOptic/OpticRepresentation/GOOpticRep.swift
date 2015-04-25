@@ -8,11 +8,16 @@
 
 import UIKit
 
-class GOOpticRep: NSObject {
+class GOOpticRep: NSObject, NSCoding {
     var id: String
+    var center: GOCoordinate
     var edges = [GOSegment]()
     var type = DeviceType.Mirror
+    var direction: CGVector = OpticRepDefaults.defaultDirection
+    var refractionIndex : CGFloat = GOConstant.vacuumRefractionIndex
+    
     var bezierPath: UIBezierPath {
+        // the bezier path representation of the optic instrument for drawing
         get {
             var path = UIBezierPath()
             for edge in self.edges {
@@ -28,23 +33,85 @@ class GOOpticRep: NSObject {
         }
     }
     
-    var refractionIndex : CGFloat = Constant.vacuumRefractionIndex
-
+    var vertices: [CGPoint] {
+        get {
+            fatalError("The computational variable vertices must be overriden by subclasses")
+        }
+    }
     
-    init(id: String) {
+    init(id: String, center: GOCoordinate) {
         self.id = id
+        self.center = center
         super.init()
     }
     
-    init(refractionIndex: CGFloat, id: String) {
+    init(refractionIndex: CGFloat, id: String, center: GOCoordinate) {
         self.id = id
         self.refractionIndex = refractionIndex
+        self.center = center
         super.init()
         self.updateEdgesParent()
     }
     
+    required convenience init(coder aDecoder: NSCoder) {
+        let id = aDecoder.decodeObjectForKey(GOCodingKey.optic_id) as String
+        let edges = aDecoder.decodeObjectForKey(GOCodingKey.optic_edges) as [GOSegment]
+        let typeRaw = aDecoder.decodeObjectForKey(GOCodingKey.optic_type) as Int
+        let type = DeviceType(rawValue: typeRaw)
+        let center = aDecoder.decodeObjectForKey(GOCodingKey.optic_center) as GOCoordinate
+        
+        let refIndex = aDecoder.decodeObjectForKey(GOCodingKey.optic_refractionIndex) as CGFloat
+        
+        self.init(refractionIndex: refIndex, id: id, center: center)
+        self.type = type!
+        self.edges = edges
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(id, forKey: GOCodingKey.optic_id)
+        aCoder.encodeObject(edges, forKey: GOCodingKey.optic_edges)
+        aCoder.encodeObject(type.rawValue, forKey: GOCodingKey.optic_type)
+        aCoder.encodeObject(center, forKey: GOCodingKey.optic_center)
+        
+        aCoder.encodeObject(refractionIndex, forKey: GOCodingKey.optic_refractionIndex)
+    }
+    
+    func refresh() {
+        let direction = self.direction
+        self.direction = OpticRepDefaults.defaultDirection
+        self.setUpEdges()
+        self.setDirection(direction)
+        self.updateEdgesParent()
+        self.updateEdgesType()
+    }
+    
+    func containsPoint(point: CGPoint) -> Bool {
+        // check whether the point is contained with in the optic representation
+        var framePath = UIBezierPath()
+        let vertices = self.vertices
+        framePath.moveToPoint(vertices[0])
+        
+        for var i = 1; i < vertices.count; i++ {
+            var vertex = vertices[i]
+            framePath.addLineToPoint(vertex)
+        }
+        
+        framePath.closePath()
+        
+        return framePath.containsPoint(point)
+    }
+    
+    func setUpEdges() {
+        fatalError("setUpEdges must be overridden by child classes")
+    }
+    
     func setDirection(direction: CGVector) {
         fatalError("setDirection must be overridden by child classes")
+    }
+    
+    func setCenter(center: GOCoordinate) {
+        self.center = center
+        self.refresh()
     }
     
     func setDeviceType(type: DeviceType) {
@@ -58,7 +125,8 @@ class GOOpticRep: NSObject {
         }
     }
     
-    private func updateEdgesType() {
+    func updateEdgesType() {
+        // udpate the type of edge according to the property of the device
         for edge in self.edges {
             switch self.type {
             case DeviceType.Mirror:
@@ -68,6 +136,9 @@ class GOOpticRep: NSObject {
                 edge.willReflect = false
                 edge.willRefract = true
             case DeviceType.Wall:
+                edge.willReflect = false
+                edge.willRefract = false
+            case DeviceType.Emitter:
                 edge.willReflect = false
                 edge.willRefract = false
             default:

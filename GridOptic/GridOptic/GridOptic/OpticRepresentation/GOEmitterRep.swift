@@ -1,17 +1,17 @@
 //
-//  GOFlatWallRep.swift
-//  GridOptic
+//  GOEmitterRep.swift
+//  Planck
 //
-//  Created by Wang Jinghan on 01/04/15.
+//  Created by Lei Mingyu on 05/04/15.
 //  Copyright (c) 2015 Echx. All rights reserved.
 //
 
 import UIKit
 
-class GOFlatWallRep: GOFlatOpticRep {
+class GOEmitterRep: GOFlatOpticRep {
     override init(center: GOCoordinate, thickness: CGFloat, length: CGFloat, direction: CGVector, id: String) {
         super.init(center: center, thickness: thickness, length: length, direction: direction, id: id)
-        self.setDeviceType(DeviceType.Wall)
+        self.setDeviceType(DeviceType.Emitter)
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -39,5 +39,13 @@ class GOFlatWallRep: GOFlatOpticRep {
         aCoder.encodeObject(center, forKey: GOCodingKey.optic_center)
         aCoder.encodeCGVector(direction, forKey: GOCodingKey.optic_direction)
         aCoder.encodeObject(refractionIndex, forKey: GOCodingKey.optic_refractionIndex)
+    }
+
+    func getRay() -> GORay {
+        let angle = self.direction.angleFromXPlus - CGFloat(M_PI) / 2
+        let initialPoint = CGPointMake(0, self.length / 2 + EmitterDefaults.initialPointOffset)
+        var startPoint = CGPoint.getPointAfterRotation(angle, from: initialPoint,
+            translate: CGPointMake(CGFloat(self.center.x), CGFloat(self.center.y)))
+        return GORay(startPoint: startPoint, direction: self.direction)
     }
 }

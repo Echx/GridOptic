@@ -8,51 +8,80 @@
 
 import UIKit
 
+// GOGridDelegate methods are triggered when new critical point is generated
 protocol GOGridDelegate {
-    
+    func grid(grid: GOGrid, didProduceNewCriticalPoint point: CGPoint,
+        onEdge edge: GOSegment?, forRayWithTag tag: String)
+    func gridDidFinishCalculation(grid: GOGrid, forRayWithTag tag: String)
 }
 
-class GOGrid: NSObject {
+class GOGrid: NSObject, NSCoding {
     let unitLength: CGFloat
     let width: NSInteger
     let height: NSInteger
     let origin: CGPoint = CGPointZero
-    let backgroundRefractionIndex: CGFloat = 1.0
+    let backgroundRefractionIndex: CGFloat = GOConstant.vacuumRefractionIndex
+    let unitDegree = GridDefaults.unitDegree
     
     var instruments = [String: GOOpticRep]()
     var delegate: GOGridDelegate?
     var refractionEdgeParentStack = GOStack<String>()
+    var queue = dispatch_queue_create(GridDefaults.calculationQueueIdentifier,
+        DISPATCH_QUEUE_SERIAL)
+    var shouldContinueCalculation: Bool = false
     
     var size: CGSize {
+        // returns the size of the grid, in square CGFloat
         get {
-            return CGSizeMake(CGFloat(self.width) * self.unitLength, CGFloat(self.height) * self.unitLength)
+            return CGSizeMake(CGFloat(self.width) * self.unitLength,
+                CGFloat(self.height) * self.unitLength)
         }
     }
     
     var transformToDisplay: CGAffineTransform {
+        // transformation to display grid (CGPoint representation)
         get {
             return CGAffineTransformMakeScale(self.unitLength, self.unitLength)
         }
     }
     
     var transformToGrid: CGAffineTransform {
+        // transformation to display grid (CGPoint representation)
         get {
-            return CGAffineTransformMakeScale(1/self.unitLength, 1/self.unitLength)
+            return CGAffineTransformMakeScale(1 / self.unitLength,
+                1 / self.unitLength)
         }
     }
     
     var boundaries : [GOSegment] {
+        // the boundaries of the grid represented by four line segments
         get {
             var boundaries = [GOLineSegment]()
             
-            let bottomBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-                y: origin.y - Constant.boundaryOffset), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
-            let upperBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width / 2),
-                y: origin.y + CGFloat(height) + Constant.boundaryOffset), length: CGFloat(width), direction: CGVector(dx: 1, dy: 0))
-            let leftBound = GOLineSegment(center: CGPoint(x: origin.x - Constant.boundaryOffset,
-                y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
-            let rightBound = GOLineSegment(center: CGPoint(x: origin.x + CGFloat(width) + Constant.boundaryOffset,
-                y: origin.y + CGFloat(height / 2)), length: CGFloat(height), direction: CGVector(dx: 0, dy: 1))
+            let bottomBound = GOLineSegment(
+                center: CGPoint(x: origin.x + CGFloat(width / 2),
+                y: origin.y - GOConstant.boundaryOffset),
+                length: CGFloat(width) + GOConstant.boundaryExtend,
+                direction: CGVector(dx: 1, dy: 0)
+            )
+            let upperBound = GOLineSegment(
+                center: CGPoint(x: origin.x + CGFloat(width / 2),
+                y: origin.y + CGFloat(height) + GOConstant.boundaryOffset),
+                length: CGFloat(width) + GOConstant.boundaryExtend,
+                direction: CGVector(dx: 1, dy: 0)
+            )
+            let leftBound = GOLineSegment(
+                center: CGPoint(x: origin.x - GOConstant.boundaryOffset,
+                y: origin.y + CGFloat(height / 2)),
+                length: CGFloat(height) + GOConstant.boundaryExtend,
+                direction: CGVector(dx: 0, dy: 1)
+            )
+            let rightBound = GOLineSegment(
+                center: CGPoint(x: origin.x + CGFloat(width) + GOConstant.boundaryOffset,
+                y: origin.y + CGFloat(height / 2)),
+                length: CGFloat(height) + GOConstant.boundaryExtend,
+                direction: CGVector(dx: 0, dy: 1)
+            )
             
             boundaries.append(bottomBound)
             boundaries.append(upperBound)
@@ -77,13 +106,52 @@ class GOGrid: NSObject {
         super.init()
     }
     
+    required convenience init(coder aDecoder: NSCoder) {
+        let unitLength = aDecoder.decodeObjectForKey(GOCodingKey.grid_unitLength) as CGFloat
+        let width = aDecoder.decodeObjectForKey(GOCodingKey.grid_width) as NSInteger
+        let height = aDecoder.decodeObjectForKey(GOCodingKey.grid_height) as NSInteger
+        self.init(width: width, height: height, andUnitLength: unitLength)
+        self.instruments = aDecoder.decodeObjectForKey(GOCodingKey.grid_instruments) as [String : GOOpticRep]
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(unitLength, forKey: GOCodingKey.grid_unitLength)
+        aCoder.encodeObject(width, forKey: GOCodingKey.grid_width)
+        aCoder.encodeObject(height, forKey: GOCodingKey.grid_height)
+        
+        aCoder.encodeObject(instruments, forKey: GOCodingKey.grid_instruments)
+    }
+    
+    func clearInstruments() {
+        // clear all the instruments in the grid
+        self.instruments = [String: GOOpticRep]()
+    }
+    
     func addInstrument(instrument: GOOpticRep) -> Bool{
+        // add one instrument into the instrument list
         if self.instruments[instrument.id] == nil {
             self.instruments[instrument.id] = instrument
             return true
         } else {
+            // instrument already exists
             return false
         }
+    }
+    
+    func isInstrumentOverlappedWidthOthers(instrument: GOOpticRep) -> Bool {
+        // check whether an instrument is overlapped with others
+        let instrumentVertices = instrument.vertices
+        for (key, otherInstrument) in self.instruments {
+            if instrument != otherInstrument {
+                // iterate through instrument list
+                let otherInstrumentVertices = otherInstrument.vertices
+                if GOOverlapManager.isShape(instrumentVertices,
+                    overlappedWith: otherInstrumentVertices) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     func getInstrumentDisplayPathForID(id: String) -> UIBezierPath? {
@@ -104,14 +172,28 @@ class GOGrid: NSObject {
         return self.instruments[id]
     }
     
+    func removeInstrumentForID(id: String) {
+        self.instruments[id] = nil
+    }
+    
     func getCenterForGridCell(coordinate: GOCoordinate) -> CGPoint {
+        // get the center point of the grid
         return CGPointMake(origin.x + CGFloat(coordinate.x) * self.unitLength,
                            origin.y + CGFloat(coordinate.y) * self.unitLength)
     }
     
-    func getGridCoordinateForPoint(point: CGPoint) {
+    func getGridCoordinateForPoint(point: CGPoint) -> GOCoordinate {
+        // convert CGPoint to GOCoordinate
         var x = round(point.x / self.unitLength)
         var y = round(point.y / self.unitLength)
+        return GOCoordinate(x: Int(x), y: Int(y))
+    }
+    
+    func getPointForGridCoordinate(coordinate: GOCoordinate) -> CGPoint {
+        // convert GOCoordinate to CGPoint
+        var x = CGFloat(coordinate.x) * self.unitLength
+        var y = CGFloat(coordinate.y) * self.unitLength
+        return CGPoint(x: x, y: y)
     }
     
     func getDisplayPointForGridPoint(point: CGPoint) -> CGPoint {
@@ -122,22 +204,100 @@ class GOGrid: NSObject {
         return CGPointApplyAffineTransform(point, self.transformToGrid)
     }
     
+    func getInstrumentAtPoint(displayPoint: CGPoint) -> GOOpticRep? {
+        let gridPoint = self.getGridPointForDisplayPoint(displayPoint)
+        return getInstrumentAtGridPoint(gridPoint)
+    }
+    
+    func getInstrumentAtGridPoint(gridPoint: CGPoint) -> GOOpticRep? {
+        for (id, instrument) in self.instruments {
+            if instrument.containsPoint(gridPoint) {
+                return instrument
+            }
+        }
+        return nil
+    }
+    
     //the ray is in the grid coordinate system
-    func getRayPath(ray: GORay) -> UIBezierPath {
+    func getRayPath(ray: GORay) -> GOPath {
         var path = UIBezierPath()
         path.moveToPoint(ray.startPoint)
         let criticalPoints = self.getRayPathCriticalPoints(ray)
+        var points = [CGPoint]()
         
+        // generate ray path according the critical points
         for point in criticalPoints {
-            println("\n\(point)")
             path.addLineToPoint(point)
+            points.append(point)
         }
         path.applyTransform(self.transformToDisplay)
-        return path
+        
+        return GOPath(bezierPath: path, criticalPoints: points)
+    }
+    
+    func stopSubsequentCalculation() {
+        self.shouldContinueCalculation = false
     }
 
-    //given a ray to start, this method will return every critical point of the path (i.e. the contact points between light paths and instruments)
+    func startCriticalPointsCalculationWithRay(ray: GORay, withTag tag: String) {
+        self.shouldContinueCalculation = true
+        dispatch_async(self.queue, {
+            self.refractionEdgeParentStack = GOStack<String>()
+            var criticalPoints = [CGPoint]()
+            
+            // first add the start point of the ray
+            criticalPoints.append(ray.startPoint)
+            self.delegate?.grid(self, didProduceNewCriticalPoint:
+                self.getDisplayPointForGridPoint(ray.startPoint),
+                onEdge: nil, forRayWithTag: tag)
+            
+            // from the given ray, we found out each nearest edge
+            // loop through each resulted ray until we get nil result (no intersection anymore)
+            var edge = self.getNearestEdgeOnDirection(ray)
+            var currentRay : GORay = ray
+            // mark if the final ray will end at the boundary
+            var willEndAtBoundary = true
+            while (edge != nil) {
+                if !self.shouldContinueCalculation {
+                    return
+                }
+                // it must hit the edge, add the intersection point
+                let newPoint = edge!.getIntersectionPoint(currentRay)!
+                criticalPoints.append(newPoint)
+                self.delegate?.grid(self, didProduceNewCriticalPoint:
+                    self.getDisplayPointForGridPoint(newPoint),
+                    onEdge: edge, forRayWithTag: tag)
+                
+                
+                if let outcomeRay = self.getOutcomeRay(currentRay, edge: edge!) {
+                    edge = self.getNearestEdgeOnDirection(outcomeRay)
+                    currentRay = outcomeRay
+                } else {
+                    // no outcome ray, hit wall
+                    willEndAtBoundary = false
+                    break
+                }
+            }
+            
+            if willEndAtBoundary {
+                // found out the intersection with the boundary
+                // we treat boundary as 4 line segments
+                if let finalPoint = self.getIntersectionWithBoundary(ray: currentRay) {
+                    self.delegate?.grid(self, didProduceNewCriticalPoint:
+                        self.getDisplayPointForGridPoint(finalPoint), onEdge: nil, forRayWithTag: tag)
+                } else {
+                    fatalError("something goes wrong no final point")
+                }
+            }
+            
+            self.delegate?.gridDidFinishCalculation(self, forRayWithTag: tag)
+        })
+    }
+    
+    // given a ray to start, this method will return every critical point of the path
+    // (i.e. the contact points between light paths and instruments)
     func getRayPathCriticalPoints(ray: GORay) -> [CGPoint] {
+        self.refractionEdgeParentStack = GOStack<String>()
         var criticalPoints = [CGPoint]()
         
         // first add the start point of the ray
@@ -153,13 +313,8 @@ class GOGrid: NSObject {
             // it must hit the edge, add the intersection point
             let newPoint = edge!.getIntersectionPoint(currentRay)!
             criticalPoints.append(newPoint)
-
             
             if let outcomeRay = getOutcomeRay(currentRay, edge: edge!) {
-                println("\n\n\n\n\n\n")
-                println("currentRay:    \(currentRay.direction) from \(currentRay.startPoint)")
-                println("edge:          \(edge?.parent)  center: \(edge?.center)   direction: \(edge?.direction))")
-                println("outcomeRay:    \(outcomeRay.direction) from \(outcomeRay.startPoint)")
                 edge = getNearestEdgeOnDirection(outcomeRay)
                 currentRay = outcomeRay
             } else {
@@ -172,16 +327,19 @@ class GOGrid: NSObject {
         if willEndAtBoundary {
             // found out the intersection with the boundary
             // we treat boundary as 4 line segments
-            criticalPoints.append(getIntersectionWithBoundary(ray: currentRay)!)
-
+            if let finalPoint = getIntersectionWithBoundary(ray: currentRay) {
+                criticalPoints.append(finalPoint)
+            } else {
+                fatalError("something goes wrong no final point")
+            }
         }
         return criticalPoints
     }
     
     //given a ray and an edge, get the reflect/refract outcome, nil if there is no reflect/refract outcome
     func getOutcomeRay(ray: GORay, edge: GOSegment) -> GORay? {
-        var indexIn: CGFloat = 1.0
-        var indexOut: CGFloat = 1.0
+        var indexIn: CGFloat = self.backgroundRefractionIndex
+        var indexOut: CGFloat = self.backgroundRefractionIndex
         if edge.willRefract {
             if self.refractionEdgeParentStack.peek() == edge.parent {
                 indexIn = self.getRefractionIndexForID(self.refractionEdgeParentStack.pop()!)!
@@ -201,9 +359,16 @@ class GOGrid: NSObject {
             }
         }
         
-        println("indexIn:   \(indexIn)")
-        println("indexOut:  \(indexOut)")
-        return edge.getOutcomeRay(rayIn: ray, indexIn: indexIn, indexOut: indexOut)
+        if let outcomeRay = edge.getOutcomeRay(rayIn: ray, indexIn: indexIn, indexOut: indexOut) {
+            if outcomeRay.1 {
+                // the outcome ray is caused by total reflection
+                // push back the parent edge
+                self.refractionEdgeParentStack.push(edge.parent)
+            }
+            return outcomeRay.0
+        } else {
+            return nil
+        }
     }
     
     //given a ray to start, return nearest edge on the ray's path, nil if no edge lies on the path
@@ -254,7 +419,6 @@ class GOGrid: NSObject {
     }
     
     func getAllEdges() -> [GOSegment]? {
-        println("getAllEdges")
         // firstly add all boundaries
         var output = self.boundaries
         
@@ -271,15 +435,20 @@ class GOGrid: NSObject {
         return output
     }
     
+    func deepCopy() -> GOGrid {
+        return NSKeyedUnarchiver.unarchiveObjectWithData(NSKeyedArchiver.archivedDataWithRootObject(self)) as GOGrid
+    }
+    
     private func getIntersectionWithBoundary(#ray:GORay) -> CGPoint? {
         for bound in boundaries {
             if let point = bound.getIntersectionPoint(ray) {
-                println(point)
                 // check the point is in the visible space
                 // heigh: [0, height]
                 // width: [0, width]
-                if point.x >= (-Constant.boundaryOffset) && point.x <= CGFloat(width) + Constant.boundaryOffset &&
-                    point.y >= (-Constant.boundaryOffset) && point.y <= CGFloat(height) + Constant.boundaryOffset {
+                if point.x >= (-GOConstant.boundaryOffset) &&
+                    point.x <= CGFloat(width) + GOConstant.boundaryOffset &&
+                    point.y >= (-GOConstant.boundaryOffset) &&
+                    point.y <= CGFloat(height) + GOConstant.boundaryOffset {
                         return point
                 }
             }
@@ -287,5 +456,4 @@ class GOGrid: NSObject {
         
         return nil
     }
-    
 }

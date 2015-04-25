@@ -8,13 +8,14 @@
 
 import UIKit
 
+// GOLine is the representation of a line in GO library
 class GOLine: NSObject {
     var anyPoint: CGPoint
-    //angle in [0, PI)
+    // angle should be in [0, PI)
     var direction: CGVector
     var slope: CGFloat {
         get {
-            if self.direction.dx.abs < Constant.overallPrecision {
+            if self.direction.dx.equalWithPrecision(CGFloat(0)) {
                 return CGFloat.max
             }
             
@@ -22,14 +23,15 @@ class GOLine: NSObject {
         }
     }
     
-    var yIntercept: CGFloat {
+    // y Intercept for mathematical calculation
+    var yIntercept: CGFloat? {
         get {
-            return self.getY(x: 0)!
+            return self.getY(x: 0)
         }
     }
     
     init(anyPoint: CGPoint, direction: CGVector) {
-        self.anyPoint = anyPoint;
+        self.anyPoint = anyPoint
         if direction.dy < 0 || (direction.dy == 0 && direction.dx < 0){
             self.direction = CGVectorMake(-direction.dx, -direction.dy)
         } else {
@@ -40,17 +42,20 @@ class GOLine: NSObject {
     //give the corresponding y of a given x, nil if not defined
     func getY(#x: CGFloat) -> CGFloat? {
         if self.slope == CGFloat.max {
+            // the line is perpendicular to x axis
             if x == self.anyPoint.x {
                 return anyPoint.y
             } else {
                 return nil
             }
         } else if self.slope == 0 {
+            // the line is parallel to x axis
             return self.anyPoint.y
         }
         
         let deltaX = x - self.anyPoint.x
         let deltaY = deltaX * self.slope
+        
         return self.anyPoint.y + deltaY
     }
     
@@ -58,28 +63,35 @@ class GOLine: NSObject {
     func getX(#y: CGFloat) -> CGFloat? {
         if self.slope == 0 {
             if y == self.anyPoint.y {
+                // the line is parallel to x axis
                 return anyPoint.x
             } else {
                 return nil
             }
         } else if self.slope == CGFloat.max {
+            // the line is perpendicular to x axis
             return anyPoint.x
         }
         
         let deltaY = y - self.anyPoint.y
         let deltaX = deltaY / self.slope
+        
         return self.anyPoint.x + deltaX
     }
     
     class func getIntersection(#line1: GOLine, line2: GOLine) -> CGPoint? {
-        if abs(line1.slope - line2.slope) < Constant.overallPrecision {
+        // return the intersection point of two GOLine, if there is
+        if line1.slope.equalWithPrecision(line2.slope) {
+            // those two lines are parallel to each other
             return nil
         } else if line1.slope == CGFloat.max {
+            // line 1 is perpendicular to x axis
             var x = line1.anyPoint.x
             var y = line2.getY(x: x)!
 
             return CGPointMake(x, y)
         } else if line2.slope == CGFloat.max {
+            // line 2 is perpendicular to x axis
             var x = line2.anyPoint.x
             var y = line1.getY(x: x)!
 

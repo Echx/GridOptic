@@ -8,7 +8,8 @@
 
 import UIKit
 
-class GOCoordinate: NSObject {
+// GOCoordinate is the scaled coordinate in a GOGrid
+class GOCoordinate: NSObject, NSCoding {
     let x: NSInteger
     let y: NSInteger
     var point: CGPoint {
@@ -22,7 +23,26 @@ class GOCoordinate: NSObject {
         self.y = y
     }
     
+    required convenience init(coder aDecoder: NSCoder) {
+        let x = aDecoder.decodeObjectForKey(GOCodingKey.coord_x) as NSInteger
+        let y = aDecoder.decodeObjectForKey(GOCodingKey.coord_y) as NSInteger
+        self.init(x: x, y: y)
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(x, forKey: GOCodingKey.coord_x)
+        aCoder.encodeObject(y, forKey: GOCodingKey.coord_y)
+    }
+    
     class func GOCoordinateMake(x: NSInteger, y: NSInteger) -> GOCoordinate {
         return GOCoordinate(x: x, y: y)
+    }
+}
+
+extension GOCoordinate: Printable {
+    override var description: String {
+        get {
+            return "Coordinate: (\(self.x), \(self.y))"
+        }
     }
 }
